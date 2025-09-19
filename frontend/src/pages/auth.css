@@ -1,0 +1,207 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Roboto:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:wght@500;600;700&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth_main_div {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+}
+
+
+.left_inner_div {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+}
+
+.back_img_div {
+    min-width: 100%;
+    height: 100%;
+}
+
+.left_inner_div img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    max-height: 100vh;
+    z-index: 1;
+}
+
+.tagline-div {
+    position: absolute;
+    bottom: 3rem;
+    left: 3rem;
+    color: rgba(255, 255, 255, 0.912);
+    font-size: 2.5rem;
+    font-weight: 600;
+    width: 80%;
+    line-height: 1.2;
+    z-index: 2;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-style: italic;
+}
+.right_inner_div{
+    min-width: 100%;
+    height: 100vh;
+
+    flex-direction: column;
+    background-color: black;
+    display: grid;
+    grid-template-rows: 1fr 2.5fr;
+}
+.auth_form {
+    background-color: black;
+    color: white;
+    padding: 2rem ;
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* transition: all 0.3s ease-in-out; */
+}
+
+.auth_form form {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    gap: 0.5rem;
+}
+.logo{
+    /* margin-bottom: 1rem; */
+    display: flex;
+    /* background-color: red; */
+    justify-content: center;
+    align-items: center;
+}
+.logo img{
+    width: auto;
+    height: 130px;
+    object-fit: contain;
+}
+.auth_form .title-text{
+    
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.auth-form .title-text h1{
+    font-family: 'Montserrat', sans-serif;
+}
+.auth_form form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #00C853;
+    border-radius: 8px;
+    background-color: transparent;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.05rem;
+    padding-left: 15px;
+    outline: none;
+}
+.auth_form form input::placeholder{
+    color: rgba(255, 255, 255, 0.759);
+}
+.auth_form form label {
+    color: #00C853;
+    margin-bottom: 5px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    display: block;
+    margin-left: 2px;
+}
+
+.auth_form button {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    background-color: #00C853;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    margin-top: 0.5rem;
+    font-weight: 550;
+    transition: all 0.3s ease-in-out;
+}
+
+.auth_form button:hover {
+    background-color: #00a844;
+    /* transform: translateY(-1px); */
+    box-shadow: 0 2px 8px rgba(0, 200, 83, 0.3);
+}
+
+.auth_form .google-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    font-weight: 500;
+    color: black;
+    transition: all 0.3s ease-in-out;
+}
+.auth_form .resubmit{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    font-weight: 500;
+    color: black;
+    transition: all 0.3s ease-in-out;
+}
+.auth_form .google-btn:hover,.auth_form .resubmit:hover {
+   background-color: rgb(180, 178, 178);
+}
+
+.google-btn img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    margin-right: 8px;
+}
+
+.auth-text {
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.auth-text a {
+    color: #00C853;
+    text-decoration: none;
+    margin-left: 5px;
+    transition: all 0.3s ease;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+}
+.auth-text a:hover {
+    text-decoration: underline;
+    color: #00a844;
+}

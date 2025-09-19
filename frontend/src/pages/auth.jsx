@@ -1,0 +1,107 @@
+import React, { useState } from "react";
+import "./auth.css";
+import bg_img from "../assets/dark-mode-login-bg.png";
+import dark_mode_logo from "../assets/dark-mode-logo.png";
+import google_logo from "../assets/google_logo.svg";
+import { InputField } from "../components/inputField";
+
+export const Auth = () => {
+  const [isLogin, setIsLogin] = useState(true);
+  const [submitted, setSubmitted] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [otp, setOtp] = useState("");
+  
+  const toggleForm = () => {
+    setIsLogin(!isLogin);
+    setSubmitted(false)
+  };
+  const changeInputBoxes = () => {
+    if (email === "" || password === "" || name === "" || confirmPassword === "") {
+      alert("All fields are required");
+    } else if (password !== confirmPassword) {
+      alert("password and confirm password should be same");
+    } else {
+      setSubmitted(!submitted); 
+    }
+  };
+  const renderForm = () => {
+    if (isLogin) {
+      return (
+        <>
+          <div className="title-text">
+            <h1>Login to your account</h1>
+          </div>
+          <form>
+            <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email"/>
+            <InputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password"/>
+
+            <button type="submit" className="submit">Login</button>
+            <button type="button" className="google-btn">
+              <img src={google_logo} alt="google logo" />
+              Continue with Google
+            </button>
+
+            <p className="auth-text">
+              Don't have an account ?
+              <a onClick={toggleForm} style={{ cursor: 'pointer' }}>Sign up</a>
+            </p>
+          </form>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div className="title-text">
+            <h1>{submitted ? 'Check your email for the OTP' : 'Create your account'}</h1>
+          </div>
+          <form>
+            <InputField htmlFor="name" type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Enter your full name" labelVal="Full Name" styleVal={{ display: submitted ? 'none' : 'block' }} />
+            <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: submitted ? 'none' : 'block' }} />
+            <InputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{ display: submitted ? 'none' : 'block' }} />
+            <InputField htmlFor="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmPassword" placeholder="Confirm your password" labelVal="Confirm Password" styleVal={{ display: submitted ? 'none' : 'block' }} />
+            <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: submitted ? 'block' : 'none' }} />
+      
+            <button type="submit" className="submit" onClick={submitted ? null : changeInputBoxes}>{submitted ? 'Verify OTP' : 'Sign Up'}</button>
+            <button type="submit" className="resubmit" onClick={submitted ? null : changeInputBoxes} style={{display: submitted ? 'block' : 'none'}}>Resend</button>
+    
+
+            <p className="auth-text">
+              Already have an account ?
+              <a onClick={toggleForm} style={{ cursor: 'pointer' }}>Login</a>
+            </p>
+          </form>
+        </>
+      );
+    }
+  };
+  return (
+    <div className="container">
+      <div className="auth_main_div px-0 py-0">
+        <div className="left_inner_div">
+          <div className="back_img_div">
+            <img src={bg_img} alt="Background img" />
+          </div>
+          <div className="tagline-div text-black">
+            <h2>
+              Analyze Smarter,
+              <br />
+              Invest Better.
+            </h2>
+          </div>
+        </div>
+
+        <div className="right_inner_div">
+          <div className="logo">
+            <img src={dark_mode_logo} alt="Dark Mode Logo" />
+          </div>
+          <div className="auth_form">
+            {renderForm()}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
