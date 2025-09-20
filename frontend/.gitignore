@@ -11,10 +11,6 @@ node_modules
 dist
 dist-ssr
 *.
-.history
-.history2.0
-.history copy
-.history3.0
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
