@@ -8,9 +8,8 @@ import { Home } from './pages/Home'
 function App() {
   useEffect(() => {
     AOS.init({
-       duration: 1200,   // smooth animations
-      once: true,       // only animate once on scroll
-      easing: "ease-out-cubic",
+      duration: 1000,
+      once: false,
     });
   }, []);
   return (

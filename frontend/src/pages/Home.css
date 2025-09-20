@@ -46,27 +46,38 @@
 }
 .navbar_btn{
     background: none;
-    border: 2px solid #00C853;
-    color: #00C853;
+    border: 1px solid white;
+    color: white;
     font-size: 1rem;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
     transition: color 0.3s ease;
     border-radius: 20px;
     font-weight: 550;
-    padding: 8px 15px;
-    transition: all 0.3s ease-in-out;
+    padding: 8px 20px;
+    transition: all 0.3s linear;
 }
 .login_btn
 {
-    background-color: #00C853;
+    background-color: white;
     color : black;
     padding: 8px 20px;       /* styles for login button */
+    border-radius: 10px;
+    border: 1px solid black;
 }
+
 .navbar_btn:hover{
-    background-color: #24ee78af;
+    background-color: #00C853;
     font-weight: 550; 
-     color: black;
+    color:black;
+    border: 1px solid black;
+     /* background-color: black; */
+}
+.login_btn:hover{
+    background-color:  #00C853;
+    font-weight: 550; 
+    color:black;
+     /* background-color: black; */
 }
 .navbar_btn *{
     cursor: pointer;
@@ -76,6 +87,7 @@
     /* z-index: -1; */
     border-radius: 50%;
     padding: 10px;
+    display: none;
 }
 .mode_btn img{
     height: 30px;
@@ -109,7 +121,7 @@
     z-index: 2;
     justify-content: center;
     min-height: 50%;
-    gap:20px;
+    gap:50px;
     /* background-color: red; */
     align-items: center;
     min-width: 90%;
@@ -123,9 +135,9 @@
     font-family: 'Montserrat', sans-serif;
 }
 .middle_text_part .subtitle{
-    color:#00C853;
+    color : rgba(255, 255, 255, 0.859);
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: lighter;
     text-align: center; 
     margin-top: 1rem;
     font-family: 'Inter', sans-serif;
@@ -139,15 +151,15 @@
 }
 .middle_text_part .get_started_btn button{
     background-color: white;
-    /* border: 2px solid #00C853; */
+    border: 1px solid black;
     color: black;
     font-size: 1rem;
     cursor: pointer;
     font-family: 'Inter', sans-serif;
     transition: color 0.3s ease;
-    border-radius: 20px;
+    border-radius: 10px;
     font-weight: 550;
-    padding: 12px 20px;
+    padding: 12px 30px;
     transition: all 0.3s ease-in-out;
 }
 .middle_text_part .get_started_btn button:hover{
@@ -168,6 +180,7 @@
 
 .dash_board_template{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     min-height: 100vh;
     align-items: center;
@@ -188,9 +201,19 @@
     box-shadow: 8px 8px 32px 0 rgba(0, 200, 83, 0.25), 0 1.5px 6px 0 rgba(0,0,0,0.15);
     /* border-radius: 40px; */
  }
+ .dash_board_template h1{
+    /* position: relative; */
+    /* top: ; */
+    padding: 50px;
+    margin-top: 100px;
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+ }
 
 .features_div{
-    
     display: grid;
     grid-template-rows: 1fr 3fr;
     gap: 20px;
@@ -200,8 +223,10 @@
     width: 100%;
     justify-items: center;
 }
+
 .features_title_div{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 20px;
@@ -209,6 +234,7 @@
 }
 .features_title_div h1{
     color: white;
+    margin-top: 100px;
     font-size: 3rem;
     font-weight: 800;
     text-align: center;
@@ -222,6 +248,7 @@
     grid-template-rows: 1fr 1fr;
     gap: 30px;
     width: 80%;
+    padding: 0px 20px;
 }
 .features_card{
     /* background-color: green; */
@@ -262,12 +289,13 @@
     left: 10px;
 }
 .feature_text_div p{
-    color: white;
-    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.859);
+    font-size: 1.3rem;
     text-align: start;
     padding: 10px;
     position: relative;
     left: 10px;
+    font-family: 'Inter', sans-serif;
 }
 .features_card:hover{
     border: 2px solid #00C853;
@@ -278,7 +306,7 @@
     background-color: #00C853;
     box-shadow: 0 2px 16px 8px rgba(255,255,255,0.15);
 }
-.feature_text_div button{
+.see_detail_button button{
     width: fit-content;
     /* height: 100%; */
     padding: 10px 20px;
@@ -296,4 +324,147 @@
     left: 70%;
     margin-bottom: 10px;
     /* box-shadow: 0px 4px 8px rgba(18, 87, 16, 0.985); */
+}
+.powerful_features{
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+    gap: 20px;
+    min-height: 120vh;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    width: 100%;
+    justify-items: center;
+}
+.p_features_title_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+.p_features_title_div h1{
+   color: white;
+    /* margin-top: 100px; */
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+.powerful_features_section{
+    min-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 30px;
+    width: 70%;
+    padding: 0px 20px;
+}
+.p_features_card{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    /* align-items: center; */
+    border-radius: 10px;
+    border: 1px solid white;
+    transition: all 0.3s linear;
+    margin: 5px;
+    padding: 5px;
+    width: 450px;
+}
+.p_features_card img{
+    /* width: 50px; */
+    height: 90px;
+    object-fit: contain;
+    padding: 10px;
+}
+.p_feature_img{
+    display: flex;
+    justify-content: center;
+    position: relative;
+    top: 10px;
+}
+.p_feature_text_div{
+    display: flex;
+    flex-direction: column;    
+}
+.p_feature_text_div h2{
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    padding: 10px;
+    position: relative;
+ 
+}
+.p_feature_text_div p{
+    color: rgba(255, 255, 255, 0.637);
+    font-size: 1.25rem;
+    text-align: center;
+    padding: 10px;
+    font-weight: lighter;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+    
+}
+.p_features_card:hover{
+    border: 1px solid #00C853;
+    box-shadow: 8px 8px 32px 10px rgba(0, 200, 83, 0.25), 0 1.5px 6px 0 rgba(0,0,0,0.15);
+}
+
+.FAQs_div{
+    display: grid;
+    grid-template-rows: 1fr 2fr;
+    gap: 20px;
+    min-height: 100vh;
+    /* margin-top: 50px; */
+    margin-bottom: 50px;
+    width: 100%;
+    justify-items: center;
+}
+.FAQ_title{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+.FAQ_title h1{
+    color: white;
+    /* margin-top: 100px; */
+    font-size: 3rem;
+    font-weight: 800;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+.FAQs_div .question_div{
+    /* background-color: red; */
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+.que{
+    display: flex;
+    justify-content: space-between;
+    /* flex-direction: column;   */
+    /* background-color: blue; */
+    padding-bottom: 10px;
+    border-bottom: 2px solid #00C853;
+}
+.que h2{
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    padding: 10px;
+    position: relative;
+}
+.que img{
+    height: 20px;
+    position: relative;
+    top : 20px;
 }
