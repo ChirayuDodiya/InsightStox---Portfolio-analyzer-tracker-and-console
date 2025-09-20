@@ -3,7 +3,7 @@ import "./auth.css";
 import bg_img from "../assets/dark-mode-login-bg.png";
 import dark_mode_logo from "../assets/dark-mode-logo.png";
 import google_logo from "../assets/google_logo.svg";
-import { InputField } from "../components/InputField";
+import { InputField } from "../components/InputField.jsx";
 
 export const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
