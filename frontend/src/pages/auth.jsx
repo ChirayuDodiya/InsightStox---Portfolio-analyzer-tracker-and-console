@@ -4,7 +4,8 @@ import bg_img from "../assets/dark-mode-login-bg.png";
 import dark_mode_logo from "../assets/dark-mode-logo.png";
 import google_logo from "../assets/google_logo.svg";
 import { InputField } from "../components/InputField.jsx";
-
+import { PasswordInputField } from "../components/PasswordInputField.jsx";
+import 'primeicons/primeicons.css';
 export const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [submitted, setSubmitted] = useState(false);
@@ -98,6 +99,7 @@ export const Auth = () => {
     <div className="container">
       <div className="auth_main_div px-0 py-0">
         <div className="left_inner_div">
+         <button className="backToHome" >← Back to Home</button>
           <div className="back_img_div">
             <img src={bg_img} alt="Background img" />
           </div>
