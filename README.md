@@ -1,5 +1,5 @@
 
-![InsightStox Logo](https://drive.google.com/uc?export=view&id=13O5Zf6cZ8iDeY2flbioByBfoLrTQyrwq)
+![InsightStox Logo](https://drive.google.com/uc?export=view&id=1BVzEIrAtxF6D76pE-7wDIwmCHNfI7LPq)
 
 
 # **InsightStox - Portfolio analyzer, tracker and console** 
