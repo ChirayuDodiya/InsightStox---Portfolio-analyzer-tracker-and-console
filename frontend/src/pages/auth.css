@@ -72,7 +72,6 @@
     cursor: pointer;
 }
 .backToHome:hover{
-    /* background-color: #222 ; */
     box-shadow: 0 0 12px #333;
     transition: all 0.2s ease-in-out;
 }
@@ -94,7 +93,6 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* transition: all 0.3s ease-in-out; */
 }
 
 .auth_form form {
@@ -107,16 +105,15 @@
     gap: 0.5rem;
 }
 .logo{
-    /* margin-bottom: 1rem; */
+    margin-top: 2rem;
     display: flex;
     /* background-color: red; */
     justify-content: center;
     align-items: center;
 }
 .logo img{
-    width: auto;
-    height: 130px;
-    object-fit: contain;
+    /* width: auto; */
+    /* object-fit: contain; */
 }
 .auth_form .title-text{
     
@@ -144,6 +141,7 @@
 .auth_form form input::placeholder{
     color: rgba(255, 255, 255, 0.759);
 }
+
 .auth_form form label {
     color: #00C853;
     margin-bottom: 5px;
@@ -232,5 +230,30 @@
 }
 .auth-text a:hover {
     text-decoration: underline;
+    color: #00a844;
+}
+
+.passwordinput {
+    position: relative;
+    width: 100%;
+}
+
+.passwordinput input {
+    width: 100%;
+    padding-right: 20px;
+}
+.passwordinput .password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 26%;
+    cursor: pointer;
+    width: auto;
+    color: #00C853;
+    background: none;
+}
+
+.passwordinput .password-toggle:hover {
+    background: none;
+    box-shadow: none;
     color: #00a844;
 }
