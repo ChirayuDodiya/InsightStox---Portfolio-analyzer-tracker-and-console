@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import dark_mode_logo from "../assets/dark-mode-logo.png";
-import without_bg_logo from "../assets/logo-bg-remove.png";
+import dark_mode_logo from "../assets/Logodark.png";
+import web_logo_without_bg_darkmode from "../assets/web_logo_without_bg_darkmode.png";
+import web_logo_without_bg_lightmode from "../assets/web_logo_without_bg_lightmode.png";
 import "./home.css";
-import mode_logo from "../assets/mode-symbol.svg";
+import dark_theme_logo from "../assets/mode-symbol.svg";
+import light_theme_logo from "../assets/light_theme_logo.png";
 import home_background from "../assets/home-page-bg.jpg";
 import dashboard_background from "../assets/desh_board.png";
 import watchlist from "../assets/watchlist.png";
@@ -22,14 +24,15 @@ import github_logo from "../assets/github_logo.png"
 
 export const Home = () => {
   const [openIndex, setOpenIndex] = useState(0);
+  const [darkMode ,setDarkMode] = useState(true);
   function toggleArrow(index) { 
     setOpenIndex(openIndex === index ? null : index)
   }
   return (
     <div className="container">
       <div className="home-main">
-        <div className="navbar">
-          <ImgDiv className="left_btn logo" src={without_bg_logo} alt="logo without background"/>
+        <div className={`navbar ${darkMode === true ? "navbar-dark" : "navbar-light"}`}>
+          <ImgDiv className="left_btn logo" src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="logo without background"/>
 
           <div className="center_btn">
             <ButtonDiv className="features_btn navbar_btn" val="Features" />
@@ -39,7 +42,7 @@ export const Home = () => {
 
           <div className="right_btn">
             <ButtonDiv className="login_btn navbar_btn" val="Log In" />
-            <ImgDiv className="mode_btn" src={mode_logo} alt="Toggle Mode" />
+            <ImgDiv className="mode_btn" src={darkMode==true ? light_theme_logo : dark_theme_logo} alt="Toggle Mode" onlcick={() => setDarkMode(!darkMode)}/> 
           </div>
 
         </div>
@@ -185,7 +188,7 @@ export const Home = () => {
             <div className="footer_text_part">
               <div className="footer_upper_text_part">
                 <div className="footer_first_column column_div">
-                  <ImgDiv className="footer_web logo" src={without_bg_logo} alt="logo without background"/>
+                  <ImgDiv className="footer_web logo" src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="logo without background"/>
                   <TextDiv tagName="p" className="tagline_text" val={<>Analyze Smarter,<br/>Invest Better</>} />
                   <ImgDiv className="github_logo" src={github_logo} alt="Github logo"/>
                 </div>
