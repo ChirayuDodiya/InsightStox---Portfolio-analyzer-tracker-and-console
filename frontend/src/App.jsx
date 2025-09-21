@@ -8,8 +8,9 @@ import { Home } from './pages/Home'
 function App() {
   useEffect(() => {
     AOS.init({
-      duration: 1000,
+      duration: 1200,
       once: false,
+      // offset: -50, 
     });
   }, []);
   return (
