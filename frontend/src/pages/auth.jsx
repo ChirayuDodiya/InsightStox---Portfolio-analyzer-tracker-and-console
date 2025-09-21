@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./auth.css";
 import bg_img from "../assets/dark-mode-login-bg.png";
-import dark_mode_logo from "../assets/dark-mode-logo.png";
+import LogoDark from "../assets/LogoDark.png";
 import google_logo from "../assets/google_logo.svg";
 import { InputField } from "../components/InputField.jsx";
 import { PasswordInputField } from "../components/PasswordInputField.jsx";
@@ -114,7 +114,7 @@ export const Auth = () => {
 
         <div className="right_inner_div">
           <div className="logo">
-            <img src={dark_mode_logo} alt="Dark Mode Logo" />
+            <img src={LogoDark} alt="Dark Mode Logo" />
           </div>
           <div className="auth_form">
             {renderForm()}
