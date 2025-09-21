@@ -12,7 +12,7 @@ To solve these challenges, we come up with an idea to build a platform that brin
 
 **Platform Introduction:**
 
-![](https://drive.google.com/uc?export=view&id=13O5Zf6cZ8iDeY2flbioByBfoLrTQyrwq)
+![](https://drive.google.com/uc?export=view&id=1BVzEIrAtxF6D76pE-7wDIwmCHNfI7LPq)
 
 # **Analyze Smarter, Invest Better**
 
