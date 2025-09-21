@@ -4,10 +4,14 @@ import bg_img from "../assets/dark-mode-login-bg.png";
 import dark_mode_logo from "../assets/dark-mode-logo.png";
 import google_logo from "../assets/google_logo.svg";
 import { InputField } from "../components/InputField.jsx";
-
+import { PasswordInputField } from "../components/PasswordInputField.jsx";
+import 'primeicons/primeicons.css';
 export const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [submitted, setSubmitted] = useState(false);
+  const [forgotpassword, setforgotpassword] = useState(false);
+  const [submittedforgot, setsubmittedforgot] = useState(false);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -18,6 +22,9 @@ export const Auth = () => {
     setIsLogin(!isLogin);
     setSubmitted(false)
   };
+  const toggleForgotPassword = () => {
+    setforgotpassword(!forgotpassword);
+  }
   const changeInputBoxes = () => {
     if (email === "" || password === "" || name === "" || confirmPassword === "") {
       alert("All fields are required");
@@ -27,24 +34,35 @@ export const Auth = () => {
       setSubmitted(!submitted); 
     }
   };
+  const changeforgotInputBoxes = () => {
+    if (email === "") {
+      alert("Email is required");
+    } else {
+      setsubmittedforgot(!submittedforgot);
+    } 
+  };
   const renderForm = () => {
     if (isLogin) {
       return (
         <>
           <div className="title-text">
-            <h1>Login to your account</h1>
+            <h1>{forgotpassword?'Reset your password':'Login to your account'}</h1>
           </div>
           <form>
-            <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email"/>
-            <InputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password"/>
+            <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: submittedforgot ? 'none':'block' }}/>
+            <a className="forgot-password" onClick={toggleForgotPassword} style={{ cursor: 'pointer', display: forgotpassword?'none':'block'}} >Forgot?</a>
+            <InputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{display: forgotpassword?'none':'block'}}/>
+            <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: submittedforgot ? 'block' : 'none' }} />
 
-            <button type="submit" className="submit">Login</button>
-            <button type="button" className="google-btn">
-              <img src={google_logo} alt="google logo" />
+            <button type="submit" className="submit" style={{display: forgotpassword?'none':'block'}}>Login</button>
+            <button type="submit" className="submit" onClick={submitted ? null : changeforgotInputBoxes} style={{display: forgotpassword?'block':'none'}}>{submittedforgot?'Verify OTP': 'Send OTP'}</button>
+            <button type="submit" className="resubmit" onClick={submitted ? null : changeforgotInputBoxes} style={{display: submittedforgot ? 'block' : 'none'}}>Resend</button>
+            <button type="button" className="google-btn" style={{display: forgotpassword ?'none':'flex'}}>
+              <img src={google_logo} alt="google logo"  />
               Continue with Google
             </button>
 
-            <p className="auth-text">
+            <p className="auth-text" style={{display: forgotpassword?'none':'block'}}>
               Don't have an account ?
               <a onClick={toggleForm} style={{ cursor: 'pointer' }}>Sign up</a>
             </p>
@@ -81,6 +99,7 @@ export const Auth = () => {
     <div className="container">
       <div className="auth_main_div px-0 py-0">
         <div className="left_inner_div">
+         <button className="backToHome" >← Back to Home</button>
           <div className="back_img_div">
             <img src={bg_img} alt="Background img" />
           </div>

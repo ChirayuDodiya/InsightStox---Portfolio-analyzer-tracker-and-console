@@ -1,5 +1,8 @@
 import { useState ,useEffect } from 'react'
 import './App.css'
+import { Auth } from './pages/auth'
+import 'primeicons/primeicons.css';
+// import { Home } from './pages/Home'
 import AOS from "aos";
 import "aos/dist/aos.css";
 // import { Auth } from './pages/auth'
