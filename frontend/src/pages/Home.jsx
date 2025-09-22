@@ -26,7 +26,7 @@ export const Home = () => {
   const [openIndex, setOpenIndex] = useState(0);
   const [darkMode ,setDarkMode] = useState(true);
   function toggleArrow(index) { 
-    setOpenIndex(openIndex === index ? null : index)
+    setOpenIndex(openIndex === index ? 0 : index)
   }
   return (
     <div className="container">
@@ -144,7 +144,7 @@ export const Home = () => {
               <div className="que1 que">
                 <div className="innerBoxOfQue">
                   <h2>Q : Is my financial data secure?</h2>
-                  <ImgDiv className="arrow_img_div" src={openIndex==1 ? upArrow : downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(1)}/>
+                  <ImgDiv className="arrow_img_div" src={openIndex==1 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(1)}/>
                 </div>
                 <p className="answer_text" style={{display : openIndex==1 ? "block" : "none"}}>Absolutely. We use bank-level encryption and follow industry best practices to ensure your data is always protected. We will never share your personal or financial data without your explicit consent.</p>
               </div>
@@ -152,7 +152,7 @@ export const Home = () => {
               <div className="que2 que">
                 <div className="innerBoxOfQue">
                   <h2>Q : Is InsightStox a financial advisor?</h2>
-                  <ImgDiv className="arrow_img_div" src={downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(2)}/>
+                  <ImgDiv className="arrow_img_div" src={openIndex==2 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(2)}/>
                 </div>
                 <p className="answer_text" style={{display : openIndex==2 ? "block" : "none"}}>InsightStox offers a powerful free plan that includes a dashboard, portfolio tracking, and a limited number of AI insights per month. For unlimited insights, advanced analytics, and priority support, you can upgrade to our Pro plan. You can find detailed information on our pricing page.</p>
               </div>
@@ -160,21 +160,23 @@ export const Home = () => {
               <div className="que3 que">
                 <div className="innerBoxOfQue">
                   <h2>Q : What is the pricing for InsightFolio?</h2>
-                  <ImgDiv className="arrow_img_div" src={downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(3)}/>
+                  <ImgDiv className="arrow_img_div" src={openIndex==3 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(3)}/>
                 </div>
                 <p className="answer_text" style={{display : openIndex==3 ? "block" : "none"}}>Our AI analyzes market data from trusted sources, including real-time price feeds, historical performance, and key financial metrics. It uses this data to identify trends and patterns, generating insights based on established investment principles to help you optimize your portfolio.</p>
               </div>
-              <div className="subtitle">
-                <h2>
-                  Empower your financial decisions with our platform's <br />{" "}
-                  advanced analytics and intelligent forecasting.
-                </h2>
+
+              <div className="que4 que">
+                <div className="innerBoxOfQue">
+                  <h2>Q : Which brokerages can I connect?</h2>
+                  <ImgDiv className="arrow_img_div" src={openIndex==4 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(4)}/>
+                </div>
+                <p className="answer_text" style={{display : openIndex==4 ? "block" : "none"}}>We are constantly expanding our integrations. Currently, we support connections with major brokerages like Zerodha, Groww, and Upstox, with more coming soon. You can also add your holdings manually.</p>
               </div>
 
               <div className="que5 que">
                 <div className="innerBoxOfQue">
                   <h2>Q : How does the AI generate its suggestions?</h2>
-                  <ImgDiv className="arrow_img_div" src={downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(5)}/>
+                  <ImgDiv className="arrow_img_div" src={openIndex==4 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(5)}/>
                 </div>
               <p className="answer_text" style={{display : openIndex==5 ? "block" : "none"}}>Absolutely. We use bank-level encryption and follow industry best practices to ensure your data is always protected. We will never share your personal or financial data without your explicit consent.</p>
               </div>
