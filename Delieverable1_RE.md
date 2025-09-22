@@ -884,3 +884,104 @@ Success:
 
 Failure:
 - When no stock matches the filter criteria then the system should prompt that there are no stock with given criteria.
+
+---
+
+## **POC for Sprint 1:**
+
+### **1. Sprint Goal** 
+
+The goal of Sprint 1 was to create the basic foundation of the InsightStox platform. The main focus was on designing (UI) and developing the initial pages of the application, including the Home Page, Login Page, and Registration Page. This sprint also aimed to build the backend for user authentication (login, register, logout) with proper database integration. 
+
+At the same time, this sprint included research activities such as conducting interviews, surveys, and analyzing similar platforms. The purpose of these activities was to gather correct requirements and understand what users expect from such a platform. 
+
+In summary, the goal was to make sure that both the technical structure (frontend + backend) and the requirement base (user needs) were ready for future sprints. 
+ 
+### **2. Scope of POC (Features Implemented)**
+
+During Sprint 1, the following features were included in the scope of the Proof of Concept: 
+
+Frontend (UI/UX Design and Development): 
+
+1. First, created UI designs (prototypes/mockups), and then implemented those designs as actual frontend code.  
+2. Designed the Home Page showing the platform’s purpose and navigation. 
+3. Designed the Login Page with input fields for username/email and password. 
+4. Designed the Register Page for new users to create accounts. 
+
+Backend (Server and Database): 
+
+1. Implemented user registration – saving new user details in the database. 
+2. Implemented user login – verifying user credentials and creating a login session. 
+3. Implemented user logout – closing the session securely. 
+4. Created and connected a database schema to store and manage user details. 
+ 
+Research and Requirement Gathering: 
+
+1. Conducted interviews with potential users to understand their needs and expectations. 
+2. Carried out surveys to collect opinions about features users would like. 
+3. Studied similar platforms to identify what features they provide and what improvements can be made in our platform. 
+4. Collected and organized all findings to help in planning the next stages of development 
+3. User Stories Delivered 
+
+The following user stories were completed in Sprint 1: 
+
+1. As a new user, I want to register on the platform, so that I can create an account and start using it. 
+
+2. As a registered user, I want to log in securely, so that I can access my personal account and data. 
+
+3. As a registered user, I want to securely log out from the platform, so that I can ensure my account is safe when I am not using it.
+ 
+
+### **3. User Stories Delivered** 
+
+The following user stories were completed in Sprint 1: 
+
+1. As a new user, I want to register on the platform, so that I can create an account and start using it. 
+
+2. As a registered user, I want to log in securely, so that I can access my personal account and data. 
+
+3. As a registered user, I want to securely log out from the platform, so that I can ensure my account is safe when I am not using it.
+
+ 
+### **4. Implementation Details (Tools Used)** 
+
+UI & Frontend Implementation: 
+
+1. Created clean and simple UI designs for the home page, login page and register page using Figma. 
+
+2. Focused on making the design user-friendly and responsive using HTML, CSS, Java Script and ReactJS. 
+ 
+ 
+Backend Implementation: 
+
+1. Developed the database schema for storing user details securely in PostGreSQL. 
+
+2. Coded the backend functionality for user registration, login, and logout using NodeJS. 
+
+3. Ensured that login and logout sessions work correctly. 
+
+Research Activities: 
+
+1. Interviews were conducted with potential users to identify needs and challenges. 
+
+2. Surveys Forms (Google Forms) were shared to collect feedback on what features users expect. 
+
+3. Similar platforms were studied to find common features and possible improvements for InsightStox.
+
+4. All results were documented and will guide the design of future sprints. 
+
+
+
+### **5. Outcome of POC**
+
+At the end of Sprint 1, the following outcomes were achieved: 
+
+1. A working prototype of the Home Page, Login Page and Register Page was completed. 
+
+2. The backend authentication system (login, register, logout) was successfully implemented. 
+
+3. Valuable user insights were gathered from interviews, surveys, and individual research. 
+
+4. The sprint validated both the technical feasibility (frontend + backend integration) and the user requirements for the platform. 
+ 
+
