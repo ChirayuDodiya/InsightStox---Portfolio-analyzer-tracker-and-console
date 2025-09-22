@@ -455,3 +455,432 @@ Questionnaires and interviews with potential users confirmed that showing these 
 
 Interviews showed that user need the platform to follow the standard rules and norms announced by financial regulatory bodies like SEBI to ensure that what they are using is authorized and safe to use. 
 By exploring the documentation of these regulatory bodies, we got to know that this requirement is also directly connected with legality and reputation of the platform that is the main factor behind user trust. Therefore, it concluded that this must be one of the important requirements.
+
+---
+## User Stories
+---
+
+### **User Story 1**
+
+**Front of Card**	
+
+As an unregistered user,
+I want to register on the platform,
+So that I can use the utilities of the application.	
+
+**Back of Card**
+
+Success:
+- Fetch the details from the user and send a verification OTP.
+- Validate the OTP given by the user.
+- Valid user registered and referred to Login Page.
+
+Failure:
+- Display user already exists for existing user.
+- Display “OTP invalid” in case of user entering invalid OTP.
+- Display “OTP expired” in case the OTP is expired.
+
+
+### **User Story 2**
+
+**Front of Card**	
+
+As an unregistered user,
+I want to register directly from google registration,
+So that I can register in a faster way.	
+
+**Back of Card**
+
+Success:
+- Fetch the details from google authentication and validate it.
+- Valid user registered and referred to Login Page.
+
+Failure:
+- Display user already exists for existing user.
+
+
+### **User Story 3**
+
+**Front of Card**	
+
+As a registered user,
+I want to login into the application,
+So that I can access the application utilities.	
+
+**Back of Card**
+
+Success:
+- Verify the credentials provided by the user.
+- A valid user gets logged in and referred to the home page.
+
+Failure:
+- Display message according to the type of failure:
+- “Incorrect Credentials.”
+- “Unregistered user.”
+- “Incorrect Password.”
+
+
+### **User Story 4**
+
+**Front of Card**	
+
+As a registered user,
+I want to login directly with Google login,
+So that I can access the application utilities in directly 1 click.	
+
+**Back of Card**
+
+Success:
+- Verify the credentials directly by google auth.
+- A valid user gets logged in and referred to the home page.
+
+Failure:
+- Display message “Unregistered user” in case of user not registered.
+
+
+### **User Story 5**
+
+**Front of Card**	
+
+As a registered user who has forgotten my password,
+I want to request a password reset,
+So that I can set a new password and regain access to my account.	
+
+**Back of Card**
+
+Success:
+- Take email from the user and send OTP.
+- Validate OTP and set the new Password provided by the user.
+
+Failure:
+- Display “User unregistered” if the user is not registered.
+- Display “Invalid OTP” if the user has entered invalid OTP.
+- Display “OTP expired” in case the OTP is expired.
+
+### **User Story 6**
+
+**Front of Card**
+
+As a registered user,
+I want to request a password reset,
+So that I can set a new password to keep my password safe by updating.	
+
+**Back of Card**
+
+Success:
+- Reset the Password and refer user to homepage
+
+Failure:
+- Display “old Password incorrect”.
+
+
+### **User Story 7**
+
+**Front of Card**	
+
+As a registered user,
+I want to securely log out from the platform,
+So that I can ensure my account is safe when I am not using it.	
+
+**Back of Card**
+
+Success:
+- Redirect the user to the login page.
+- Display a confirmation message “You have been logged out successfully.”
+
+Failure:
+- If session termination fails, display “Logout unsuccessful. Please try again.”
+
+  
+### **User Story 8**
+
+**Front of Card**	
+
+As an Investor, 
+I want the platform to reflect real-time stock data, 
+so that I can make timely investment decisions.	
+
+**Back of Card**
+
+Success:
+- Successful Real-Time Data Display (Market is Open)
+- Final Closing Data Display (Market is Closed)
+
+Failure:
+- Display the last data available in case of data extraction failure with stating that it’s not the real time price and retry to fetch data.
+
+### **User Story 9**
+
+**Front of Card**	
+
+As a registered user,
+I want to search the stocks I want,
+So that I can quickly find a specific stock to view its detailed information or add it to my portfolio.	
+
+**Back of Card**
+
+Success:
+- displays a list of relevant stocks matching the user's query.
+
+Failure:
+- Display message “No results found” in case of result not found.
+- In case of internal error try retrying the search on a given query.
+
+  
+### **User Story 10**
+
+**Front of Card**	
+
+As a user,
+I want to maintain a watchlist of stocks I wanted,
+So that I can track the stocks in which I am more interested.	
+
+**Back of Card**
+
+Success:
+- Add the stocks the user has selected in the Watchlist.
+- Display the stocks the user has in its watchlist to the user.
+
+Failure:
+- In case of empty watchlist access display “Watchlist is empty” and provide a search option.
+- Already added stock should not allow add to watchlist option.
+
+
+### **User Story 11**
+
+**Front of Card**	
+
+As a user,
+I want to manage the stocks in my portfolio (add, edit, delete),
+So that my performance analytics accurately reflect my real-world holdings.	
+
+**Back of Card**
+
+Success:
+- The user can add, edit or delete stocks in his/her portfolio.
+- On updating the portfolio its statistics metrics should also be updated.
+- Prompt the user to confirm the stocks selected to delete.
+
+Failure:
+- Display “Invalid data” In case of anything that is not possible such as negative shares or any other problematic fields.
+- Save the data in case of any network error.
+- Should not be allowed to remove stock if its quantity is 0.
+
+
+### **User Story 12**
+
+**Front of Card**	
+
+As a user,
+I want to see a consolidated overview of my most important investment data on a single dashboard,
+So that I can quickly assess my financial position and access key features without confusion.	
+
+**Back of Card**
+
+Success:
+- Display the total portfolio value and easy to read visual analysis.
+- There should be obvious and intuitive navigation to all major sections of the application.
+
+Failure:
+- The Dashboard should not crash in case of failure in loading some specific section, only that specific section should display error.
+- New Users should not be shown an empty dashboard, It should show the functions to add stocks or portfolio.
+
+
+### **User Story 13**
+
+**Front of Card**	
+
+As a user,
+I want to select multiple stocks and compare their key performance metrics  side-by-side
+So that I can make effective, data-driven investment decisions.	
+
+**Back of Card**
+
+Success:
+- The User can select up to 3 stocks to compare on a dedicated comparison page.
+
+Failure:
+- If users try to navigate to comparison with less than 2 stocks then the system should show a clear message and give a search option.
+- If the entered stock name is incorrect then accordingly a failure message must be displayed.
+
+
+### **User Story 14**
+
+**Front of Card**
+
+As a user,
+I want to receive suggestions and guidance on my stock allocation,
+So that I can make strategic adjustments to better align my portfolio with my financial goals.	
+
+**Back of Card**	
+
+Success:
+- Display the user's current asset allocation (e.g., 80% Tech, 20% Healthcare) directly beside a target allocation model that matches their risk profile.
+- Display easy to understand suggestions such as: Your portfolio is heavily concentrated in the Technology sector. To align with a 'Moderate' profile, consider diversifying into other sectors like Financials or Industrials. To reach their specific goal.
+
+Failure:
+- When a user's risk profile is not available the system should prompt the user to Complete the risk Profile.
+- When the user portfolio is empty it should display the user to add portfolio holdings to receive allocation insights.
+
+  
+### **User Story 15**
+
+**Front of Card**	
+
+As a user,
+I want to see a visual breakdown of my portfolio’s diversification by sector, weightage etc.. and get suggestions to concentrate risks and rebalance my portfolio.
+So that I can focus on risks and improve my portfolio growth.	
+
+**Back of Card**	
+
+Success:
+- Display clear and interactive charts displaying portfolio allocation according to different categories.
+- Display suggestions on concentrating the diversified portfolio to rebalance the portfolio.
+- In the case of a well diversified portfolio display message to acknowledge the user about it.
+
+Failure:
+- In case of an empty portfolio it should prompt the user to add portfolio to analyze diversification.
+- When Stock’s diversification data is unavailable it should be added to an uncategorized part of the chart.
+
+  
+### **User Story 16**
+
+**Front of Card**	
+
+As a user,
+I want to get a clear assessment of my portfolio's overall risk and volatility, with data-driven suggestions for improvement,
+So that I can make informed decisions to optimize my returns while managing my risk exposure.	
+
+**Back of Card**
+
+Success:
+- The user is presented with a dedicated "Risk Analysis" dashboard that successfully visualizes risk and volatility assessment.
+- The user is also presented with suggestions on actions to take.
+
+Failure:
+- If the user's portfolio is empty then the display prompts the user to build a portfolio.
+- When data service for a specific metric fails, still load the dashboard with data unavailable messages.
+
+  
+### **User Story 17**
+
+**Front of Card**	
+
+As a user,
+I want to see detailed performance of my portfolio,
+So that I can understand how my investments are doing.	
+
+**Back of Card**
+
+Success:
+- Detailed metrics (returns, gains/losses, trends) are shown.
+- Data is clear and easy to understand.
+
+Failure:
+- If data is not available, show users “insufficient data” for proper performance analysis.
+
+  
+### **User Story 18**
+
+**Front of Card**	
+
+As a user,
+I want to know if my portfolio is stable over short and long periods,
+So that I can get suggestions if it is not stable.	
+
+**Back of Card**
+
+Success:
+- Checks on portfolio performance over short and long periods are shown.
+- Shows stability status clearly.
+- Gives suggestions to improve if unstable.
+
+Failure:
+- Show error message: “Unable to calculate stability” and then guide for next step to be taken like if data is not available then ask for proper data.
+
+
+### **User Story 19**
+
+**Front of Card**
+
+As a user,
+I want the app to calculate taxation on stock sales (e.g. Short-Term Capital Gains (STCG) and Long-Term Capital Gains (LTCG), etc),
+So that I know the tax for immediate sale or future sale.	
+
+**Back of Card**	
+
+Success:
+- Shows tax for immediate sale and for sale after chosen period.
+
+Failure:
+- Show error if tax cannot be calculated due to missing data and ask the user to enter proper data.
+
+
+### **User Story 20**
+
+**Front of Card**	
+
+As a regulatory authority,
+I want the platform to provide disclaimers,
+So that users understand investment risks.	
+
+**Back of Card**	
+
+Success:
+- Disclaimer shown clearly before users begin interacting with the platform.
+- Users acknowledge disclaimer and agree to all terms and conditions before proceeding.
+
+Failure:
+- Show warning and error if the user skips disclaimer acknowledgement or does not agree to terms and conditions.
+
+
+### **User Story 21**
+
+**Front of Card**	
+
+As a data provider,
+I want the platform to respect API rate limits,
+So that my servers are not overloaded.	
+
+**Back of Card**	
+
+Success:
+- Requests stay within allowed limits.
+- All functionalities will work as they are supposed to work.
+
+Failure:
+- If a limit is crossed, the provider blocks or rejects requests.
+- On reaching the limit, the currently running process will stop and users will be instructed to stop for a specific cooldown period due to overload of data. After that period of time as data can be fetched again, the user can start again.
+
+
+### **User Story 22**
+
+**Front of Card**	
+
+As a user,
+I want to see the specific data, sources, and reasoning behind every AI-generated recommendation,
+So that I can verify the information, understand the context, and make a confident and well-informed decision.	
+
+**Back of Card**	
+
+Success:
+- Display the reference and proof of all the recommendations that user got by AI
+
+Failure:
+- The system must not present a recommendation without an explanation or resources.
+
+### **User Story 23**
+
+**Front of Card**
+
+As a user,
+I want to filter the entire market of stocks based on a specific set of financial criteria,
+So that I can discover new companies that match my personal investment strategy.	
+
+**Back of Card**
+
+Success:
+- The system should display stocks according to a given query with some constraints such as in case of price fluctuates every second so the result should state that the list is as per a given time range so the user doesn’t make mistakes due to incorrect data.
+
+Failure:
+- When no stock matches the filter criteria then the system should prompt that there are no stock with given criteria.
