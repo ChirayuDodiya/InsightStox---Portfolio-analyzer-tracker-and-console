@@ -18,7 +18,7 @@ import upArrow from "../assets/upArrow.png"
 import optimize_act from "../assets/Optimize_Act.png";
 import trackPerformace from "../assets/trackPerformance.png";
 import addPortfolio from "../assets/addPortfolio.png";
-import creatACC from "../assets/creatACC.png";
+import creatACC from "../assets/creatAcc.png";
 import downArrow from "../assets/downArrow.png"
 import github_logo from "../assets/github_logo.png"
 
