@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import dark_mode_logo from "../assets/Logodark.png";
 import web_logo_without_bg_darkmode from "../assets/web_logo_without_bg_darkmode.png";
 import web_logo_without_bg_lightmode from "../assets/web_logo_without_bg_lightmode.png";
-import "./home.css";
+import "./Home.css";
 import dark_theme_logo from "../assets/mode-symbol.svg";
 import light_theme_logo from "../assets/light_theme_logo.png";
 import home_background from "../assets/home-page-bg.jpg";
