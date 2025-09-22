@@ -1,6 +1,6 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { apiError } from "../utils/apiError.js";
-import { searchUserByEmail } from "../db/searchUser.js";
+import { searchUserByEmail } from "../db/findUser.js";
 import jwt from "jsonwebtoken";
 
 const varifyToken = asyncHandler(async (req, res, next) => {

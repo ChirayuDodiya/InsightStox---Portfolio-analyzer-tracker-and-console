@@ -2,17 +2,17 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 import { apiError } from "../../utils/apiError.js";
 import { apiResponse } from "../../utils/apiResponse.js";
 import jwt from "jsonwebtoken";
-import { searchUserByEmail } from "../../db/searchUser.js";
+import { searchUserByEmail } from "../../db/findUser.js";
 import bcrypt from "bcrypt";
 
 const loginUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-
+    let { email, password } = req.body;
+    email = email?.toLowerCase();
     if (!email || !password) {
         throw new apiError(400, "Please provide email and password");
     }
 
-    const user = await searchUserByEmail(email.tolowerCase());
+    const user = await searchUserByEmail(email);
 
     if (user.length == 0) {
         throw new apiError(400, "User is not registered");
