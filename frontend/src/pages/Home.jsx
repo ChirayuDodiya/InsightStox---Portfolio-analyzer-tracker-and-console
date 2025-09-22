@@ -11,7 +11,7 @@ import watchlist from "../assets/watchlist.png";
 import Dynamic_portfolio from "../assets/Dynamic-Portfolio.png";
 import Unified_deshboard from "../assets/Unified-Dashboard.png";
 import intellSence from "../assets/IntellSence.png";
-import ImgDiv from "../components/imgDiv.jsx";
+import ImgDiv from "../components/ImgDiv.jsx";
 import ButtonDiv from "../components/ButtonDiv.jsx";
 import TextDiv from "../components/TextDiv.jsx";
 import upArrow from "../assets/upArrow.png"
@@ -31,8 +31,10 @@ export const Home = () => {
   return (
     <div className="container">
       <div className="home-main">
-        <div className={`navbar ${darkMode === true ? "navbar-dark" : "navbar-light"}`}>
-          <ImgDiv className="left_btn logo" src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="logo without background"/>
+        <div className="navbar">
+          <div className="left_btn logo">
+            <img src={without_bg_logo} alt="logo without background" />
+          </div>
 
           <div className="center_btn">
             <ButtonDiv className="features_btn navbar_btn" val="Features" />
@@ -45,10 +47,14 @@ export const Home = () => {
             <ImgDiv className="mode_btn" src={darkMode==true ? light_theme_logo : dark_theme_logo} alt="Toggle Mode" onlcick={() => setDarkMode(!darkMode)}/> 
           </div>
 
+
         </div>
         <div className="main_page">
 
+
           <div className="home-body">
+            <ImgDiv className="home_img" src={home_background} alt="Home Background" />
+
             <ImgDiv className="home_img" src={home_background} alt="Home Background" />
 
             <div className="middle_text_part">
@@ -158,13 +164,11 @@ export const Home = () => {
                 </div>
                 <p className="answer_text" style={{display : openIndex==3 ? "block" : "none"}}>Our AI analyzes market data from trusted sources, including real-time price feeds, historical performance, and key financial metrics. It uses this data to identify trends and patterns, generating insights based on established investment principles to help you optimize your portfolio.</p>
               </div>
-
-              <div className="que4 que">
-                <div className="innerBoxOfQue">
-                  <h2>Q : Which brokerages can I connect?</h2>
-                  <ImgDiv className="arrow_img_div" src={downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(4)}/>
-                </div>
-                <p className="answer_text" style={{display : openIndex==4 ? "block" : "none"}}>Absolutely. We use bank-level encryption and follow industry best practices to ensure your data is always protected. We will never share your personal or financial data without your explicit consent.</p>
+              <div className="subtitle">
+                <h2>
+                  Empower your financial decisions with our platform's <br />{" "}
+                  advanced analytics and intelligent forecasting.
+                </h2>
               </div>
 
               <div className="que5 que">
@@ -174,6 +178,7 @@ export const Home = () => {
                 </div>
               <p className="answer_text" style={{display : openIndex==5 ? "block" : "none"}}>Absolutely. We use bank-level encryption and follow industry best practices to ensure your data is always protected. We will never share your personal or financial data without your explicit consent.</p>
               </div>
+                
             </div>
           </div>
 
