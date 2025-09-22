@@ -15,7 +15,7 @@ import ImgDiv from "../components/ImgDiv.jsx";
 import ButtonDiv from "../components/ButtonDiv.jsx";
 import TextDiv from "../components/TextDiv.jsx";
 import upArrow from "../assets/upArrow.png"
-import optimize_act from "../assets/optimize_act.png";
+import optimize_act from "../assets/Optimize_Act.png";
 import trackPerformace from "../assets/trackPerformance.png";
 import addPortfolio from "../assets/addPortfolio.png";
 import creatACC from "../assets/creatACC.png";
