@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcrypt'
 import {transporter} from '../../utils/nodemailer.js';
 import crypto from 'crypto';
 import { otpStore } from '../../utils/registrationOtpStore.js';

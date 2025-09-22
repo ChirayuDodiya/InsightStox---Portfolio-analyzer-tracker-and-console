@@ -12,7 +12,7 @@ const varifyToken = asyncHandler(async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
         const user = await searchUserByEmail(decoded.email);
-        console.log(user);
+        
         if (user.length == 0) {
             throw new apiError(401, "Invalid token");
         }
