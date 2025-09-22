@@ -322,3 +322,136 @@ During team discussions, we focused on the fact that in this world where AI is e
 
 Example: a user receives a recommendation to rebalance their portfolio or an alert when a stock’s risk level changes. This confirmed the need for AI-based guidance.
 
+
+### **2. Non-Functional Requirements (NFRs)**
+These describe the quality attributes of the system:
+
+**1.	real-time updates (low latency for live data):** the platform must deliver live stock price and portfolio valuation updates with minimal (feasible) latency during market hours to ensure users always view current market conditions.
+   
+**Elicitation Techniques Used:**
+
+ 1. Questionnaires
+ 2. Interviewing
+ 3. Brainstorming
+ 4. Analysis of Existing Systems
+
+
+
+**How Identified**
+
+Through analysis of existing stock platforms, the team observed that investors rely on instant updates to make timely decisions. Questionnaires and interviews with potential users confirmed that delays in stock prices, portfolio values, or watchlist data would negatively affect decision-making.
+During brainstorming sessions, the team concluded that low-latency real-time updates are necessary to meet user expectations and provide a responsive experience.
+
+
+**2.	Scalability & Reliability:** The platform must scale to support growth in users, portfolios, and historical data without impacting performance. It should be reliable to cover consistent data processing, error handling, and recovery from failures, so that users can trust the system to deliver good performance.
+
+**Elicitation Techniques Used:**
+
+1. Brainstorming
+   
+**How Identified**	
+
+These are two of the important pillars which help the platform to win user experience and these are necessary things to consider when building the platform which we discussed in the brainstorming sessions. 
+Reliability refers to the operational capabilities of the platform and scalability refers to the maintainability with growing number of users and complexities. The goal should be to achieve them to the level which helps to build long term user adoption. 
+
+
+**3.	Availability:**  The system must remain accessible and functional during NSE/BSE trading hours. Other than that, it must be available the entire day with minimal maintenance time.
+
+**Elicitation Techniques Used:**
+
+ 1. Questionnaires
+ 2. Interviewing
+ 3. Analysis of Existing Systems
+
+**How Identified**
+
+System analysis showed that investors need constant access to their portfolios, watchlists, and live market data to make timely decisions.
+Surveys and interviews confirmed that users expect the platform to be available most of the time, especially during trading hours, with minimal disruptions. This requirement directly affects the performance of the platform and that is why It is one of the necessary requirements to ensure. 
+
+
+**4.	Security:** The platform must ensure that all user data is protected from unauthorized access. It must allow users to securely delete or withdraw their account and portfolio information (along with the consent they have provided) at any time.
+
+**Elicitation Techniques Used:**
+
+ 1. Questionnaires
+ 2. Interviewing
+ 3. Brainstorming
+ 4. Analysis of Existing Systems
+
+**How Identified**
+
+Response from the questionnaires and interviews showed that the most common concern every user has is security of their data. 67% of people from the survey emphasized that data security is a must. 
+We refer to the regulatory and data privacy documentation relevant here	 	which also suggested that privacy and security of the user data must be the	most important factor in the platform's integration process.
+
+
+**5.	Usability:** The platform should have an intuitive interface that allows users to navigate easily. Clear UI, visualizations and guided explanations should minimize confusion and enhance the overall user experience.
+
+**Elicitation Techniques Used:**
+
+ 1. Questionnaires
+ 2. Interviewing
+ 3. Brainstorming
+
+**How Identified**
+
+Many investors are not very experienced with technology and need a clear and simple interface to understand financial information. Surveys and interviews showed that presenting data with easy-to-read charts and visuals helps users to make better decisions.
+Team discussions also revealed that complicated interfaces make it hard for users to know what actions to take. A simple and visual design improves usability, reduces confusion, and makes the platform more comfortable and effective for everyone.
+
+
+**6.	Accuracy:**  The platform must ensure that all stock market data is sourced from reliable APIs and is accurate to use. AI-driven results should be accurate, consistent and free from errors to support informed decision-making.
+
+**Elicitation Techniques Used:**
+
+ 1. Questionnaires
+ 2. Interviewing
+ 3. Brainstorming
+
+**How Identified**
+
+Questionnaires and interviews showed that 63% of people demanded that accuracy of the data sources and AI suggestions must be very high as this platform is going to provide important suggestions to the users and lack of accuracy can result in false information which can worsen the investment of users.
+This way we got to know that it directly affects user’s trust, platform’s credibility and reputation. That is why it is one of the most necessary requirements to maintain.
+
+
+### **3. Domain/Business Rules**
+
+**1.	Real-Time Stock Data Integration & Compliance with API rules:** 
+The system must integrate with NSE-approved data APIs to provide near real-time stock prices, and historical data which compiles stock exchange API rules.
+
+**Elicitation Techniques Used:**
+
+ 1. Analysis of Existing Systems/Documentation.
+
+**How Identified**
+
+By reviewing existing stock platforms and their documentation, the team observed that APIs from stock exchanges have usage rules, including rate limits and licensing requirements. Analysis of these systems showed that exceeding limits can block access or violate compliance.
+During team discussions, it was decided that our platform must follow these API rules to ensure uninterrupted access to market data. This confirmed the need to include API compliance as a domain requirement.
+
+
+
+**2.	Adherence with financial standards:** All computations and performance metrics must follow recognized financial and legal standards.
+
+**Elicitation Techniques Used:**
+
+ 1. Questionnaires
+ 2. Interviewing
+ 3. Brainstorming
+ 4. Analysis of Existing Systems/Documentation.
+
+**How Identified**
+
+Through brainstorming and reviewing similar platforms, the team noted that investors rely on common financial ratios and indicators to evaluate stocks.
+Questionnaires and interviews with potential users confirmed that showing these metrics is critical for informed decision-making. Analysis of existing platforms demonstrated how standard indicators like P/E ratio, ROI, and market cap are commonly presented. Combining these observations, the team identified that supporting standard financial ratios and indicators is essential for the platform.
+
+
+**3.	Compliance with Regulatory Bodies:** The platform must comply with rules and regulations set by financial authorities (e.g., SEBI) to ensure lawful and legal execution. This includes following disclosure norms, data handling policies, and restrictions on advisory practices. 
+
+**Elicitation Techniques Used:**
+
+ 1. Interviewing
+ 2. Brainstorming
+ 3. Analysis of Existing Systems/Documentation.
+
+**How Identified**
+
+Interviews showed that user need the platform to follow the standard rules and norms announced by financial regulatory bodies like SEBI to ensure that what they are using is authorized and safe to use. 
+By exploring the documentation of these regulatory bodies, we got to know that this requirement is also directly connected with legality and reputation of the platform that is the main factor behind user trust. Therefore, it concluded that this must be one of the important requirements.
