@@ -23,3 +23,5 @@ const createOtpStore = () => {
         }
     };
 };
+
+export const otpStore = createOtpStore();

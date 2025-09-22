@@ -1,4 +1,4 @@
-import {sql} from './db.js';
+import {sql} from './dbConnection.js';
 
 
 const searchUserByEmail = async (email)=> {
