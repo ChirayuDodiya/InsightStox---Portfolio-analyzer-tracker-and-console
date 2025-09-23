@@ -2,19 +2,19 @@ import React, { useState } from "react";
 import dark_mode_logo from "../assets/Logodark.png";
 import web_logo_without_bg_darkmode from "../assets/web_logo_without_bg_darkmode.png";
 import web_logo_without_bg_lightmode from "../assets/web_logo_without_bg_lightmode.png";
-import "./home.css";
+import "./Home.css";
 import dark_theme_logo from "../assets/mode-symbol.svg";
 import light_theme_logo from "../assets/light_theme_logo.png";
 import home_background from "../assets/home-page-bg.jpg";
 import dashboard_background from "../assets/desh_board.png";
-import ImgDiv from "../components/imgDiv.jsx";
+import ImgDiv from "../components/ImgDiv.jsx";
 import ButtonDiv from "../components/ButtonDiv.jsx";
 import TextDiv from "../components/TextDiv.jsx";
 import upArrow from "../assets/upArrow.png"
-import optimize_act from "../assets/optimize_act.png";
+import optimize_act from "../assets/Optimize_Act.png";
 import trackPerformace from "../assets/trackPerformance.png";
 import addPortfolio from "../assets/addPortfolio.png";
-import creatACC from "../assets/creatACC.png";
+import creatACC from "../assets/creatAcc.png";
 import downArrow from "../assets/downArrow.png"
 import github_logo from "../assets/github_logo.png"
 import featurelogo1 from "../assets/featuredivlogo1.png"
@@ -27,7 +27,7 @@ export const Home = () => {
   const [darkMode ,setDarkMode] = useState(true);
   const [expandedCard, setExpandedCard] = useState(null);
   function toggleArrow(index) { 
-    setOpenIndex(openIndex === index ? null : index)
+    setOpenIndex(openIndex === index ? 0 : index)
   }
   
   function CardClick(cardNumber) {
@@ -40,8 +40,10 @@ export const Home = () => {
   return (
     <div className="container">
       <div className="home-main">
-        <div className={`navbar ${darkMode === true ? "navbar-dark" : "navbar-light"}`}>
-          <ImgDiv className="left_btn logo" src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="logo without background"/>
+        <div className="navbar">
+          <div className="left_btn logo">
+            <img src={web_logo_without_bg_darkmode} alt="logo without background" />
+          </div>
 
           <div className="center_btn">
             <ButtonDiv className="features_btn navbar_btn" val="Features" />
@@ -54,10 +56,14 @@ export const Home = () => {
             <ImgDiv className="mode_btn" src={darkMode==true ? light_theme_logo : dark_theme_logo} alt="Toggle Mode" onlcick={() => setDarkMode(!darkMode)}/> 
           </div>
 
+
         </div>
         <div className="main_page">
 
+
           <div className="home-body">
+            <ImgDiv className="home_img" src={home_background} alt="Home Background" />
+
             <ImgDiv className="home_img" src={home_background} alt="Home Background" />
 
             <div className="middle_text_part">
@@ -171,7 +177,7 @@ export const Home = () => {
               <div className="que1 que">
                 <div className="innerBoxOfQue">
                   <h2>Q : Is my financial data secure?</h2>
-                  <ImgDiv className="arrow_img_div" src={openIndex==1 ? upArrow : downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(1)}/>
+                  <ImgDiv className="arrow_img_div" src={openIndex==1 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(1)}/>
                 </div>
                 <p className="answer_text" style={{display : openIndex==1 ? "block" : "none"}}>Absolutely. We use bank-level encryption and follow industry best practices to ensure your data is always protected. We will never share your personal or financial data without your explicit consent.</p>
               </div>
@@ -179,7 +185,7 @@ export const Home = () => {
               <div className="que2 que">
                 <div className="innerBoxOfQue">
                   <h2>Q : Is InsightStox a financial advisor?</h2>
-                  <ImgDiv className="arrow_img_div" src={downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(2)}/>
+                  <ImgDiv className="arrow_img_div" src={openIndex==2 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(2)}/>
                 </div>
                 <p className="answer_text" style={{display : openIndex==2 ? "block" : "none"}}>InsightStox offers a powerful free plan that includes a dashboard, portfolio tracking, and a limited number of AI insights per month. For unlimited insights, advanced analytics, and priority support, you can upgrade to our Pro plan. You can find detailed information on our pricing page.</p>
               </div>
@@ -187,7 +193,7 @@ export const Home = () => {
               <div className="que3 que">
                 <div className="innerBoxOfQue">
                   <h2>Q : What is the pricing for InsightFolio?</h2>
-                  <ImgDiv className="arrow_img_div" src={downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(3)}/>
+                  <ImgDiv className="arrow_img_div" src={openIndex==3 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(3)}/>
                 </div>
                 <p className="answer_text" style={{display : openIndex==3 ? "block" : "none"}}>Our AI analyzes market data from trusted sources, including real-time price feeds, historical performance, and key financial metrics. It uses this data to identify trends and patterns, generating insights based on established investment principles to help you optimize your portfolio.</p>
               </div>
@@ -195,18 +201,19 @@ export const Home = () => {
               <div className="que4 que">
                 <div className="innerBoxOfQue">
                   <h2>Q : Which brokerages can I connect?</h2>
-                  <ImgDiv className="arrow_img_div" src={downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(4)}/>
+                  <ImgDiv className="arrow_img_div" src={openIndex==4 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(4)}/>
                 </div>
-                <p className="answer_text" style={{display : openIndex==4 ? "block" : "none"}}>Absolutely. We use bank-level encryption and follow industry best practices to ensure your data is always protected. We will never share your personal or financial data without your explicit consent.</p>
+                <p className="answer_text" style={{display : openIndex==4 ? "block" : "none"}}>We are constantly expanding our integrations. Currently, we support connections with major brokerages like Zerodha, Groww, and Upstox, with more coming soon. You can also add your holdings manually.</p>
               </div>
 
               <div className="que5 que">
                 <div className="innerBoxOfQue">
                   <h2>Q : How does the AI generate its suggestions?</h2>
-                  <ImgDiv className="arrow_img_div" src={downArrow} alt="Down Arrow logo" onlcick={() => toggleArrow(5)}/>
+                  <ImgDiv className="arrow_img_div" src={openIndex==4 ? upArrow : downArrow} alt=" Arrow logo" onClick={() => toggleArrow(5)}/>
                 </div>
               <p className="answer_text" style={{display : openIndex==5 ? "block" : "none"}}>Absolutely. We use bank-level encryption and follow industry best practices to ensure your data is always protected. We will never share your personal or financial data without your explicit consent.</p>
               </div>
+                
             </div>
           </div>
 

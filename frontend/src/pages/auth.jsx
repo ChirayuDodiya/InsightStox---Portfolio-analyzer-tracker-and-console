@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./auth.css";
 import bg_img from "../assets/dark-mode-login-bg.png";
-import dark_mode_logo from "../assets/dark-mode-logo.png";
+import LogoDark from "../assets/LogoDark.png";
 import google_logo from "../assets/google_logo.svg";
 import { InputField } from "../components/InputField.jsx";
 import { PasswordInputField } from "../components/PasswordInputField.jsx";
@@ -51,7 +51,7 @@ export const Auth = () => {
           <form>
             <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: submittedforgot ? 'none':'block' }}/>
             <a className="forgot-password" onClick={toggleForgotPassword} style={{ cursor: 'pointer', display: forgotpassword?'none':'block'}} >Forgot?</a>
-            <InputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{display: forgotpassword?'none':'block'}}/>
+            <PasswordInputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{display: forgotpassword?'none':'block'}}/>
             <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: submittedforgot ? 'block' : 'none' }} />
 
             <button type="submit" className="submit" style={{display: forgotpassword?'none':'block'}}>Login</button>
@@ -78,8 +78,8 @@ export const Auth = () => {
           <form>
             <InputField htmlFor="name" type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Enter your full name" labelVal="Full Name" styleVal={{ display: submitted ? 'none' : 'block' }} />
             <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: submitted ? 'none' : 'block' }} />
-            <InputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{ display: submitted ? 'none' : 'block' }} />
-            <InputField htmlFor="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmPassword" placeholder="Confirm your password" labelVal="Confirm Password" styleVal={{ display: submitted ? 'none' : 'block' }} />
+            <PasswordInputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{ display: submitted ? 'none' : 'block' }} />
+            <PasswordInputField htmlFor="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmPassword" placeholder="Confirm your password" labelVal="Confirm Password" styleVal={{ display: submitted ? 'none' : 'block' }} />
             <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: submitted ? 'block' : 'none' }} />
       
             <button type="submit" className="submit" onClick={submitted ? null : changeInputBoxes}>{submitted ? 'Verify OTP' : 'Sign Up'}</button>
@@ -114,7 +114,7 @@ export const Auth = () => {
 
         <div className="right_inner_div">
           <div className="logo">
-            <img src={dark_mode_logo} alt="Dark Mode Logo" />
+            <img src={LogoDark} alt="Dark Mode Logo" />
           </div>
           <div className="auth_form">
             {renderForm()}
