@@ -6,10 +6,15 @@ import google_logo from "../assets/google_logo.svg";
 import { InputField } from "../components/InputField.jsx";
 import { PasswordInputField } from "../components/PasswordInputField.jsx";
 import 'primeicons/primeicons.css';
+import {Link} from "react-router-dom";
 export const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(() => {
+  return localStorage.getItem("isLogin") === "false" ? false : true;
+});
+const [forgotpassword, setforgotpassword] = useState(() => {
+  return localStorage.getItem("forgotpassword") === "true";
+});
   const [submitted, setSubmitted] = useState(false);
-  const [forgotpassword, setforgotpassword] = useState(false);
   const [submittedforgot, setsubmittedforgot] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -18,13 +23,20 @@ export const Auth = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setOtp] = useState("");
   
-  const toggleForm = () => {
-    setIsLogin(!isLogin);
-    setSubmitted(false)
-  };
-  const toggleForgotPassword = () => {
-    setforgotpassword(!forgotpassword);
-  }
+ const toggleForm = () => {
+  setIsLogin(prev => {
+    localStorage.setItem("isLogin", !prev);
+    return !prev;
+  });
+  setSubmitted(false);
+};
+
+const toggleForgotPassword = () => {
+  setforgotpassword(prev => {
+    localStorage.setItem("forgotpassword", !prev);
+    return !prev;
+  });
+};
   const changeInputBoxes = () => {
     if (email === "" || password === "" || name === "" || confirmPassword === "") {
       alert("All fields are required");
@@ -66,6 +78,12 @@ export const Auth = () => {
               Don't have an account ?
               <a onClick={toggleForm} style={{ cursor: 'pointer' }}>Sign up</a>
             </p>
+            {forgotpassword && (
+        <p className="auth-text">
+          Remembered your password ?
+          <a onClick={toggleForgotPassword} style={{ cursor: 'pointer' }}>Login</a>
+        </p>
+      )}
           </form>
         </>
       );
@@ -99,7 +117,10 @@ export const Auth = () => {
     <div className="container">
       <div className="auth_main_div px-0 py-0">
         <div className="left_inner_div">
+          <Link to ="/" 
+          onClick={() => {localStorage.removeItem("isLogin"); localStorage.removeItem("forgotpassword");}}>
          <button className="backToHome" >← Back to Home</button>
+         </Link>
           <div className="back_img_div">
             <img src={bg_img} alt="Background img" />
           </div>
