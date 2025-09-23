@@ -7,10 +7,6 @@ import dark_theme_logo from "../assets/mode-symbol.svg";
 import light_theme_logo from "../assets/light_theme_logo.png";
 import home_background from "../assets/home-page-bg.jpg";
 import dashboard_background from "../assets/desh_board.png";
-import watchlist from "../assets/watchlist.png";
-import Dynamic_portfolio from "../assets/Dynamic-Portfolio.png";
-import Unified_deshboard from "../assets/Unified-Dashboard.png";
-import intellSence from "../assets/IntellSence.png";
 import ImgDiv from "../components/imgDiv.jsx";
 import ButtonDiv from "../components/ButtonDiv.jsx";
 import TextDiv from "../components/TextDiv.jsx";
@@ -21,12 +17,25 @@ import addPortfolio from "../assets/addPortfolio.png";
 import creatACC from "../assets/creatACC.png";
 import downArrow from "../assets/downArrow.png"
 import github_logo from "../assets/github_logo.png"
+import featurelogo1 from "../assets/featuredivlogo1.png"
+import featurelogo2 from "../assets/featuredivlogo2.png"
+import featurelogo3 from "../assets/featuredivlogo3.png"
+import featurelogo4 from "../assets/featuredivlogo4.png"
 
 export const Home = () => {
   const [openIndex, setOpenIndex] = useState(0);
   const [darkMode ,setDarkMode] = useState(true);
+  const [expandedCard, setExpandedCard] = useState(null);
   function toggleArrow(index) { 
     setOpenIndex(openIndex === index ? null : index)
+  }
+  
+  function CardClick(cardNumber) {
+    setExpandedCard(cardNumber);
+  }
+  
+  function SeeLess() {
+    setExpandedCard(null);
   }
   return (
     <div className="container">
@@ -65,41 +74,65 @@ export const Home = () => {
             <img src={dashboard_background} alt="Dashboard Background" />
           </div>
 
-          <div className="features_div" data_aos="fade-up">
-            <TextDiv tagName="h1" className="features_title_div" data_aos="fade-up"  val={<>Everything You Need to Invest <br /> Smarter</>}/>
-            <div className="features_section" data-aos="fade-up">
+          <div className="features_div" >
+            <TextDiv tagName="h1" className="features_title_div" val={<>Everything You Need to Invest <br /> Smarter</>}/>
+            <div className={`features_section ${expandedCard ? 'expanded' : ''}`} >
 
-              <div className="features_card_1 features_card">
-                <ImgDiv className="feature_img" src={watchlist} alt="watchlist logo" />
-                <TextDiv tagName="h2" tagName2="p" className="feature_text_div"  val="Smart Watchlist" val2="Create your custom watchlist, keep an eye on opportunities that matter to you."/>
-                <div className="see_detail_button">
-                    <button>See in detail</button>
+           <div className={`features_card ${expandedCard === 1 ? 'expanded' : expandedCard && expandedCard !== 1 ? 'hidden' : ''}`} 
+                onClick={() =>CardClick(1)}>
+                <div className="logo-title">
+                <ImgDiv className="feature_img" src={featurelogo1} alt="logo" />
+                <TextDiv className="feature_title" tagName="h2" val="Dynamic Portfolio Tools" />
                 </div>
+                <TextDiv tagName="p" className="feature_para" val="Your portfolio isn't static, and your tools shouldn't be either. Model potential changes, analyze your diversification, and rebalance your assets with powerful, easy-to-use tools that help you stay in control."/>
+                {expandedCard === 1 && (
+                  <div className="see_less">
+                      <button onClick={(e) => {e.stopPropagation(); SeeLess();}}>See less</button>
+                  </div>
+                )}
               </div>
 
-              <div className="features_card_2 features_card">
-                <ImgDiv className="feature_img" src={Dynamic_portfolio} alt="dynamic portfolio logo" />
-                <TextDiv className="feature_text_div" tagName="h2" tagName2="p" val="Dynamic Portfolio" val2="Create and manage your portfolio and get a clear view of your investments."/>
-                <div className="see_detail_button">
-                    <button>See in detail</button>
+              <div className={`features_card ${expandedCard === 2 ? 'expanded' : expandedCard && expandedCard !== 2 ? 'hidden' : ''}`} 
+                onClick={() =>CardClick(2)}>
+                <div className="logo-title">
+                <ImgDiv className="feature_img" src={featurelogo2} alt="logo" />
+                <TextDiv className="feature_title" tagName="h2" val="Unified Dashboard" />
                 </div>
+                <TextDiv tagName="p" className="feature_para" val="Stop juggling spreadsheets and multiple apps. See your entire financial picture, across all assets, in one clean, real time view. Track your net worth and performance effortlessly."/>
+                {expandedCard === 2 && (
+                  <div className="see_less">
+                      <button onClick={(e) => {e.stopPropagation(); SeeLess();}}>See less</button>
+                  </div>
+                )}
               </div>
 
-              <div className="features_card_3 features_card">
-                <ImgDiv className="feature_img" src={Unified_deshboard} alt="portfolio analysis log" />
-                <TextDiv className="feature_text_div" tagName="h2" tagName2="p" val="Unified Dashboard" val2="Experience a dashboard that brings your investments and performance into one place."/>
-                <div className="see_detail_button">
-                    <button>See in detail</button>
+              <div className={`features_card ${expandedCard === 3 ? 'expanded' : expandedCard && expandedCard !== 3 ? 'hidden' : ''}`} 
+              onClick={() =>CardClick(3)}>
+                <div className="logo-title">
+                <ImgDiv className="feature_img" src={featurelogo3} alt="log" />
+                <TextDiv className="feature_title" tagName="h2" val="Smart Watchlist" />
                 </div>
+                <TextDiv tagName="p" className="feature_para" val="Keep potential investments organized and ready for analysis. Track key metrics for stocks you're interested in, all in one place, so you can act with confidence when the time is right."/>
+                {expandedCard === 3 && (
+                  <div className="see_less">
+                      <button onClick={(e) => {e.stopPropagation(); SeeLess();}}>See less</button>
+                  </div>
+                )}
               </div>
 
 
-              <div className="features_card_4 features_card">
-                <ImgDiv className="feature_img" src={intellSence} alt="intellSence logo" />
-                <TextDiv className="feature_text_div" tagName="h2" tagName2="p"  val="Intelligent Insights" val2="Get smarter, insightful and more confident decisions with AI-powered analyzer."/>
-                <div className="see_detail_button">
-                    <button>See in detail</button>
+              <div className={`features_card ${expandedCard === 4 ? 'expanded' : expandedCard && expandedCard !== 4 ? 'hidden' : ''}`}
+               onClick={() =>CardClick(4)}>
+                <div className="logo-title">
+                <ImgDiv className="feature_img" src={featurelogo4} alt="logo" />
+                <TextDiv className="feature_title" tagName="h2"  val="Intelligent Insights"/>
                 </div>
+                <TextDiv tagName="p" className="feature_para" val='Go beyond raw data. Our AI-powered "Intellisense" analyzes your portfolio to highlight hidden risks, uncover new opportunities, and provide actionable suggestions so you can invest with confidence, not guesswork.'/>
+                {expandedCard === 4 && (
+                  <div className="see_less">
+                      <button onClick={(e) => {e.stopPropagation(); SeeLess();}}>See less</button>
+                  </div>
+                )}
               </div>
                 
             </div>
