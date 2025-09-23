@@ -21,7 +21,7 @@ import featurelogo1 from "../assets/featuredivlogo1.png"
 import featurelogo2 from "../assets/featuredivlogo2.png"
 import featurelogo3 from "../assets/featuredivlogo3.png"
 import featurelogo4 from "../assets/featuredivlogo4.png"
-
+import {Link} from "react-router-dom";
 export const Home = () => {
   const [openIndex, setOpenIndex] = useState(0);
   const [darkMode ,setDarkMode] = useState(true);
@@ -42,17 +42,21 @@ export const Home = () => {
       <div className="home-main">
         <div className="navbar">
           <div className="left_btn logo">
+            <a href="#">
             <img src={web_logo_without_bg_darkmode} alt="logo without background" />
+            </a>
           </div>
 
           <div className="center_btn">
-            <ButtonDiv className="features_btn navbar_btn" val="Features" />
-            <ButtonDiv className="FAQ_btn navbar_btn" val="FAQs" />
-            <ButtonDiv className="How_it_works_btn navbar_btn" val="How it Works ? " />
+            <a className="features_btn navbar_btn" href="#feature">Features</a>
+            <a className="FAQ_btn navbar_btn" href="#FAQs">FAQs</a>
+            <a className="How_it_works_btn navbar_btn" href="#HowItWorks">How it Works ?</a>
           </div>
 
           <div className="right_btn">
+            <Link to ={`/auth`}>
             <ButtonDiv className="login_btn navbar_btn" val="Log In" />
+            </Link>
             <ImgDiv className="mode_btn" src={darkMode==true ? light_theme_logo : dark_theme_logo} alt="Toggle Mode" onlcick={() => setDarkMode(!darkMode)}/> 
           </div>
 
@@ -80,7 +84,7 @@ export const Home = () => {
             <img src={dashboard_background} alt="Dashboard Background" />
           </div>
 
-          <div className="features_div" >
+          <div className="features_div" id="feature">
             <TextDiv tagName="h1" className="features_title_div" val={<>Everything You Need to Invest <br /> Smarter</>}/>
             <div className={`features_section ${expandedCard ? 'expanded' : ''}`} >
 
@@ -144,7 +148,7 @@ export const Home = () => {
             </div>
           </div>
 
-          <div className="powerful_features" data-aos="fade-up">
+          <div id="HowItWorks" className="powerful_features" data-aos="fade-up">
             <TextDiv tagName="h1" className="p_features_title_div" data_aos="fade-up" val={<>Unlock powerful insights in four <br/> simple steps.</>}/>
             <div className="powerful_features_section" data-aos="fade-up">
 
@@ -171,7 +175,7 @@ export const Home = () => {
             </div>
           </div>
 
-          <div className="FAQs_div" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="100">
+          <div id="FAQs" className="FAQs_div" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="100">
             <TextDiv className="FAQ_title" tagName="h1" val="Frequently Asked Questions"/>
             <div className="question_div">
               <div className="que1 que">
@@ -219,8 +223,10 @@ export const Home = () => {
 
 
           <div className="signup_div" data-aos="fade-up">
-            <TextDiv className="signup_text" tagName="h1" tagName2="p" val={<>Ready to Take Control of Your <br/>Investments ?</>} val2="Sign up for free and start making smarter, data-backed decisions today."/>
-            <ButtonDiv className="login_btn navbar_btn" val="Sign Up Now" />
+            <TextDiv className="_text" tagName="h1" tagName2="p" val={<>Ready to Take Control of Your <br/>Investments ?</>} val2="Sign up for free and start making smarter, data-backed decisions today."/>
+            <Link to ={`/auth`}>
+            <ButtonDiv className="login_btn navbar_btn" val="Log In" />
+            </Link>
           </div>
 
 
