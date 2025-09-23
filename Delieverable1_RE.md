@@ -199,7 +199,7 @@ Thus, Register, Login, and Logout were recognized as core features and are essen
 
 1. Analysis of Existing Systems 
 2. Brainstorming
-3. 
+  
 **How Identified**
 
 We checked existing platforms similar to our project. All of them let users search by stock name, so we saw that it is a common and important feature.
@@ -214,7 +214,7 @@ In our team discussion, we agreed that search by stock name makes the system sim
 2. Interviewing
 3. Questionnaires
 4. Brainstorming
-5. 
+
 **How Identified**
 
 By reviewing other stock platforms, we noticed that all of them provide real-time updates on stock prices and portfolio values. This shows that users expect live information to make timely investment decisions.
@@ -254,7 +254,7 @@ During team discussions, we concluded that creating and maintaining watchlists i
 2. Interviewing
 3. Questionnaires
 4. Brainstorming
-5. 
+   
 **How Identified**
 
 By reviewing other investment platforms, we noticed that most of them provide portfolio management as a main feature. This shows that users find it useful to keep all their stock details in one place, and it has become a standard expectation in such systems.
