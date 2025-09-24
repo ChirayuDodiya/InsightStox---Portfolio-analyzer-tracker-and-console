@@ -14,7 +14,7 @@ export const Auth = () => {
 const [forgotpassword, setforgotpassword] = useState(() => {
   return localStorage.getItem("forgotpassword") === "true";
 });
-  const [submitted, setSubmitted] = useState(false);
+  const [isOtpSent, setOtpSent] = useState(false);
   const [submittedforgot, setsubmittedforgot] = useState(false);
 
   const [email, setEmail] = useState("");
@@ -28,7 +28,7 @@ const [forgotpassword, setforgotpassword] = useState(() => {
     localStorage.setItem("isLogin", !prev);
     return !prev;
   });
-  setSubmitted(false);
+  setOtpSent(false);
 };
 
 const toggleForgotPassword = () => {
@@ -37,13 +37,13 @@ const toggleForgotPassword = () => {
     return !prev;
   });
 };
-  const changeInputBoxes = () => {
+  const handleSignUpVarifyOtp = () => {
     if (email === "" || password === "" || name === "" || confirmPassword === "") {
       alert("All fields are required");
     } else if (password !== confirmPassword) {
       alert("password and confirm password should be same");
     } else {
-      setSubmitted(!submitted); 
+      setOtpSent(!isOtpSent); 
     }
   };
   const changeforgotInputBoxes = () => {
@@ -66,13 +66,10 @@ const toggleForgotPassword = () => {
             <PasswordInputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{display: forgotpassword?'none':'block'}}/>
             <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: submittedforgot ? 'block' : 'none' }} />
 
-            <button type="submit" className="submit" style={{display: forgotpassword?'none':'block'}}>Login</button>
-            <button type="submit" className="submit" onClick={submitted ? null : changeforgotInputBoxes} style={{display: forgotpassword?'block':'none'}}>{submittedforgot?'Verify OTP': 'Send OTP'}</button>
-            <button type="submit" className="resubmit" onClick={submitted ? null : changeforgotInputBoxes} style={{display: submittedforgot ? 'block' : 'none'}}>Resend</button>
-            <button type="button" className="google-btn" style={{display: forgotpassword ?'none':'flex'}}>
-              <img src={google_logo} alt="google logo"  />
-              Continue with Google
-            </button>
+            <button type="submit" className="submit_forget_pass" style={{display: forgotpassword?'none':'block'}}>Login</button>
+            <button type="submit" className="submit" onClick={isOtpSent ? null : changeforgotInputBoxes} style={{display: forgotpassword?'block':'none'}}>{submittedforgot?'Verify OTP': 'Send OTP'}</button>
+            <button type="submit" className="resubmit" onClick={isOtpSent ? null : changeforgotInputBoxes} style={{display: submittedforgot ? 'block' : 'none'}}>Resend</button>
+            <button type="button" className="google-btn" style={{display: forgotpassword ?'none':'flex'}}><img src={google_logo} alt="google logo"  />Continue with Google</button>
 
             <p className="auth-text" style={{display: forgotpassword?'none':'block'}}>
               Don't have an account ?
@@ -91,23 +88,22 @@ const toggleForgotPassword = () => {
       return (
         <>
           <div className="title-text">
-            <h1>{submitted ? 'Check your email for the OTP' : 'Create your account'}</h1>
+        <h1>{isOtpSent ? 'Check your email for the OTP' : 'Create your account'}</h1>
           </div>
           <form>
-            <InputField htmlFor="name" type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Enter your full name" labelVal="Full Name" styleVal={{ display: submitted ? 'none' : 'block' }} />
-            <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: submitted ? 'none' : 'block' }} />
-            <PasswordInputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{ display: submitted ? 'none' : 'block' }} />
-            <PasswordInputField htmlFor="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmPassword" placeholder="Confirm your password" labelVal="Confirm Password" styleVal={{ display: submitted ? 'none' : 'block' }} />
-            <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: submitted ? 'block' : 'none' }} />
-      
-            <button type="submit" className="submit" onClick={submitted ? null : changeInputBoxes}>{submitted ? 'Verify OTP' : 'Sign Up'}</button>
-            <button type="submit" className="resubmit" onClick={submitted ? null : changeInputBoxes} style={{display: submitted ? 'block' : 'none'}}>Resend</button>
-    
-
-            <p className="auth-text">
-              Already have an account ?
-              <a onClick={toggleForm} style={{ cursor: 'pointer' }}>Login</a>
-            </p>
+        <InputField htmlFor="name" type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Enter your full name" labelVal="Full Name" styleVal={{ display: isOtpSent ? 'none' : 'block' }} />
+        <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: isOtpSent ? 'none' : 'block' }} />
+        <PasswordInputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{ display: isOtpSent ? 'none' : 'block' }} />
+        <PasswordInputField htmlFor="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmPassword" placeholder="Confirm your password" labelVal="Confirm Password" styleVal={{ display: isOtpSent ? 'none' : 'block' }} />
+        <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSent ? 'block' : 'none' }} />
+                                                                              
+        <button type="submit" className="submit" onClick={isOtpSent ? null : handleSignUpVarifyOtp}>{isOtpSent ? 'Verify OTP' : 'Sign Up'}</button>
+        <button type="submit" className="resubmit" onClick={isOtpSent ? null : handleSignUpVarifyOtp} style={{display: isOtpSent ? 'block' : 'none'}}>Resend</button>
+        
+        <p className="auth-text">
+          Already have an account ?
+          <a onClick={toggleForm} style={{ cursor: 'pointer' }}>Login</a>
+        </p>
           </form>
         </>
       );

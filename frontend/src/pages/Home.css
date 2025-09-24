@@ -3,6 +3,9 @@
     margin: 0;
     box-sizing: border-box;
 }
+html{
+    scroll-behavior: smooth;
+}
 .container {
     background-color: black;
     min-width: 100%;
@@ -103,6 +106,7 @@
     cursor: pointer;
 }
 .logo{
+    margin-top: 0px;
     cursor: pointer;
 }
 .logo img{

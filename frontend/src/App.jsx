@@ -10,19 +10,11 @@ const router = createBrowserRouter(
   [
     {
       path:"/",
-      element:
-      <div>
-        <Home/>
-      </div>
-      
+      element:<Home/>
     },
      {
       path:"/auth",
-      element:
-         <div>
-        <Auth/>
-        </div>
-      
+      element:<Auth/>      
     }
   ]
 );
@@ -31,7 +23,6 @@ function App() {
     AOS.init({
       duration: 1200,
       once: false,
-      // offset: -50, 
     });
   }, []);
   return (

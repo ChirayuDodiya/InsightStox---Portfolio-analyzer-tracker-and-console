@@ -42,20 +42,18 @@ export const Home = () => {
       <div className="home-main">
         <div className="navbar">
           <div className="left_btn logo">
-            <a href="#">
-            <img src={web_logo_without_bg_darkmode} alt="logo without background" />
-            </a>
+            <a href="#"><img src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="logo without background" /></a>
           </div>
 
           <div className="center_btn">
             <a className="features_btn navbar_btn" href="#feature">Features</a>
-            <a className="FAQ_btn navbar_btn" href="#FAQs">FAQs</a>
             <a className="How_it_works_btn navbar_btn" href="#HowItWorks">How it Works ?</a>
+            <a className="FAQ_btn navbar_btn" href="#FAQs">FAQs</a>
           </div>
 
           <div className="right_btn">
             <Link to ={`/auth`}>
-            <ButtonDiv className="login_btn navbar_btn" val="Log In" />
+              <ButtonDiv className="login_btn navbar_btn" val="Log In" />
             </Link>
             <ImgDiv className="mode_btn" src={darkMode==true ? light_theme_logo : dark_theme_logo} alt="Toggle Mode" onlcick={() => setDarkMode(!darkMode)}/> 
           </div>
@@ -64,10 +62,7 @@ export const Home = () => {
         </div>
         <div className="main_page">
 
-
           <div className="home-body">
-            <ImgDiv className="home_img" src={home_background} alt="Home Background" />
-
             <ImgDiv className="home_img" src={home_background} alt="Home Background" />
 
             <div className="middle_text_part">
@@ -100,7 +95,7 @@ export const Home = () => {
                       <button onClick={(e) => {e.stopPropagation(); SeeLess();}}>See less</button>
                   </div>
                 )}
-              </div>
+            </div>
 
               <div className={`features_card ${expandedCard === 2 ? 'expanded' : expandedCard && expandedCard !== 2 ? 'hidden' : ''}`} 
                 onClick={() =>CardClick(2)}>
@@ -230,11 +225,13 @@ export const Home = () => {
           </div>
 
 
-          <div className="footer_div" data-aos="fade-up" data-aos-duration="1000" data-aos-offset="100">
+          <div className="footer_div" data-aos="fade-up">
             <div className="footer_text_part">
               <div className="footer_upper_text_part">
                 <div className="footer_first_column column_div">
-                  <ImgDiv className="footer_web logo" src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="logo without background"/>
+                  <div className="footer_web logo">
+                    <a href="#"><img src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="Website logo" /></a>
+                  </div>
                   <TextDiv tagName="p" className="tagline_text" val={<>Analyze Smarter,<br/>Invest Better</>} />
                   <ImgDiv className="github_logo" src={github_logo} alt="Github logo"/>
                 </div>
