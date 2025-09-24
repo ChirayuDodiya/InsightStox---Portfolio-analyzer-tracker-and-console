@@ -980,13 +980,6 @@ Research and Requirement Gathering:
 4. Collected and organized all findings to help in planning the next stages of development 
 3. User Stories Delivered 
 
-The following user stories were completed in Sprint 1: 
-
-1. As a new user, I want to register on the platform, so that I can create an account and start using it. 
-
-2. As a registered user, I want to log in securely, so that I can access my personal account and data. 
-
-3. As a registered user, I want to securely log out from the platform, so that I can ensure my account is safe when I am not using it.
  
 
 ### **3. User Stories Delivered** 
