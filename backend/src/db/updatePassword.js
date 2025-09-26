@@ -1,4 +1,4 @@
-import { sql } from "./dbConnection";
+import { sql } from "./dbConnection.js";
 
 const updatePassword = async (email, hashedPassword) => {
     try {
