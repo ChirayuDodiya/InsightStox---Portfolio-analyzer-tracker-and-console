@@ -32,3 +32,5 @@ export const ResetPassword = async (req, res) => {
         return res.status(401).json({success: false, message: "Internal server error. Please try again."});
     }
 };
+
+export {ResetPassword};
