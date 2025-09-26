@@ -1,9 +1,10 @@
-import { searchUserByEmail } from "../../db/findUser";
-import { updatePassword } from "../../db/updatePassword";
-import { checkEmailSyntax , checkPasswordSyntax} from "../../utils/checkUserSyntax";
-import { transporter } from "../../utils/nodemailer";
-import { otpStore } from "../../utils/registrationOtpStore";
-
+import { searchUserByEmail } from "../../db/findUser.js";
+import { updatePassword } from "../../db/updatePassword.js";
+import { checkEmailSyntax , checkPasswordSyntax} from "../../utils/checkUserSyntax.js";
+import { transporter } from "../../utils/nodemailer.js";
+import { otpStore } from "../../utils/registrationOtpStore.js";
+import crypto from 'crypto';
+import bcrypt from "bcrypt";
 
 const SendForgotPasswordOtp = async (req, res) => {
     const { email } = req.body;
@@ -30,7 +31,7 @@ const SendForgotPasswordOtp = async (req, res) => {
             from: process.env.GOOGLE_USER_EMAIL,
             to: email,
             subject: "Your One-Time Password (OTP) for Insightstox",
-            text: `Welcome to Insightstox!\n\nYour OTP for registration is: ${otp}\n\nThis OTP is valid for 5 minutes.`
+            text: Welcome to Insightstox!\n\nYour OTP for registration is: ${otp}\n\nThis OTP is valid for 5 minutes.
         }
         
         await transporter.sendMail(mailOptions);
@@ -67,7 +68,7 @@ const VerifyOtpAndResetPassword = async (req, res) => {
         }
 
         if (otpData.otp !== otp) {
-            return res.status(401).json({success: false,message: `Invalid OTP.`});
+            return res.status(401).json({success: false,message: Invalid OTP.});
         }
 
         const userResult = searchUserByEmail(email)

@@ -1,5 +1,6 @@
-import { searchUserByEmail , updatePassword} from "../../db/findUser";
-
+import { searchUserByEmail } from "../../db/findUser.js";
+import { updatePassword } from "../../db/updatePassword.js";
+import bcrypt from "bcrypt";
 export const ResetPassword = async (req, res) => {
     const { email, password, newPassword } = req.body;
     
@@ -8,8 +9,8 @@ export const ResetPassword = async (req, res) => {
     }
 
     try {
-        const userResult = searchUserByEmail(email);
-
+        const userResult = await searchUserByEmail(email);
+        console.log(userResult);
         if (userResult.length === 0) {
             return res.status(401).json({success: false, message: "Unauthorized user"});
         }
@@ -32,5 +33,3 @@ export const ResetPassword = async (req, res) => {
         return res.status(401).json({success: false, message: "Internal server error. Please try again."});
     }
 };
-
-export {ResetPassword};
