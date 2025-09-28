@@ -1,6 +1,7 @@
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
-import { searchUserByEmail, insertUser } from '../../db/findUser.js';
+import { searchUserByEmail } from '../../db/findUser.js';
+import { insertUser } from '../../db/insertUser.js';
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
@@ -23,7 +24,7 @@ const registerWithGoogle = async (req, res) => {
         if (existingUser.length > 0) {
             return res.status(401).json({ success: false, message: "User Already Exist!" });
         } else {
-            const newUser = await insertUser({ name, email, googleId });
+            const newUser = await insertUser({ name, email, Password:googleId });
             const token = jwt.sign({ id: newUser.id, email: newUser.email }, process.env.JWT_SECRET, { expiresIn: '7d' });
             return res.status(200).json({ success: true, token });
         }
