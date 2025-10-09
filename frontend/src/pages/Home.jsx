@@ -68,7 +68,9 @@ export const Home = () => {
             <div className="middle_text_part">
               <TextDiv tagName="h1" className="title" data_aos="fade-down" val={<>Go Beyond Guesswork.<br />Invest with <span style={{color : "#00C853"}}>Insight</span>.</>}/>
               <TextDiv tagName="p" className="subtitle" data_aos="fade-up" val={<>Empower your financial decisions with our platform's <br /> advanced analytics and intelligent forecasting.</>}/>
-              <ButtonDiv className="get_started_btn" data_aos="zoom-in" val="Get Started"/>
+              <Link to="/auth">
+                <ButtonDiv className="get_started_btn" data_aos="zoom-in" val="Get Started"/>
+              </Link>
             </div>
 
           </div>
@@ -238,9 +240,9 @@ export const Home = () => {
 
                 <div className="footer_second_column column_div">
                   <TextDiv tagName="h2" className="navigation_text" val="NAVIGATION" />
-                  <TextDiv tagName="a" className="feature_text" val="Features" />
-                  <TextDiv tagName="a" className="FAQ_text" val="FAQs" />
-                  <TextDiv tagName="a" className="how_it_works_text" val="How It Works?" />
+                  <TextDiv tagName="a" className="feature_text" val="Features" href="#feature" />
+                  <TextDiv tagName="a" className="FAQ_text" val="FAQs" href="#FAQs" />
+                  <TextDiv tagName="a" className="how_it_works_text" val="How It Works?" href="#HowItWorks" />
                 </div>
 
                 <div className="footer_third_column column_div">

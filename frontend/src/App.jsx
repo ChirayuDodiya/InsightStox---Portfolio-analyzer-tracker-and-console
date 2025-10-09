@@ -5,6 +5,7 @@ import 'primeicons/primeicons.css';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Home } from './pages/Home'
+import { Dashboard } from './pages/Dashboard';
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
 const router = createBrowserRouter(
   [
@@ -15,6 +16,10 @@ const router = createBrowserRouter(
      {
       path:"/auth",
       element:<Auth/>      
+    },
+    {
+      path:"/DashBoard",
+      element:<Dashboard/>
     }
   ]
 );

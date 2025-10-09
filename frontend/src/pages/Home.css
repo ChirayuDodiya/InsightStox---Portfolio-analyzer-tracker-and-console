@@ -3,9 +3,7 @@
     margin: 0;
     box-sizing: border-box;
 }
-html{
-    scroll-behavior: smooth;
-}
+
 .container {
     background-color: black;
     min-width: 100%;
@@ -165,6 +163,7 @@ html{
     justify-content: center;
     align-items: center;
 }
+
 .middle_text_part .get_started_btn button{
     background-color: white;
     border: 1px solid black;
@@ -272,7 +271,7 @@ html{
     transition: all 0.3s linear;
     margin: 5px;
     padding:5px;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
 }
 .logo-title{
     display: flex;
@@ -313,7 +312,7 @@ html{
 
 }
 .features_card:hover{
-    border: 2px solid #00C853;
+    border: 1px solid #00C853;
     cursor:pointer;
     box-shadow: 8px 8px 32px 10px rgba(0, 200, 83, 0.25), 0 1.5px 6px 0 rgba(0,0,0,0.15);
 
@@ -406,7 +405,7 @@ html{
     justify-content: space-around;
     /* align-items: center; */
     border-radius: 10px;
-    border: 1px solid white;
+    border: 1px solid transparent;
     transition: all 0.3s linear;
     margin: 5px;
     padding: 5px;
