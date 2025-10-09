@@ -7,17 +7,17 @@ import { checkUserSyntax } from '../../utils/checkUserSyntax.js';
 const registerOtpGeneration = async (req, res)=>{
     let {name,email,password} = req.body;
     if(!name||!email||!password){
-        return res.json({success: false,message: 'Missing Details'})
+        return res.status(401).json({success: false,message: 'Missing Details'})
     }
     email=email.toLowerCase();
     try{
         const existinguser = await searchUserByEmail(email);
         if(existinguser.length>0){
-            return res.status(400).json({success: false,message: "User Already exists"});
+            return res.status(401).json({success: false,message: "User Already exists"});
         }
         const validity = checkUserSyntax(req.body);
         if(!validity.success){
-            return res.status(400).json({success: false,message: validity.message});
+            return res.status(401).json({success: false,message: validity.message});
         }
         const hashedPassword = await bcrypt.hash(password,10);
         const otp = crypto.randomInt(100000, 999999).toString();
@@ -170,9 +170,9 @@ const registerOtpGeneration = async (req, res)=>{
             ],
         };
         await transporter.sendMail(mailOptions)
-        return res.json({success: true});
+        return res.status(200).json({success: true});
     } catch(error){
-        res.json({success: false,message: error.message})
+        res.status(401).json({success: false,message: error.message})
     }
 }
 

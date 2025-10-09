@@ -887,6 +887,63 @@ Failure:
 
 ---
 
+## **Division into EPICs**
+
+### **EPIC 1**: User Account
+
+This epic covers all aspects of user authentication and password management, ensuring users can securely access and control their accounts.
+
+User Story 1 to 7: Register, register with google, login, login with google, forget password, reset password, logout.
+
+
+### **EPIC 2**: Application Features
+
+This epic includes the fundamental functionalities for tracking stocks and managing a personal investment portfolio.
+
+User story 8 to 13: Real Time Data, Search Stock, Watchlist Management, Portfolio Management, Dashboard Display, Compare Stocks.
+
+
+### **EPIC 3**: AI driven Features
+
+This epic focuses on advanced, value-added features that use data and AI to provide users with actionable recommendations and deeper insights into their investments.
+
+User Story 14 to 18 and 23: Stock Allocation Recommendation, Diversification Analysis and Concentration Suggestions, Risk and Volatility Assessment, Portfolio Performance, Portfolio Stability, AI Suggestions Proof, Stock Screener.
+
+
+### **EPIC 4**: Financial and Regulatory
+
+This epic addresses the necessary legal, regulatory, and data provider requirements to ensure the application operates responsibly.
+
+User Story 19 to 22: Tax calculation, Disclaimer, Data Limit Reached, Reasoning behind results.
+
+
+
+## **Conflicts and Resolution of EPICs**
+
+
+### **Epic 2 and Epic 4**:
+
+User Story 21 and 8: In providing continuous real time data to users, we may exceed the API limits which create a conflict with the Data limit of the API service provider.
+
+Solution: Keep a recent history of last call and tell the user that due to error it is the previous data with time noted.
+
+
+### **Epic 3 and Epic 4**:
+
+Epic 3 has conflict with User story 21 because providing AI based suggestions with proof and resources of the output lead to a lot of computation on API service providers which can lead to a heavy load on API service providers.
+
+Solution: Do not display the result without proper justification just show error and try to re-establish connection with the API service Provider.
+
+
+### **Epic 3 and Epic 4**:
+
+Epic 3 has conflict with User story 19 because in providing AI based suggestions for stock allocation and diversity rebalancing it may make degrade the tax efficiency by making decision that can change tax and degrade the overall performance 
+
+Solution: During making decisions on the AI based suggestion take in the consideration of the current taxation of the portfolio so it doesn’t degrade performance due to not considering the tax at present allocation.
+
+
+---
+
 ## **POC for Sprint 1:**
 
 ### **1. Sprint Goal** 
@@ -923,13 +980,6 @@ Research and Requirement Gathering:
 4. Collected and organized all findings to help in planning the next stages of development 
 3. User Stories Delivered 
 
-The following user stories were completed in Sprint 1: 
-
-1. As a new user, I want to register on the platform, so that I can create an account and start using it. 
-
-2. As a registered user, I want to log in securely, so that I can access my personal account and data. 
-
-3. As a registered user, I want to securely log out from the platform, so that I can ensure my account is safe when I am not using it.
  
 
 ### **3. User Stories Delivered** 

@@ -1,11 +1,12 @@
-import { asyncHandler } from "../../utils/asyncHandler.js";
-import { apiResponse } from "../../utils/apiResponse.js";
-
-const logoutUser = asyncHandler(async (req, res) => {
-    res
-    .clearCookie("token")
-    .status(200)
-    .json(new apiResponse(200, null, "Logout successful"));
-});
+const logoutUser = (req, res) => {
+    try {
+        return res
+            .clearCookie("token")
+            .status(200)
+            .json({ success: true, message: "User logged out successfully" });
+    } catch (error) {
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
 
 export { logoutUser };
