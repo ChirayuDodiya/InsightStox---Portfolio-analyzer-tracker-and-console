@@ -9,19 +9,19 @@ const loginUser = asyncHandler(async (req, res) => {
     let { email, password } = req.body;
     email = email?.toLowerCase();
     if (!email || !password) {
-        throw new apiError(400, "Please provide email and password");
+         return res.status(400).json({ success: false, message: "Please provide email and password." });
     }
 
     const user = await searchUserByEmail(email);
 
     if (user.length == 0) {
-        throw new apiError(400, "User is not registered");
+        return res.status(400).json({ success: false, message: "User not registered." } );
     }
 
     const isMatch = await bcrypt.compare(password, user[0].password);
 
     if (!isMatch) {
-        throw new apiError(400, "Invalid user credentials");
+        return res.status(400).json({ success: false, message: "Invalid password." });
     }
 
     const token = jwt.sign(

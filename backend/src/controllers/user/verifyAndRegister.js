@@ -10,14 +10,14 @@ export const register = async (req,res)=>{
     try{
         const record = otpStore.get(email);
         if(!record){
-            return res.json({success: false,message: 'OTP Expired or invalid user'});
+            return res.status(400).json({success: false,message: 'OTP Expired or invalid user'});
         }
         if(record.expiresAt<Date.now()){
             otpStore.remove(email);
-            return res.json({success: false,message: 'OTP has been expired'})
+            return  res.status(400).json({success: false,message: 'OTP has been expired'})
         }
         if(record.otp!==otp){
-            return res.json({success: false,message: 'Invalid OTP'})
+            return res.status(400).json({success: false,message: 'Invalid OTP'})
         }
         const user = await insertUser({name:record.name,email,Password:record.hashedPassword});
         otpStore.remove(email);
