@@ -6,7 +6,7 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineConfig({
   server: {
     proxy: {
-      '/api': 'http://localhost:8000',
+      '/api': 'https://insightstox-portfolio-analyzer-tracker-j1n1.onrender.com',
     }
   },
   plugins: [react(), tailwindcss()],
