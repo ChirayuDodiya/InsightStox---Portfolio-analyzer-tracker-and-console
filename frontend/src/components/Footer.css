@@ -1,0 +1,98 @@
+.footer_div{
+    position: static;
+    background-color: #0B0B0B;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer_text_part{
+    height: 80%;
+    width: 80%;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+}
+
+.footer_upper_text_part{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.637);
+}
+
+.footer_below_text_part{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rights_text p{
+    color: rgba(255, 255, 255, 0.637);
+    font-size: 1.15rem;
+    text-align: center;
+    padding: 10px;
+    font-weight: lighter;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+.column_div{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5px 20px;
+}
+
+.footer_web img{
+    height: 90px;
+}
+
+.column_div p{
+    color: rgba(255, 255, 255, 0.637);
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+    font-weight: lighter;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+}
+
+.column_div a{
+    color: rgba(255, 255, 255, 0.637);
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px;
+    font-weight: lighter;
+    position: relative;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s linear;
+}
+
+.column_div a:hover{
+    color: white;
+}
+
+.footer_second_column, .footer_third_column{
+    padding-top: 20px;
+}
+
+.column_div h2{
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    padding: 10px;
+    position: relative;
+}
+
+.github_logo{
+    cursor: pointer;
+}
+
+.github_logo img{
+    height: 50px;
+}
