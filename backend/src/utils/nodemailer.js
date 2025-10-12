@@ -1,10 +1,9 @@
 import nodemailer from 'nodemailer'
+import brevoTransport from 'nodemailer-brevo-transport'
 import 'dotenv/config';
-const transporter=nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.GOOGLE_USER_EMAIL,
-        pass: process.env.GOOGLE_APP_PASSWORD,
-    },
-})
+const transporter=nodemailer.createTransport(
+    new brevoTransport({
+        apiKey: process.env.brevo_API,
+    })
+);
 export {transporter}

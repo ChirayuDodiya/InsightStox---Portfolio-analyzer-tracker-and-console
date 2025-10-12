@@ -1,5 +1,5 @@
 import { insertUser } from '../../db/insertUser.js';
-import Jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { otpStore } from '../../utils/registrationOtpStore.js';
 export const register = async (req,res)=>{
     let {email,otp} = req.body;
@@ -21,7 +21,7 @@ export const register = async (req,res)=>{
         }
         const user = await insertUser({name:record.name,email,Password:record.hashedPassword});
         otpStore.remove(email);
-        const token = Jwt.sign({id:user.id,email:user.email}, process.env.Jwt_secret,{expiresIn: '7d'})
+        const token = jwt.sign({id:user.id,email:user.email}, process.env.Jwt_secret,{expiresIn: '7d'})
         res.cookie('token',token,{
             httponly: true,
             secure: process.env.Node_Env=='Production',
@@ -30,6 +30,7 @@ export const register = async (req,res)=>{
         })
         return res.status(200).json({success: true,userID:user.id,message: 'User registered successfully'})
     } catch(error){
+        console.log('User registration error:',error);
         return res.status(401).json({success: false,message: error.message})
     }
 }

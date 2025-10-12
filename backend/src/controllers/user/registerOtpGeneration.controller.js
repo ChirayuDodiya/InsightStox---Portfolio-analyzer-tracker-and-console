@@ -172,6 +172,7 @@ const registerOtpGeneration = async (req, res)=>{
         await transporter.sendMail(mailOptions)
         return res.status(200).json({success: true});
     } catch(error){
+        console.log('OTP generation error:',error);
         res.status(401).json({success: false,message: error.message})
     }
 }
