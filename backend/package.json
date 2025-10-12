@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "nodemailer": "^7.0.6",
     "nodemailer-brevo-transport": "^2.2.1",
+    "yahoo-finance2": "^2.13.3",
     "zod": "^4.1.11"
   },
   "devDependencies": {
