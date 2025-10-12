@@ -1,27 +1,23 @@
 function checkPasswordStrength(password) {
-  let missing = [];
+  let strength = 0;
 
   // Check for lowercase letters
-  if (!/[a-z]/.test(password)) missing.push("lowercase letters");
+  if (/[a-z]/.test(password)) strength++;
 
   // Check for uppercase letters
-  if (!/[A-Z]/.test(password)) missing.push("uppercase letters");
+  if (/[A-Z]/.test(password)) strength++;
 
   // Check for digits
-  if (!/\d/.test(password)) missing.push("digits");
+  if (/\d/.test(password)) strength++;
 
   // Check for special characters
-  if (!/[@$!%*?&]/.test(password)) missing.push("special characters (@$!%*?&)");
+  if (/[@$!%*?&]/.test(password)) strength++;
 
-  // Check for length
-  if (password.length < 8) missing.push("at least 8 characters");
-
-  // Return combined message
-  if (missing.length === 0) {
+  // Determine strength
+  if (strength === 4 && password.length >= 8) {
     return "Strong password";
   } else {
-    return `Password must contain ${missing.join(", ")}.`;
+    return "Password Should be Strong";
   }
 }
-
 export { checkPasswordStrength };
