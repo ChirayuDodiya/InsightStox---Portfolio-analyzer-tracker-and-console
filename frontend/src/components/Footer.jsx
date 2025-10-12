@@ -3,26 +3,24 @@ import github_logo from "../assets/github_logo.png";
 import TextDiv from "./TextDiv.jsx";
 import ImgDiv from "./ImgDiv.jsx";
 import "./Footer.css";
-import footerlogo from "../assets/logo-bg-remove.png";
-
+import logofooter from "../assets/logofooter.svg";
+import logotext from "../assets/logotext.svg";
 const Footer = ({ darkMode ,navigationLinks=[],legalLinks=[] }) => {
   return (
-    <div className="footer_div" data-aos="fade-up">
+    <div className="footer_div" >
       <div className="footer_text_part">
         <div className="footer_upper_text_part">
           <div className="footer_first_column column_div">
-            <div className="footer_web logo">
-              <a href="#">
-                <img 
-                  src={footerlogo} 
-                  alt="Website logo" 
-                />
-              </a>
+            <div className="footer_web">
+              
+                <img src={logofooter} alt="Website logo" />
             </div>
-            <div className="testdiv">
-            <TextDiv tagName="p" className="tagline_text" val={<>Analyze Smarter,<br/>Invest Better</>} />
-            <ImgDiv className="github_logo" src={github_logo} alt="Github logo"/>
-            </div>
+            <div className="textcolumn">
+              <ImgDiv className="logotext" src={logotext} alt="InsightStox text logo"/>
+              <TextDiv tagName="p" className="tagline_text" val={<>Analyze Smarter,<br/>Invest Better</>} />
+             
+              <ImgDiv className="github_logo" src={github_logo} alt="Github logo"/>
+          </div>
           </div>
 
           <div className="footer_second_column column_div">
