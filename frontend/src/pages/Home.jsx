@@ -10,7 +10,6 @@ import dashboard_background from "../assets/desh_board.png";
 import ImgDiv from "../components/ImgDiv.jsx";
 import ButtonDiv from "../components/ButtonDiv.jsx";
 import TextDiv from "../components/TextDiv.jsx";
-import Footer from "../components/Footer.jsx";
 import upArrow from "../assets/upArrow.png"
 import optimize_act from "../assets/Optimize_Act.png";
 import trackPerformace from "../assets/trackPerformance.png";
@@ -58,6 +57,8 @@ export const Home = () => {
             </Link>
             <ImgDiv className="mode_btn" src={darkMode==true ? light_theme_logo : dark_theme_logo} alt="Toggle Mode" onlcick={() => setDarkMode(!darkMode)}/> 
           </div>
+
+
         </div>
         <div className="main_page">
 
@@ -224,16 +225,38 @@ export const Home = () => {
             <ButtonDiv className="login_btn navbar_btn" val="Log In" />
             </Link>
           </div>
-        <Footer darkMode={darkMode}  
-                navigationLinks={[
-                    { text: "Features", href: "#feature" },
-                    { text: "FAQs", href: "#FAQs" },
-                    { text: "How It Works?", href: "#HowItWorks" },
-                ]}
-                legalLinks={[
-                    { text: "Privacy Policy", href: "#privacy" },
-                    { text: "Terms Of Service", href: "#terms" },
-                ]}/>
+
+
+          <div className="footer_div" data-aos="fade-up">
+            <div className="footer_text_part">
+              <div className="footer_upper_text_part">
+                <div className="footer_first_column column_div">
+                  <div className="footer_web logo">
+                    <a href="#"><img src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="Website logo" /></a>
+                  </div>
+                  <TextDiv tagName="p" className="tagline_text" val={<>Analyze Smarter,<br/>Invest Better</>} />
+                  <ImgDiv className="github_logo" src={github_logo} alt="Github logo"/>
+                </div>
+
+                <div className="footer_second_column column_div">
+                  <TextDiv tagName="h2" className="navigation_text" val="NAVIGATION" />
+                  <TextDiv tagName="a" className="feature_text" val="Features" href="#feature" />
+                  <TextDiv tagName="a" className="FAQ_text" val="FAQs" href="#FAQs" />
+                  <TextDiv tagName="a" className="how_it_works_text" val="How It Works?" href="#HowItWorks" />
+                </div>
+
+                <div className="footer_third_column column_div">
+                  <TextDiv tagName="h2" className="legal_text" val="LEGAL" />
+                  <TextDiv tagName="a" className="privacy_policy_text" val="Privacy Policy" />
+                  <TextDiv tagName="a" className="terms_of_service_text" val="Terms Of Service" />
+                  <TextDiv tagName="a" className="contact_us_text" val="Contact US" />
+                </div>
+              </div>
+              <div className="footer_below_text_part">
+                <TextDiv tagName="p" className="rights_text"  val={<>© 2025 InsightStox. All Rights Reserved. This platform is for demonstration purposes only. All financial data and <br/>AI-powered suggestions are for informational purposes and should not be considered financial advice.</>}/>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
