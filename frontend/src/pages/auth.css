@@ -216,13 +216,20 @@
     width: 100%;
     color: white;
     font-weight: 400;
-    text-align: left;
+    text-align: right;
     padding-left: 1%;
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     line-height: 1.2;
     margin-top: 2px;
     word-break: break-word;
+}
+.pass-error {
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
 }
 .google-btn img {
     width: 24px;
