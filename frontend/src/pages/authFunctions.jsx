@@ -18,7 +18,7 @@ function checkPasswordStrength(password) {
 
   // Return combined message
   if (missing.length === 0) {
-    return "Strong password";
+    return "";
   } else {
     return `Password must contain ${missing.join(", ")}.`;
   }
