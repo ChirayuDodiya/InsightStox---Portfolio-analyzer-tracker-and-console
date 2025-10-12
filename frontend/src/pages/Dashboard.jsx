@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer.jsx';
 import ButtonDiv from '../components/ButtonDiv.jsx';
-import StockDisplay from '../components/StockDisplay.jsx';
 import web_logo_without_bg_darkmode from '../assets/web_logo_without_bg_darkmode.png';
 import web_logo_without_bg_lightmode from '../assets/web_logo_without_bg_lightmode.png';
 import './Dashboard.css';
 import 'primeicons/primeicons.css';
-
+import DashboardHeader from '../components/Dashboard-Header.jsx';
 
 export const Dashboard = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -32,21 +31,24 @@ export const Dashboard = () => {
             </button></div>
           </div>
         </div>
-        <div className="dashboard-header">
-          <div className="trending-stocks">
-            <StockDisplay />
-          </div>
-          <div className="searchbar">
-            <i className="pi pi-search search-icon"></i>
-           <input type="text" className="search-input" placeholder="Search for a Stock (e.g., RELIANCE.NS, TATA MOTORS)"/>
-             
-          </div>
-        </div>
+      <DashboardHeader darkMode={darkMode}  />
       <div className="dashboard-content">
 
       </div>
       <div className="footer-div">
-        <Footer darkMode={darkMode} />
+        <Footer darkMode={darkMode}  
+        navigationLinks={[
+            { text: "Portfolio", href: "#" },
+            { text: "AI Insigths", href: "#" },
+            { text: "Wacthlist", href: "#" },
+            { text: "Compare Stocks", href: "#" },
+
+        ]}
+        legalLinks={[
+            { text: "Privacy Policy", href: "#privacy" },
+            { text: "Terms Of Service", href: "#terms" },
+            { text: "Contact Us", href: "#contact" },
+        ]}/>
       </div>
       
     </div>

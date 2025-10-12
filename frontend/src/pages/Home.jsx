@@ -224,8 +224,16 @@ export const Home = () => {
             <ButtonDiv className="login_btn navbar_btn" val="Log In" />
             </Link>
           </div>
-
-          <Footer darkMode={darkMode} />
+        <Footer darkMode={darkMode}  
+                navigationLinks={[
+                    { text: "Features", href: "#feature" },
+                    { text: "FAQs", href: "#FAQs" },
+                    { text: "How It Works?", href: "#HowItWorks" },
+                ]}
+                legalLinks={[
+                    { text: "Privacy Policy", href: "#privacy" },
+                    { text: "Terms Of Service", href: "#terms" },
+                ]}/>
         </div>
       </div>
     </div>
