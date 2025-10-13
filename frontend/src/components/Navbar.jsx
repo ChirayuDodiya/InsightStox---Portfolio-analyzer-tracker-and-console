@@ -45,7 +45,8 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
 
         <div className="right_btn">
           {pageType === "home" && (
-            <Link to="/auth">
+            <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
+                                              sessionStorage.setItem("forgotpassword", "false");}}>
               <ButtonDiv className="login_btn navbar_btn" val="Log In" />
             </Link>
           )}

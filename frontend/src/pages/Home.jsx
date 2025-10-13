@@ -46,7 +46,8 @@ export const Home = () => {
             <div className="middle_text_part">
               <TextDiv tagName="h1" className="title" data_aos="fade-down" val={<>Go Beyond Guesswork.<br />Invest with <span style={{color : "#00C853"}}>Insight</span>.</>}/>
               <TextDiv tagName="p" className="subtitle" data_aos="fade-up" val={<>Empower your financial decisions with our platform's <br /> advanced analytics and intelligent forecasting.</>}/>
-              <Link to="/auth">
+              <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
+                                              sessionStorage.setItem("forgotpassword", "false");}}>
                 <ButtonDiv className="get_started_btn" data_aos="zoom-in" val="Get Started"/>
               </Link>
             </div>
@@ -199,8 +200,9 @@ export const Home = () => {
 
           <div className="signup_div" data-aos="fade-up">
             <TextDiv className="_text" tagName="h1" tagName2="p" val={<>Ready to Take Control of Your <br/>Investments ?</>} val2="Sign up for free and start making smarter, data-backed decisions today."/>
-            <Link to ={`/auth`}>
-            <ButtonDiv className="login_btn navbar_btn" val="Log In" />
+            <Link to ={`/auth`} onClick={() => {sessionStorage.setItem("isLogin", "false");
+                                              sessionStorage.setItem("forgotpassword", "false");}}>
+            <ButtonDiv className="login_btn navbar_btn" val="Sign Up Now" />
             </Link>
           </div>
         <Footer darkMode={darkMode}  
