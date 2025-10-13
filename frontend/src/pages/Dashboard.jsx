@@ -10,6 +10,9 @@ import profileicon from '../assets/profileicon.svg';
 import themetoggledark from '../assets/themetoggledark.svg';
 import routeicon from '../assets/routeicon.svg';
 import exiticon from '../assets/exiticon.svg';
+import MarketMovers from '../components/MarketMovers/MarketMovers'
+import WelcomeInvestor from '../components/WelcomeInvestor/WelcomeInvestor'
+
 export const Dashboard = () => {
   const [darkMode, setDarkMode] = useState(true);
   const [isprofileopen, setIsProfileOpen] = useState(false);
@@ -61,9 +64,9 @@ export const Dashboard = () => {
       )}
       <DashboardHeader darkMode={darkMode}  />
       
-      <div className="dashboard-content">
-        <div className="welcomediv"></div>
-        <div className="portfoliodiv"></div>
+      <div className="section-wrapper">
+        <WelcomeInvestor />
+        <MarketMovers />
       </div>
       <div className="footer-div">
         <Footer darkMode={darkMode}  
