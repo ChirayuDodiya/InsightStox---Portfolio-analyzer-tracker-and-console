@@ -1,0 +1,107 @@
+*{
+    font-family: 'Inter', sans-serif;
+}
+.footer_div{
+    position: static;
+    background-color: #0B0B0B;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 100px;
+}
+
+.footer_text_part{
+    height: 80%;
+    width: 80%;
+    display: grid;
+    grid-template-rows: 2fr 1fr;
+}
+
+.footer_upper_text_part{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.637);
+}
+
+.footer_below_text_part{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rights_text p{
+    color: rgba(255, 255, 255, 0.637);
+    font-size: 1.15rem;
+    text-align: center;
+    padding: 10px;
+    font-weight: lighter;
+    position: relative;
+}
+.footer_web img{
+    max-height: 48px;
+}
+.column_div{
+    display: flex;
+    flex-direction: column;
+    justify-content: start !important;
+    padding: 5px 20px 50px 20px !important;
+    font-size: 15px !important;
+    gap:20px;
+}
+.footer_first_column{
+    display:flex;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    padding-top: 30px !important;
+    gap:5px;
+}
+.logotext{
+    max-height: 48px;
+    margin-bottom: 10px;
+    padding:10px 0px;
+}
+.column_div p{
+    color: rgba(255, 255, 255, 0.637);
+    text-align: center;
+    padding: 10px;
+    font-weight: lighter;
+    position: relative;
+}
+
+.column_div a{
+    color: rgba(255, 255, 255, 0.637);
+    padding: 10px;
+    font-weight: lighter;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    margin-bottom: 5px !important;
+}
+
+.column_div a:hover{
+    color: white;
+}
+
+.footer_second_column, .footer_third_column,.column_div p,.textcolumn{
+    align-items: flex-start !important;
+    text-align: left !important;
+}
+.footer_second_column, .footer_third_column{
+    padding: 20px 0px 50px 100px !important;}
+
+.column_div h2{
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: left;
+    padding: 10px;
+    position: relative;
+}
+
+.github_logo img{
+    margin: 10px 10px;
+    cursor: pointer;
+    max-height: 30px;
+}
