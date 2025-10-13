@@ -13,6 +13,10 @@
     justify-content: flex-start;
     align-items: center;
 }
+.section-wrapper {/*Giving full width to WelcomeInvestor and MarketMovers*/
+  width: 100%;
+  margin-top: 145px;
+}
 .navbar {
     position: fixed;
     top: 0;
