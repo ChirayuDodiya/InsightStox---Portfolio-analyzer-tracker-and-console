@@ -1,10 +1,5 @@
 import React, { useState } from "react";
-import dark_mode_logo from "../assets/Logodark.png";
-import web_logo_without_bg_darkmode from "../assets/web_logo_without_bg_darkmode.png";
-import web_logo_without_bg_lightmode from "../assets/web_logo_without_bg_lightmode.png";
 import "./Home.css";
-import dark_theme_logo from "../assets/mode-symbol.svg";
-import light_theme_logo from "../assets/light_theme_logo.png";
 import home_background from "../assets/home-page-bg.jpg";
 import dashboard_background from "../assets/desh_board.png";
 import ImgDiv from "../components/ImgDiv.jsx";
@@ -17,12 +12,13 @@ import trackPerformace from "../assets/trackPerformance.png";
 import addPortfolio from "../assets/addPortfolio.png";
 import creatACC from "../assets/creatAcc.png";
 import downArrow from "../assets/downArrow.png"
-import github_logo from "../assets/github_logo.png"
 import featurelogo1 from "../assets/featuredivlogo1.png"
 import featurelogo2 from "../assets/featuredivlogo2.png"
 import featurelogo3 from "../assets/featuredivlogo3.png"
 import featurelogo4 from "../assets/featuredivlogo4.png"
 import {Link} from "react-router-dom";
+import Navbar from "../components/Navbar.jsx";
+
 export const Home = () => {
   const [openIndex, setOpenIndex] = useState(0);
   const [darkMode ,setDarkMode] = useState(true);
@@ -39,26 +35,9 @@ export const Home = () => {
     setExpandedCard(null);
   }
   return (
-    <div className="container">
       <div className="home-main">
-        <div className="navbar">
-          <div className="left_btn logo">
-            <a href="#"><img src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="logo without background" /></a>
-          </div>
+        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="home" />
 
-          <div className="center_btn">
-            <a className="features_btn navbar_btn" href="#feature">Features</a>
-            <a className="How_it_works_btn navbar_btn" href="#HowItWorks">How it Works ?</a>
-            <a className="FAQ_btn navbar_btn" href="#FAQs">FAQs</a>
-          </div>
-
-          <div className="right_btn">
-            <Link to ={`/auth`}>
-              <ButtonDiv className="login_btn navbar_btn" val="Log In" />
-            </Link>
-            <ImgDiv className="mode_btn" src={darkMode==true ? light_theme_logo : dark_theme_logo} alt="Toggle Mode" onlcick={() => setDarkMode(!darkMode)}/> 
-          </div>
-        </div>
         <div className="main_page">
 
           <div className="home-body">
@@ -236,6 +215,5 @@ export const Home = () => {
                 ]}/>
         </div>
       </div>
-    </div>
   );
 };
