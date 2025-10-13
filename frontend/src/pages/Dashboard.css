@@ -1,10 +1,169 @@
-*{
-    margin: 0;
+* {
     padding: 0;
+    margin: 0;
     box-sizing: border-box;
 }
-.dashboard{
+
+.dashboard-container {
+    background-color: black;
+    min-width: 100vw;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.section-wrapper {/*Giving full width to WelcomeInvestor and MarketMovers*/
+  width: 100%;
+  margin-top: 145px;
+}
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3rem;
+    z-index: 999;
+    background-color: black;
+}
+
+.center_btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+.navbar_btn{
+    background: none;
+    border: 1px solid white;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: color 0.3s ease;
+    border-radius: 20px;
+    font-weight: 550;
+    padding: 8px 20px;
+    transition: all 0.3s linear;
+}
+.navbar_btn:hover{
+    background-color: black !important;
+    font-weight: 550; 
+    color: #00C853 !important;
+    border: 1px solid #00C853 !important;
+}
+.navbar_btn *{
+    cursor: pointer;
+}
+.profile_btn img,.toggle_btn img{
+    border-radius: 50%;
+    cursor: pointer;
+
+}
+.user-icon{
+    color:white;
+}
+.dashboard-content {
+    margin-top: 140px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.footer-div{
+    width: 100%;
+    margin-top: auto;
+}
+.profileoverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100% ;
+  height: 100% ;
+  z-index: 1000;
+}
+.profilepopup {
+  position: fixed;
+  top: 100px;
+  left:75%;
+  background: black;
+  color: white;
+  min-width: 350px;
+  height : 250px;
+  border-radius: 20px;
+  z-index: 10000;
+  padding: 0px 16px 16px 16px;
+  gap:20px;
+  border: 1px solid #00C853;
+  animation : popup 0.3s ease-in-out;
+}
+@keyframes popup {
+  from {
+    opacity: 0;
+    transform: translateZ(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0);
+  }
+}
+.popupheading{
+    display:flex;
+    gap:10px;
+}
+.name-email{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin:0px 5px 20px 5px;
+    padding-top: 15px;
+
+}
+.name-email h3{
+    font-size: 23px;
+    font-weight: 500;
+}
+.name-email span{
+    font-size: 14px;
+    position:relative;
+    top:-5px;
+    color: #F5F5F5;
+    font-weight: 300;
+}
+.popupoptions ul{
+    list-style: none;
+}
+.popupoptions  li{
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    padding:8px 8px;
+    margin:2px 0px;
+    border-radius:8px;
+    font-size: 12px;
+}
+.popupoptions  li:hover{
+    background-color: rgba(112, 112, 112, 0.295);
+    font-weight: 500;
+}
+.popupoptions img{
+    height: 12px;
+    width: 12px;
+}
+.welcomediv{
+    width: 100vw;
+    height: 823px;
+    background-color: black;
+}
+.portfoliodiv{
+    width: 100vw;
+    height: 1855px;
+    background-color: #1E1E1E;
 }
