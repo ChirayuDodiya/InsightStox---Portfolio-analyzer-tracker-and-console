@@ -5,7 +5,7 @@ import profileImg from "../assets/profileicon.svg";
 import LogoutSym from "../assets/LogoutSym.png";
 import "./Sidebar.css";
 
-const navigate = useNavigate();
+//const navigate = useNavigate();
 
 export const Sidebar = ({ primaryData = {} }) => {
     const [currentField, setActiveField] = useState(localStorage.getItem("activeMenu") || "My Profile");
