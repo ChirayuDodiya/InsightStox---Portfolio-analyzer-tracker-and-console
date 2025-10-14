@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import ButtonDiv from "./ButtonDiv.jsx";
 import web_logo_without_bg_darkmode from "../assets/web_logo_without_bg_darkmode.png";
@@ -10,16 +10,28 @@ import exiticon from "../assets/exiticon.svg";
 import "./Navbar.css";
 const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
   const handleProfileClick = () => setIsProfileOpen(true);
   const handleProfileClose = () => setIsProfileOpen(false);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen); 
 
+  useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth > 1100 && isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  window.addEventListener("resize", handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+}, [isMenuOpen]);
   return (
     <>
       {pageType === "dashboard" && isProfileOpen && (
         <div className="profileoverlay" onClick={handleProfileClose}></div>
       )}
-
+      {isMenuOpen && <div className="profileoverlay" onClick={toggleMenu}></div>}
       <div className="navbar">
         <div className="left_btn logo">
           <a href="#"> <img src={darkMode? web_logo_without_bg_darkmode: web_logo_without_bg_lightmode} alt="Logo" /> </a>
@@ -44,6 +56,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
         </div>
 
         <div className="right_btn">
+
           {pageType === "home" && (
             <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
                                               sessionStorage.setItem("forgotpassword", "false");}}>
@@ -64,9 +77,37 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
               <img src={themetoggledark} alt="Toggle Theme" />
             </button>
           </div>
+          <i className="menu_toggle pi pi-bars" onClick={toggleMenu}> 
+          </i>
         </div>
       </div>
-
+           {isMenuOpen && (
+        <div className="mobile_menu ">
+          {pageType === "home" ? (
+            <div className="menuoptions">
+              <ul>
+                 <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
+                                              sessionStorage.setItem("forgotpassword", "false");}}>
+                <li>Log In</li>
+                </Link>
+                <li><a href="#feature">Features</a></li>
+                <li><a href="#HowItWorks">How it Works?</a></li> 
+                <li className="lastli"><a href="#FAQs">FAQs</a></li>
+              </ul>
+              </div>
+          ) : (
+            <div className="menuoptions">
+              <ul>
+              <li><a href="#">Dashboard</a> </li>
+              <li><a href="#">Portfolio</a></li>
+              <li><a href="#">AI Insights</a></li>
+              <li><a href="#">Compare Stocks</a></li>
+              <li className="lastli"><a href="#">Watchlist</a></li>
+             </ul> 
+              </div>
+          )}
+        </div>
+      )}
       {pageType === "dashboard" && isProfileOpen && (
         <div className="profilepopup">
           <div className="popupheading">

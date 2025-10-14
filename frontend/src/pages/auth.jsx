@@ -8,9 +8,8 @@ import { PasswordInputField } from "../components/PasswordInputField.jsx";
 import 'primeicons/primeicons.css';
 import axios from "axios";
 import {Link} from "react-router-dom";
-import { Dashboard } from "./Dashboard.jsx";
 import { useNavigate } from "react-router-dom";
-import  {checkPasswordStrength} from "./authFunctions.jsx";
+import  {checkPasswordStrength} from "../components/authFunctions.jsx";
 
 export const Auth = () => {
    const navigate = useNavigate();
@@ -267,10 +266,11 @@ const toggleForgotPassword = () => {
   return (
     <div className="container">
       <div className="auth_main_div px-0 py-0">
-        <div className="left_inner_div">
-          <Link to ="/">
+       <Link to ="/">
          <button className="backToHome"  onClick={() => {sessionStorage.removeItem("isLogin");sessionStorage.removeItem("forgotpassword");resetFormStates();}}>← Back to Home</button>
          </Link>
+        <div className="left_inner_div">
+         
           <div className="back_img_div">
             <img src={bg_img} alt="Background img" />
           </div>
