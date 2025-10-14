@@ -1,27 +1,24 @@
 import React, { useState } from "react";
-import dark_mode_logo from "../assets/Logodark.png";
-import web_logo_without_bg_darkmode from "../assets/web_logo_without_bg_darkmode.png";
-import web_logo_without_bg_lightmode from "../assets/web_logo_without_bg_lightmode.png";
 import "./Home.css";
-import dark_theme_logo from "../assets/mode-symbol.svg";
-import light_theme_logo from "../assets/light_theme_logo.png";
 import home_background from "../assets/home-page-bg.jpg";
 import dashboard_background from "../assets/desh_board.png";
 import ImgDiv from "../components/ImgDiv.jsx";
 import ButtonDiv from "../components/ButtonDiv.jsx";
 import TextDiv from "../components/TextDiv.jsx";
+import Footer from "../components/Footer.jsx";
 import upArrow from "../assets/upArrow.png"
 import optimize_act from "../assets/Optimize_Act.png";
 import trackPerformace from "../assets/trackPerformance.png";
 import addPortfolio from "../assets/addPortfolio.png";
 import creatACC from "../assets/creatAcc.png";
 import downArrow from "../assets/downArrow.png"
-import github_logo from "../assets/github_logo.png"
 import featurelogo1 from "../assets/featuredivlogo1.png"
 import featurelogo2 from "../assets/featuredivlogo2.png"
 import featurelogo3 from "../assets/featuredivlogo3.png"
 import featurelogo4 from "../assets/featuredivlogo4.png"
 import {Link} from "react-router-dom";
+import Navbar from "../components/Navbar.jsx";
+
 export const Home = () => {
   const [openIndex, setOpenIndex] = useState(0);
   const [darkMode ,setDarkMode] = useState(true);
@@ -38,28 +35,9 @@ export const Home = () => {
     setExpandedCard(null);
   }
   return (
-    <div className="container">
       <div className="home-main">
-        <div className="navbar">
-          <div className="left_btn logo">
-            <a href="#"><img src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="logo without background" /></a>
-          </div>
+        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="home" />
 
-          <div className="center_btn">
-            <a className="features_btn navbar_btn" href="#feature">Features</a>
-            <a className="How_it_works_btn navbar_btn" href="#HowItWorks">How it Works ?</a>
-            <a className="FAQ_btn navbar_btn" href="#FAQs">FAQs</a>
-          </div>
-
-          <div className="right_btn">
-            <Link to ={`/auth`}>
-              <ButtonDiv className="login_btn navbar_btn" val="Log In" />
-            </Link>
-            <ImgDiv className="mode_btn" src={darkMode==true ? light_theme_logo : dark_theme_logo} alt="Toggle Mode" onlcick={() => setDarkMode(!darkMode)}/> 
-          </div>
-
-
-        </div>
         <div className="main_page">
 
           <div className="home-body">
@@ -68,7 +46,8 @@ export const Home = () => {
             <div className="middle_text_part">
               <TextDiv tagName="h1" className="title" data_aos="fade-down" val={<>Go Beyond Guesswork.<br />Invest with <span style={{color : "#00C853"}}>Insight</span>.</>}/>
               <TextDiv tagName="p" className="subtitle" data_aos="fade-up" val={<>Empower your financial decisions with our platform's <br /> advanced analytics and intelligent forecasting.</>}/>
-              <Link to="/auth">
+              <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
+                                              sessionStorage.setItem("forgotpassword", "false");}}>
                 <ButtonDiv className="get_started_btn" data_aos="zoom-in" val="Get Started"/>
               </Link>
             </div>
@@ -221,44 +200,22 @@ export const Home = () => {
 
           <div className="signup_div" data-aos="fade-up">
             <TextDiv className="_text" tagName="h1" tagName2="p" val={<>Ready to Take Control of Your <br/>Investments ?</>} val2="Sign up for free and start making smarter, data-backed decisions today."/>
-            <Link to ={`/auth`}>
-            <ButtonDiv className="login_btn navbar_btn" val="Log In" />
+            <Link to ={`/auth`} onClick={() => {sessionStorage.setItem("isLogin", "false");
+                                              sessionStorage.setItem("forgotpassword", "false");}}>
+            <ButtonDiv className="login_btn navbar_btn" val="Sign Up Now" />
             </Link>
           </div>
-
-
-          <div className="footer_div" data-aos="fade-up">
-            <div className="footer_text_part">
-              <div className="footer_upper_text_part">
-                <div className="footer_first_column column_div">
-                  <div className="footer_web logo">
-                    <a href="#"><img src={darkMode==true ? web_logo_without_bg_darkmode : web_logo_without_bg_lightmode} alt="Website logo" /></a>
-                  </div>
-                  <TextDiv tagName="p" className="tagline_text" val={<>Analyze Smarter,<br/>Invest Better</>} />
-                  <ImgDiv className="github_logo" src={github_logo} alt="Github logo"/>
-                </div>
-
-                <div className="footer_second_column column_div">
-                  <TextDiv tagName="h2" className="navigation_text" val="NAVIGATION" />
-                  <TextDiv tagName="a" className="feature_text" val="Features" href="#feature" />
-                  <TextDiv tagName="a" className="FAQ_text" val="FAQs" href="#FAQs" />
-                  <TextDiv tagName="a" className="how_it_works_text" val="How It Works?" href="#HowItWorks" />
-                </div>
-
-                <div className="footer_third_column column_div">
-                  <TextDiv tagName="h2" className="legal_text" val="LEGAL" />
-                  <TextDiv tagName="a" className="privacy_policy_text" val="Privacy Policy" />
-                  <TextDiv tagName="a" className="terms_of_service_text" val="Terms Of Service" />
-                  <TextDiv tagName="a" className="contact_us_text" val="Contact US" />
-                </div>
-              </div>
-              <div className="footer_below_text_part">
-                <TextDiv tagName="p" className="rights_text"  val={<>© 2025 InsightStox. All Rights Reserved. This platform is for demonstration purposes only. All financial data and <br/>AI-powered suggestions are for informational purposes and should not be considered financial advice.</>}/>
-              </div>
-            </div>
-          </div>
+        <Footer darkMode={darkMode}  
+                navigationLinks={[
+                    { text: "Features", href: "#feature" },
+                    { text: "FAQs", href: "#FAQs" },
+                    { text: "How It Works?", href: "#HowItWorks" },
+                ]}
+                legalLinks={[
+                    { text: "Privacy Policy", href: "#privacy" },
+                    { text: "Terms Of Service", href: "#terms" },
+                ]}/>
         </div>
       </div>
-    </div>
   );
 };
