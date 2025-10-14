@@ -1,0 +1,399 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+hr {
+    border: none;
+    border-top: 3px solid #28282889;
+    width: 860px;
+    margin-top: 1.8rem;
+}
+
+.Container {
+    display: flex;
+    width: 100%;
+    background-color: #000;
+}
+
+.Container::-webkit-scrollbar {
+    display: none;
+}
+
+.Sidebar {
+    background-color: #0f0f0f;
+    height: 750px;
+    width: 350px;
+    padding: 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    margin-top: 7rem;
+    margin-left: 61px;
+    border: 4px solid #28282889;
+
+}
+
+.MainContent {
+    width: 985px;
+    height: 1080px;
+    margin-top: 7rem;
+    margin-left: 15px;
+    margin-right: 61px;
+    margin-bottom: 30px;
+    border: 4px solid #28282889;
+    background-color: #0f0f0f;
+
+}
+
+.ProfileSection {
+    text-align: center;
+}
+
+.Avatar {
+    width: 80px;
+    height: 80px;
+    background-color: #000000;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    margin-top: 2rem;
+}
+
+.Avatar img {
+    width: 80px;
+    padding-top: 0.14rem;
+}
+
+.Sidebar h2 {
+    font-size: 1.7rem;
+    margin-bottom: 0.3rem;
+}
+
+.Email {
+    font-size: 1rem;
+    opacity: 0.8
+}
+
+.Menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+    margin-top: 5rem;
+    font-size: 1.3rem;
+}
+
+.Menu a {
+    display: flex;
+    justify-content: space-between;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+
+.i1 {
+    margin-top: 8px;
+    margin-left: 144px;
+    height: 17px;
+}
+
+.i2 {
+    margin-top: 8px;
+    margin-left: 99px;
+    height: 17px;
+}
+
+.i3 {
+    margin-top: 8px;
+    margin-left: 154px;
+    height: 17px;
+}
+
+.i4 {
+    margin-top: 8px;
+    margin-left: 69px;
+    height: 17px;
+}
+
+.i5 {
+    margin-top: 8px;
+    margin-left: 69px;
+    height: 17px;
+}
+
+.i6 {
+    margin-top: 8px;
+    margin-left: 166px;
+    height: 17px;
+}
+
+.Menu a.Active {
+    background-color: #00c853;
+    color: #000;
+}
+
+.Menu a.Active img {
+    display: none;
+}
+
+.Menu a:hover {
+    background-color: #383838;
+}
+
+
+.MainContent h1 {
+    margin-bottom: 4rem;
+    margin-top: 3rem;
+    margin-left: 3rem;
+    font-size: 2.2rem;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.EditDetails{
+    height: 34px;
+    width: 54px;
+    color: #0f0f0f;
+    border: 1px solid #00c853;
+    background-color: #00c853;
+    font-size: 15px;
+    font-weight: bold;
+    margin-top: -1.5rem;
+    margin-right: 1.5rem;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.EditDetails:hover{
+    color: #fff;
+    background-color: transparent;
+    border-color: #00c853;
+    box-shadow: 0px 0px 4px #00c853;
+    transition: 0.3s;
+}
+
+.ProfilePic {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    margin-left: 3rem;
+    margin-top: -20px;
+}
+
+.ProfilePic label {
+    font-weight: bold;
+    white-space: nowrap;
+    margin-bottom: 3rem;
+    display: inline-flex;
+    margin-left: 1rem;
+}
+
+.PicPlaceholder {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #000000;
+    margin-top: 3rem;
+    margin-left: -8.2rem;
+
+}
+
+.Information {
+    display: flex;
+    flex-direction: column;
+    margin-left: 4rem;
+}
+
+.InfRow1 label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    margin-top: 4rem;
+}
+
+.InfRow2 label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    margin-top: 2.5rem;
+}
+
+.InfRow3 {
+    display: flex;
+}
+
+.InfRow3 label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    margin-top: 2.5rem;
+}
+
+.InfRow5{
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    margin-top: 2.5rem;
+}
+
+.InfRow4 label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    margin-top: 2.5rem;
+}
+
+.InvExp {
+    width: 50%;
+}
+
+.RiskProfile {
+    width: 50%
+}
+
+.InfValueDropDown1 {
+    display: flex;
+}
+
+.InfValueDropDown2 {
+    display: flex;
+}
+
+.InfRow3 img {
+    display: flex;
+    width: 13px;
+    height: 13px;
+    margin-top: 37px;
+    transform: rotate(90deg);
+    margin-left: -25px;
+    cursor: pointer;
+}
+
+.InfRow3 select {
+    appearance: none;
+    margin-top: 1.2rem;
+    display: flex;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 0.7rem;
+    width: 240px;
+    cursor: pointer;
+}
+
+.InfRow3 select:hover{
+    border-color: #00c853;
+    transition: 0.3s;
+    box-shadow: 0 0 4px#00c853;
+}
+
+.InfRow3 select:focus {
+  outline: none;
+  border-color: #00c853;
+}
+
+.InfRow3 option {
+  background-color: #000;
+  color: #fff;
+}
+
+.InfRow3 option:hover {
+  background-color: #1e1e1e;
+  color: #fff;
+}
+
+
+.InfValue {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+}
+
+
+.InfValue span {
+    opacity: 0.7;
+}
+
+.EditButton {
+    display: inline-block;
+    background: transparent;
+    color: #000;
+    margin-right: 4rem;
+    border: 1px solid #00c853;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    background-color: #00c853;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.EditButton:hover {
+    background-color: transparent;
+    color: #fff;
+}
+
+.LinkedBox {
+    display: flex;
+    align-items: center;
+    border: 1px solid #00c853;
+    padding: 0.7rem 1rem;
+    height: 70px;
+    width: 857px;
+    border-radius: 8px;
+    background-color: #111;
+    margin-top: 1rem;
+}
+
+.AccName {
+    white-space: nowrap;
+    margin-top: 1.2rem;
+    margin-left: -3.4rem;
+    display: inline-flex;
+    font-size: 0.9rem;
+    align-items: center;
+}
+
+.ServiceName {
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1.4rem;
+    display: inline-flex;
+    align-items: center;
+}
+
+.LinkedBox img {
+    height: 45px;
+    border: 1px solid #fff;
+    padding: 0.5rem;
+    border-radius: 15%;
+}
+
+.Disconnect {
+    display: flex;
+    background: #C81B00;
+    color: #fff;
+    font-weight: bold;
+    margin-left: 555px;
+    border: 1px solid #C81B00;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+
+.Disconnect:hover {
+    color: #fff;
+    background-color: transparent;
+}

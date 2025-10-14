@@ -81,8 +81,8 @@
   right: 3rem;
   background: black;
   color: white;
-  min-width: 300px;
-  height: 250px;
+  width: 300px;
+  height: 260px;
   border-radius: 20px;
   z-index: 10000;
   padding: 0 16px 16px 16px;
@@ -131,7 +131,7 @@
   margin: 2px 0;
   border-radius: 8px;
   font-size: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.2);
 }
 .popupoptions li:last-child {
   border-bottom: none;
