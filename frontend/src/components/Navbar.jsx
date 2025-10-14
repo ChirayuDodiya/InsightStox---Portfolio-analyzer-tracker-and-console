@@ -16,16 +16,16 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
   const handleProfileClose = () => setIsProfileOpen(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen); 
 
-  useEffect(() => {
+useEffect(() => {
   const handleResize = () => {
-    if (window.innerWidth > 1100 && isMenuOpen) {
-      setIsMenuOpen(false);
-    }
+    if (window.innerWidth > 1100 && isMenuOpen) setIsMenuOpen(false);
+    if (window.innerWidth < 530 && isProfileOpen) setIsProfileOpen(false);
   };
 
   window.addEventListener("resize", handleResize);
   return () => window.removeEventListener("resize", handleResize);
-}, [isMenuOpen]);
+}, [isMenuOpen, isProfileOpen]);
+
   return (
     <>
       {pageType === "dashboard" && isProfileOpen && (
@@ -88,20 +88,30 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
               <ul>
                  <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
                                               sessionStorage.setItem("forgotpassword", "false");}}>
-                <li>Log In</li>
+                <li>Log In <img src={routeicon} alt="" /></li>
                 </Link>
-                <li><a href="#feature">Features</a></li>
+                <hr />
+                <li><a href="#feature">Features </a></li>
+                <hr />
                 <li><a href="#HowItWorks">How it Works?</a></li> 
+                <hr />
                 <li className="lastli"><a href="#FAQs">FAQs</a></li>
               </ul>
               </div>
           ) : (
             <div className="menuoptions">
               <ul>
+
+              <li className="profileinmenu">Profile</li>
+              <hr className="profileinmenu" />
               <li><a href="#">Dashboard</a> </li>
+              <hr />
               <li><a href="#">Portfolio</a></li>
+              <hr />
               <li><a href="#">AI Insights</a></li>
+              <hr />
               <li><a href="#">Compare Stocks</a></li>
+              <hr />
               <li className="lastli"><a href="#">Watchlist</a></li>
              </ul> 
               </div>
@@ -120,8 +130,11 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           <div className="popupoptions">
             <ul>
               <li>My Profile <img src={routeicon} alt="" /></li>
+              <hr/>
               <li>Manage <img src={routeicon} alt="" /></li>
+              <hr/>
               <li>Help & Support <img src={routeicon} alt="" /></li>
+              <hr/>
               <li>Log Out <img src={exiticon} alt="" /></li>
             </ul>
           </div>
