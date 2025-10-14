@@ -1,0 +1,44 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.dashboard-container {
+    background-color: black;
+    min-width: 100vw;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.section-wrapper {
+  width: 100%;
+  margin-top: 145px;
+}
+
+
+.dashboard-content {
+    margin-top: 140px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer-div{
+    width: 100%;
+    margin-top: auto;
+}
+.welcomediv{
+    width: 100vw;
+    height: 823px;
+    background-color: black;
+}
+.portfoliodiv{
+    width: 100vw;
+    height: 1855px;
+    background-color: #1E1E1E;
+}

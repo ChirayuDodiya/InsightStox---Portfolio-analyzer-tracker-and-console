@@ -1,7 +1,45 @@
-import React from 'react'
-
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Footer from '../components/Footer.jsx';
+import './Dashboard.css';
+import 'primeicons/primeicons.css';
+import DashboardHeader from '../components/Dashboard-Header.jsx';
+import MarketMovers from '../components/MarketMovers/MarketMovers'
+import WelcomeInvestor from '../components/WelcomeInvestor/WelcomeInvestor'
+import Navbar from '../components/Navbar.jsx';
 export const Dashboard = () => {
-return (
-    <div><h1>Dashboard page is not created yet</h1></div>
-)
-}
+  const [darkMode, setDarkMode] = useState(true);
+ 
+  return (
+    <>
+    <div className="dashboard-container">
+       
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="dashboard" 
+      profileData={{name: "Ayush Dhamecha",email: "ma**@gmail.com",}}/>
+
+      <DashboardHeader darkMode={darkMode}  />
+      
+      <div className="section-wrapper">
+        <WelcomeInvestor />
+        <MarketMovers />
+      </div>
+      <div className="footer-div">
+        <Footer darkMode={darkMode}  
+        navigationLinks={[
+            { text: "Portfolio", href: "#" },
+            { text: "AI Insigths", href: "#" },
+            { text: "Wacthlist", href: "#" },
+            { text: "Compare Stocks", href: "#" },
+
+        ]}
+        legalLinks={[
+            { text: "Privacy Policy", href: "#privacy" },
+            { text: "Terms Of Service", href: "#terms" },
+            { text: "Contact Us", href: "#contact" },
+        ]}/>
+      </div>
+      
+    </div>
+    </>
+  );
+};

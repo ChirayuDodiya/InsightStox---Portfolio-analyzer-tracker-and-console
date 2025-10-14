@@ -8,17 +8,16 @@ import { PasswordInputField } from "../components/PasswordInputField.jsx";
 import 'primeicons/primeicons.css';
 import axios from "axios";
 import {Link} from "react-router-dom";
-import { Dashboard } from "./Dashboard.jsx";
 import { useNavigate } from "react-router-dom";
-import  {checkPasswordStrength} from "./authFunctions.jsx";
+import  {checkPasswordStrength} from "../components/authFunctions.jsx";
 
 export const Auth = () => {
    const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(() => {
-  return localStorage.getItem("isLogin") === "false" ? false : true;
+  return sessionStorage.getItem("isLogin") === "false" ? false : true;
 });
 const [isForgotPassword, setIsForgotPassword] = useState(() => {
-  return localStorage.getItem("forgotpassword") === "true";
+  return sessionStorage.getItem("forgotpassword") === "true";
 });
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isOtpSubmitted, setIsOtpSubmitted] = useState(false);
@@ -82,7 +81,7 @@ const validateRequiredFields = () => {
 
   const handleLogin = async () => {
     try {
-        const res = await axios.post("/api/v1/users/login", {email : email, password : password});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/login", {email : email, password : password});
         console.log("Logged in successfully");
         navigate("/Dashboard");
     } catch (err) {
@@ -133,7 +132,7 @@ const validateRequiredFields = () => {
 
    const handleOtpGeneration = async () => {
     try {
-        const res = await axios.post("/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
         console.log("OTP generation successful");
         setIsOtpSent(!isOtpSent); 
     } catch (err) {
@@ -146,7 +145,7 @@ const validateRequiredFields = () => {
   };
    const handleResendOtpGeneration = async () => {
     try {
-        const res = await axios.post("/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
         console.log("OTP resend successful");
     } catch (err) {
        console.log("OTP resend error:", err.response.data.message);
@@ -155,7 +154,7 @@ const validateRequiredFields = () => {
   
   const handleRegister = async () => {
    try {
-        const res = await axios.post("/api/v1/users/register", {email : email, otp: otp});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/register", {email : email, otp: otp});
         console.log("Registered successfully");
         setIsOtpSent(!isOtpSent);
         navigate("/Dashboard");
@@ -171,8 +170,9 @@ const validateRequiredFields = () => {
 
  const toggleForm = () => {
   setIsLogin(prev => {
-    localStorage.setItem("isLogin", !prev);
-    return !prev;
+    const newVal = !prev;
+    sessionStorage.setItem("isLogin", newVal);  // update sessionStorage
+    return newVal;
   });
   setIsOtpSent(false);
 };
@@ -182,8 +182,9 @@ function validateEmail(email) {
 }
 const toggleForgotPassword = () => {
   setIsForgotPassword(prev => {
-    localStorage.setItem("forgotpassword", !prev);
-    return !prev;
+    const newVal = !prev;
+    sessionStorage.setItem("forgotpassword", newVal); // update sessionStorage
+    return newVal;
   });
 };
   
@@ -265,11 +266,11 @@ const toggleForgotPassword = () => {
   return (
     <div className="container">
       <div className="auth_main_div px-0 py-0">
-        <div className="left_inner_div">
-          <Link to ="/" 
-          onClick={() => {localStorage.removeItem("isLogin"); localStorage.removeItem("forgotpassword");}}>
-         <button className="backToHome" >← Back to Home</button>
+       <Link to ="/">
+         <button className="backToHome"  onClick={() => {sessionStorage.removeItem("isLogin");sessionStorage.removeItem("forgotpassword");resetFormStates();}}>← Back to Home</button>
          </Link>
+        <div className="left_inner_div">
+         
           <div className="back_img_div">
             <img src={bg_img} alt="Background img" />
           </div>
