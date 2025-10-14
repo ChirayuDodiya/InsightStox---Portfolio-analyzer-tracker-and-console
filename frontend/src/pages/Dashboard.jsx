@@ -15,7 +15,7 @@ export const Dashboard = () => {
     <div className="dashboard-container">
        
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="dashboard" 
-      profileData={{name: "Ayush Damecha",email: "ma**@gmail.com",}}/>
+      profileData={{name: "Ayush Dhamecha",email: "ma**@gmail.com",}}/>
 
       <DashboardHeader darkMode={darkMode}  />
       

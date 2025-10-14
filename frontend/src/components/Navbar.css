@@ -81,7 +81,7 @@
   background: black;
   color: white;
   min-width: 350px;
-  height: 250px;
+  height: 270px;
   border-radius: 20px;
   z-index: 10000;
   padding: 0 16px 16px 16px;
@@ -99,6 +99,9 @@
   gap: 10px;
 }
 
+.popupheading img{
+  margin-left: 5px;
+}
 .name-email {
   display: flex;
   flex-direction: column;
@@ -116,6 +119,7 @@
   font-size: 14px;
   color: #F5F5F5;
   font-weight: 300;
+  opacity: 0.7;
 }
 
 .popupoptions ul {
@@ -132,11 +136,18 @@
   font-size: 12px;
 }
 
+.popupoptions hr{
+  border: 1.5px solid #1e1e1e;
+  width: 95%;
+  margin-left: 7px;
+}
 .popupoptions li:hover {
-  background-color: rgba(112, 112, 112, 0.295);
+  background-color: #1e1e1e;
   font-weight: 500;
+  transition: 0.3s;
 }
 .popupoptions img {
     height: 12px;
     width: 12px;
+    margin-top: 4px;
 }
