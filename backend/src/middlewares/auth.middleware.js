@@ -18,7 +18,7 @@ const varifyToken = async (req, res, next) => {
                 .status(401)
                 .json({ success: false, message: "invalid token" });
         }
-        res.user = user;
+        req.user = user[0];
         next();
     } catch (error) {
         return res.status(401).json({ success: false, message: error.message });

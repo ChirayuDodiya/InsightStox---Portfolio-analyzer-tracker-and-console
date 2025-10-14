@@ -6,8 +6,8 @@ const updateProfileImage = async (email, profileImage) => {
             await sql`UPDATE "user" SET profileimage=${profileImage} WHERE email=${email} RETURNING id, email, profileimage`;
         return result;
     } catch (error) {
-        console.error("Error updating profile image:", error);
-        throw error;
+        console.log("Error updating profile image:", error);
+        return null;
     }
 };
 
