@@ -4,9 +4,9 @@ import Navbar from "../components/Navbar.jsx";
 import profileImg from "../assets/profileicon.svg";
 import GoToArrow from "../assets/routeicon.svg";
 import GoogleLogo from "../assets/google_logo.svg";
-import LogoutSym from "../assets/LogoutSym.png"
 import ButtonDiv from "../components/ButtonDiv";
 import Footer from '../components/Footer.jsx';
+import { Sidebar } from "../components/Sidebar.jsx";
 
 export const MyProfile = () => {
     const [darkMode, setDarkMode] = useState(true);
@@ -15,45 +15,11 @@ export const MyProfile = () => {
     return (
         <div className="Page">
             <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="dashboard"
-            profileData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com", }} />
+            profileData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com"}} />
 
             <div className="Container">
-                <aside className="Sidebar">
-                    <div className="ProfileSection">
-                        <div className="Avatar">
-                            <img src={profileImg} alt="Profile Pic" />
-                        </div>
-                        <h2>Ayush Dhamecha</h2>
-                        <p className="Email">ma***mail.com</p>
-                    </div>
-
-                    <nav className="Menu">
-                        <a href="#" className="Active">
-                            My Profile
-                            <img className="i1" src={GoToArrow} alt="go-to" />
-                        </a>
-                        <a href="#" className="Sidebar-item">
-                            Data & Privacy
-                            <img className="i2" src={GoToArrow} alt="go-to" />
-                        </a>
-                        <a href="#" className="Sidebar-item">
-                            Activity
-                            <img className="i3" src={GoToArrow} alt="go-to" />
-                        </a>
-                        <a href="#" className="Sidebar-item">
-                            Preferences
-                            <img className="i4" src={GoToArrow} alt="go-to" />
-                        </a>
-                        <a href="#" className="Sidebar-item">
-                            Help & Resources
-                            <img className="i5" src={GoToArrow} alt="go-to" />
-                        </a>
-                        <a href="#" className="Sidebar-item">
-                            Logout
-                            <img className="i6" src={LogoutSym} alt="go-to" />
-                        </a>
-                    </nav>
-                </aside>
+                
+                <Sidebar primaryData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com"}} />
 
                 <main className="MainContent">
                     <h1>Your Profile
