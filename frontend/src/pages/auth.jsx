@@ -82,7 +82,7 @@ const validateRequiredFields = () => {
 
   const handleLogin = async () => {
     try {
-        const res = await axios.post("/api/v1/users/login", {email : email, password : password});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/login", {email : email, password : password});
         console.log("Logged in successfully");
         navigate("/Dashboard");
     } catch (err) {
@@ -133,7 +133,7 @@ const validateRequiredFields = () => {
 
    const handleOtpGeneration = async () => {
     try {
-        const res = await axios.post("/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
         console.log("OTP generation successful");
         setIsOtpSent(!isOtpSent); 
     } catch (err) {
@@ -146,7 +146,7 @@ const validateRequiredFields = () => {
   };
    const handleResendOtpGeneration = async () => {
     try {
-        const res = await axios.post("/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
         console.log("OTP resend successful");
     } catch (err) {
        console.log("OTP resend error:", err.response.data.message);
@@ -155,7 +155,7 @@ const validateRequiredFields = () => {
   
   const handleRegister = async () => {
    try {
-        const res = await axios.post("/api/v1/users/register", {email : email, otp: otp});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/register", {email : email, otp: otp});
         console.log("Registered successfully");
         setIsOtpSent(!isOtpSent);
         navigate("/Dashboard");

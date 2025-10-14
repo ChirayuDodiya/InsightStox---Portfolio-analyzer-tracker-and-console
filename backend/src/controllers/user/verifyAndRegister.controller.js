@@ -21,7 +21,7 @@ export const register = async (req,res)=>{
         }
         const user = await insertUser({name:record.name,email,Password:record.hashedPassword});
         otpStore.remove(email);
-        const token = jwt.sign({id:user.id,email:user.email}, process.env.Jwt_secret,{expiresIn: '7d'})
+        const token = jwt.sign({user:user.id,email:user.email}, process.env.JWT_SECRET,{expiresIn: process.env.JWT_EXPIRE})
         res.cookie('token',token,{
             httponly: true,
             secure: process.env.Node_Env=='Production',
