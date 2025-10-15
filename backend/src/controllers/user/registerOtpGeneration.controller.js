@@ -135,7 +135,7 @@ const registerOtpGeneration = async (req, res)=>{
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <img src="cid:insightstoxlogo" alt="InsightStox Logo">
+      <img src="http://res.cloudinary.com/dzfesaufb/image/upload/v1760535335/w1wrxm6fa1yrrcrzaffv.png" alt="InsightStox Logo">
     </div>
 
     <!-- Content -->
@@ -160,15 +160,7 @@ const registerOtpGeneration = async (req, res)=>{
   </div>
 </body>
 </html>
-`,
-            attachments: [
-                {
-                    filename: "website_logo.png", // Name of the file
-                    path: "./src/utils/asset/website_logo.png", // Path in your backend
-                    cid: "insightstoxlogo", // Same cid as in <img src="cid:insightstoxlogo">
-                },
-            ],
-        };
+`,};
         await transporter.sendMail(mailOptions)
         return res.status(200).json({success: true});
     } catch(error){
