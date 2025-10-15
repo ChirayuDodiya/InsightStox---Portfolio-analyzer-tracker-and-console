@@ -1,7 +1,7 @@
 import { searchUserByEmail } from "../db/findUser.js";
 import jwt from "jsonwebtoken";
 
-const varifyToken = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
     try {
         const token = req.cookies?.token;
         if (!token) {
@@ -18,11 +18,11 @@ const varifyToken = async (req, res, next) => {
                 .status(401)
                 .json({ success: false, message: "invalid token" });
         }
-        res.user = user;
+        req.user = user[0];
         next();
     } catch (error) {
         return res.status(401).json({ success: false, message: error.message });
     }
 };
 
-export { varifyToken };
+export { verifyToken };
