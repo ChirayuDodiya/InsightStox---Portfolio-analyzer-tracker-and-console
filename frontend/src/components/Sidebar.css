@@ -7,8 +7,8 @@
 
 .Sidebar {
     background-color: #0f0f0f;
-    height: 750px;
-    width: 350px;
+    height: 100%;
+    width: 100%;
     padding: 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
