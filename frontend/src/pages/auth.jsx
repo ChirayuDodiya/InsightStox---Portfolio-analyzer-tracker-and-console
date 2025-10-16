@@ -9,7 +9,7 @@ import 'primeicons/primeicons.css';
 import axios from "axios";
 import {Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import  {checkPasswordStrength} from "../components/authFunctions.jsx";
+import  {checkPasswordStrength,validateNameStrength,validateEmail} from "../components/authFunctions.jsx";
 
 export const Auth = () => {
    const navigate = useNavigate();
@@ -64,22 +64,26 @@ React.useEffect(() => {
       setAreAllFieldsValid(false);
   }
   else{
-    if(email !== "" && password !== "" && name !== "" && confirmPassword !== "" && (isOtpSent ? otp !== "" : true) && checkPasswordStrength(password) === "Strong password" && password === confirmPassword && validateEmail(email) && validateNameStrength(name))
-      setAreAllFieldsValid(true);
+    if(isOtpSent)
+    {
+      if(otp !== "")
+        setAreAllFieldsValid(true);
+      else
+        setAreAllFieldsValid(false);
+    }
     else
-      setAreAllFieldsValid(false);
+    {
+      if(email !== "" && password !== "" && name !== "" && confirmPassword !== "" && password === confirmPassword && passwordError === "" && nameError === "" && emailError === "")
+        setAreAllFieldsValid(true);
+      else
+        setAreAllFieldsValid(false);
+    }
+  
   }
-},[email, password, name, confirmPassword, otp]);
+},[email, password, name, confirmPassword, otp,passwordError,nameError,emailError,isLogin,isOtpSent,isForgotPassword]);
 
-const validateRequiredFields = () => {
-  if(email === "" || password === "" || (!isLogin && name === "") || (!isLogin && confirmPassword === "") || (isOtpSent && otp === "")){
-    return false;
-  }
-  setTitleError("");
-  return true;
-}
 
-  const handleLogin = async () => {
+const handleLogin = async () => {
     try {
         const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/login", {email : email, password : password});
         console.log("Logged in successfully");
@@ -92,10 +96,7 @@ const validateRequiredFields = () => {
        console.log("Login error:", err.response.data.message);
     }
   };
-  function validateNameStrength(name) {
-    const nameRegex = /^[a-zA-Z\s]*$/;
-    return nameRegex.test(name);
-  }
+
 
   //useEffect for error message validation
   React.useEffect(() => {
@@ -176,10 +177,7 @@ const validateRequiredFields = () => {
   });
   setIsOtpSent(false);
 };
-function validateEmail(email) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-  return regex.test(email);
-}
+
 const toggleForgotPassword = () => {
   setIsForgotPassword(prev => {
     const newVal = !prev;
@@ -188,7 +186,7 @@ const toggleForgotPassword = () => {
   });
 };
   
-  const handleForgotPasswordInputToggle = () => {
+  const handleForgotPasswordInputToggle = (email) => {
     if (email === "") {
       alert("Email is required");
     } else {
@@ -214,8 +212,8 @@ const toggleForgotPassword = () => {
             <PasswordInputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{display: isForgotPassword ? 'none' : 'block'}}/>
             <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSubmitted ? 'block' : 'none' }} />
 
-            <button type="submit" className="submit_forget_pass" style={{display: isForgotPassword ? 'none' : 'block', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault();handleLogin(); validateRequiredFields();}}>Login</button>
-            <button type="submit" className="submit" onClick= {(e)=>{e.preventDefault();isOtpSent ? null : handleForgotPasswordInputToggle();setTitleError("");}} style={{display: isForgotPassword ? 'block' : 'none', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}>{isOtpSubmitted ? 'Verify OTP' : 'Send OTP'}</button>
+            <button type="submit" disabled={!areAllFieldsValid} className="submit_forget_pass" style={{display: isForgotPassword ? 'none' : 'block', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault();handleLogin()}}>Login</button>
+            <button type="submit" disabled={!areAllFieldsValid} className="submit" onClick= {(e)=>{e.preventDefault();isOtpSent ? null : handleForgotPasswordInputToggle();setTitleError("");}} style={{display: isForgotPassword ? 'block' : 'none', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}>{isOtpSubmitted ? 'Verify OTP' : 'Send OTP'}</button>
             <button type="submit" className="resubmit" onClick={ (e) => {e.preventDefault();isOtpSent ? null : handleForgotPasswordInputToggle();setTitleError("");}} style={{display: isOtpSubmitted ? 'block' : 'none'}}>Resend</button>
             <button type="button" className="google-btn" style={{display: isForgotPassword ? 'none' : 'flex'}}><img src={google_logo} alt="google logo"  />Continue with Google</button>
 
@@ -250,7 +248,7 @@ const toggleForgotPassword = () => {
           <p style={{ display: isOtpSent ? 'none' : 'block' }} className="confirm-pass-error error">{confirmPasswordError}</p>
         <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSent ? 'block' : 'none' }} />
 
-        <button type="submit" className="submit" style = {{opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault();setAreAllFieldsValid(false); validateRequiredFields() && (isOtpSent ? handleRegister() : handleOtpGeneration()); }}>{isOtpSent ? 'Verify OTP' : 'Sign Up'}</button>
+        <button type="submit" disabled={!areAllFieldsValid} className="submit" style = {{opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault(); (isOtpSent ? handleRegister() : handleOtpGeneration()); }}>{isOtpSent ? 'Verify OTP' : 'Sign Up'}</button>
         <button type="submit" className="resubmit" onClick={(e) => {e.preventDefault(); setTitleError("");handleResendOtpGeneration();}} style={{display: isOtpSent ? 'block' : 'none'}}>Resend</button>
 
         <p className="auth-text">

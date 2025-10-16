@@ -8,7 +8,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0px 100px;
+    /* padding: 0px 50px; */
 }
 
 .footer_text_part{
@@ -54,9 +54,9 @@
     display:flex;
     flex-direction: row !important;
     align-items: flex-start !important;
-    padding-top: 30px !important;
-    gap:5px;
+    padding-top: 20px !important;
 }
+
 .logotext{
     max-height: 48px;
     margin-bottom: 10px;
@@ -84,9 +84,20 @@
     color: white;
 }
 
-.footer_second_column, .footer_third_column,.column_div p,.textcolumn{
+.textcolumn{
     align-items: flex-start !important;
     text-align: left !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    
+}
+.footer_second_column, .footer_third_column{
+ align-items: flex-start !important;
+    text-align: left !important;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .footer_second_column, .footer_third_column{
     padding: 20px 0px 50px 100px !important;}

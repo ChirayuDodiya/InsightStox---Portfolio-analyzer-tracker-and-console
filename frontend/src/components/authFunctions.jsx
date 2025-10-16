@@ -23,5 +23,15 @@
     return `Password must contain ${missing.join(", ")}.`;
   }
 }
+ function validateNameStrength(name) {
+    const nameRegex = /^[a-zA-Z\s]*$/;
+    return nameRegex.test(name);
+  }
 
-export { checkPasswordStrength };
+  function validateEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  return regex.test(email);
+}
+
+
+export { checkPasswordStrength , validateNameStrength , validateEmail };
