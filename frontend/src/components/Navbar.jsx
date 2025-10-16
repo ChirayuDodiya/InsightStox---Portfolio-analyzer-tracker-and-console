@@ -60,7 +60,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           {pageType === "home" && (
             <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
                                               sessionStorage.setItem("forgotpassword", "false");}}>
-              <ButtonDiv className="login_btn navbar_btn" val="Log In" />
+              <ButtonDiv className="login_btn" val="Log In" />
             </Link>
           )}
 
@@ -73,7 +73,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           )}
 
           <div className="toggle_btn">
-            <button onClick={() => setDarkMode(!darkMode)}>
+            <button style = {{display : "none"}}onClick={() => setDarkMode(!darkMode)}>
               <img src={themetoggledark} alt="Toggle Theme" />
             </button>
           </div>
