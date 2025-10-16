@@ -14,17 +14,17 @@ export const MyProfile = () => {
     const [riskProfile, setRiskProfile] = useState("");
     return (
         <div className="Page">
-            <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="dashboard"
-            profileData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com"}} />
+            <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="myprofile"
+                profileData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com" }} />
 
             <div className="Container">
-                
-                <Sidebar primaryData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com"}} />
+
+                <Sidebar primaryData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com" }} />
 
                 <main className="MainContent">
                     <h1>Your Profile
-                        <button className="EditDetails" value="">Edit</button>    
-                    </h1> 
+                        <button className="EditDetails" value="">Edit</button>
+                    </h1>
                     <div className="ProfilePic">
                         <label>Profile photo</label>
                         <img className="PicPlaceholder" src={profileImg} alt="Profile Pic" />
@@ -81,13 +81,15 @@ export const MyProfile = () => {
                                 <span>**********</span>
                             </div>
                         </div>
-                        <hr/>
+                        <hr />
                         <div className="InfRow4">
                             <label>Linked accounts</label>
                             <div className="LinkedBox">
                                 <img src={GoogleLogo} alt="Google Logo" />
-                                <span className="ServiceName">Google</span>
-                                <span className="AccName">Ayush Dhamecha</span>
+                                <div className="InsideBox">
+                                    <span className="ServiceName">Google</span>
+                                    <span className="AccName">Ayush Dhamecha</span>
+                                </div>
                                 <ButtonDiv className="Disconnect" val="Disconnect" />
                             </div>
                         </div>

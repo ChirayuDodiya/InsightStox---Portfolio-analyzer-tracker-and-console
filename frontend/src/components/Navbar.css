@@ -20,10 +20,16 @@
 .logo img{
     height: 65px;
 } 
-.profile_btn img,.toggle_btn img{
+.profile_btn img{
     cursor: pointer;
     height:2.75rem;
     width:2.75rem;
+}
+
+.toggle_btn img{
+    cursor: pointer;
+    height: 2rem;
+    width: 2rem;
 }
 
 .center_btn, .right_btn, .left_btn {
@@ -152,7 +158,8 @@
   .menu_toggle {
     cursor: pointer;
     color:#00C853;
-    font-size: 2.75rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.4rem;
   }
 
   .menu_icon {
