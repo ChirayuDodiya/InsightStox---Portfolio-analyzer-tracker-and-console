@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./auth.css";
 import bg_img from "../assets/dark-mode-login-bg.png";
 import LogoDark from "../assets/LogoDark.png";
@@ -34,6 +34,7 @@ const [isForgotPassword, setIsForgotPassword] = useState(() => {
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [areAllFieldsValid, setAreAllFieldsValid] = useState(false);
+  const [timer, setTimer] = useState(30);
   function resetFormStates(){
     setEmail("");
     setPassword("");
@@ -66,6 +67,7 @@ React.useEffect(() => {
   else{
     if(isOtpSent)
     {
+      setTitleError("");  
       if(otp !== "")
         setAreAllFieldsValid(true);
       else
@@ -133,9 +135,12 @@ const handleLogin = async () => {
 
    const handleOtpGeneration = async () => {
     try {
+        setAreAllFieldsValid(false);
         const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
         console.log("OTP generation successful");
-        setIsOtpSent(!isOtpSent); 
+        setAreAllFieldsValid(true);
+        setIsOtpSent(!isOtpSent);
+        setTimer(30);
     } catch (err) {
       if(err.response.data.message === "User Already exists"){
         setTitleError("User already exists. Please login.");
@@ -148,6 +153,7 @@ const handleLogin = async () => {
     try {
         const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
         console.log("OTP resend successful");
+        setTimer(30);
     } catch (err) {
        console.log("OTP resend error:", err.response.data.message);
     }
@@ -155,9 +161,9 @@ const handleLogin = async () => {
   
   const handleRegister = async () => {
    try {
-        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/register", {email : email, otp: otp});
-        console.log("Registered successfully");
-        setIsOtpSent(!isOtpSent);
+     const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/register", {email : email, otp: otp});
+     console.log("Registered successfully");
+     setIsOtpSent(!isOtpSent);
         navigate("/Dashboard");
     } catch (err) {
       if(err.response.data.message){
@@ -167,8 +173,14 @@ const handleLogin = async () => {
        console.log("Register error:", err.response.data.message);
     }
   };
-
-
+  useEffect(() => {
+    if(timer <= 0)
+        return;
+    const interval = setInterval(() => {
+      setTimer((prevTimer) => prevTimer - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timer]);
  const toggleForm = () => {
   setIsLogin(prev => {
     const newVal = !prev;
@@ -205,6 +217,7 @@ const toggleForgotPassword = () => {
           </div>
           <form className="form" style={{gap : isForgotPassword ? '0.5rem' : '0rem' }}>
             <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: isOtpSubmitted ? 'none':'block' }}/>
+
               <p className="email-error error" style={{ display: isOtpSent ? 'none' : 'block' }}>{emailError}</p>
               <div className="forgot-password" >
                 <a onClick={() => {toggleForgotPassword();resetFormStates();}} style={{display: isForgotPassword ? 'none' : 'block'}} >Forgot?</a>
@@ -214,7 +227,7 @@ const toggleForgotPassword = () => {
 
             <button type="submit" disabled={!areAllFieldsValid} className="submit_forget_pass" style={{display: isForgotPassword ? 'none' : 'block', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault();handleLogin()}}>Login</button>
             <button type="submit" disabled={!areAllFieldsValid} className="submit" onClick= {(e)=>{e.preventDefault();isOtpSent ? null : handleForgotPasswordInputToggle();setTitleError("");}} style={{display: isForgotPassword ? 'block' : 'none', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}>{isOtpSubmitted ? 'Verify OTP' : 'Send OTP'}</button>
-            <button type="submit" className="resubmit" onClick={ (e) => {e.preventDefault();isOtpSent ? null : handleForgotPasswordInputToggle();setTitleError("");}} style={{display: isOtpSubmitted ? 'block' : 'none'}}>Resend</button>
+            <button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSubmitted ? 'block' : 'none'}} onClick={(e) => {e.preventDefault(); setTitleError("");handleResendOtpGeneration();}}>Resend</button>
             <button type="button" className="google-btn" style={{display: isForgotPassword ? 'none' : 'flex'}}><img src={google_logo} alt="google logo"  />Continue with Google</button>
 
             <p className="auth-text" style={{display: isForgotPassword ? 'none' : 'block'}}>
@@ -227,6 +240,7 @@ const toggleForgotPassword = () => {
           <a onClick={()=>{toggleForgotPassword();setTitleError("");resetFormStates()}} style={{ cursor: 'pointer' }}>Login</a>
         </p>
       )}
+      <p className="text-center" style={{display : isOtpSubmitted ? 'block' : 'none'}}>{`Didn’t receive the OTP? Resend in ${timer}s`}</p>
       <p className="title-error">{titleError}</p>
           </form>
         </>
@@ -249,12 +263,13 @@ const toggleForgotPassword = () => {
         <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSent ? 'block' : 'none' }} />
 
         <button type="submit" disabled={!areAllFieldsValid} className="submit" style = {{opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault(); (isOtpSent ? handleRegister() : handleOtpGeneration()); }}>{isOtpSent ? 'Verify OTP' : 'Sign Up'}</button>
-        <button type="submit" className="resubmit" onClick={(e) => {e.preventDefault(); setTitleError("");handleResendOtpGeneration();}} style={{display: isOtpSent ? 'block' : 'none'}}>Resend</button>
+        <button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSent ? 'block' : 'none'}} onClick={(e) => {e.preventDefault(); setTitleError("");handleResendOtpGeneration();}}>Resend</button>
 
         <p className="auth-text">
           Already have an account ?
           <a onClick={() => {toggleForm();setTitleError("");resetFormStates();}} style={{ cursor: 'pointer' }}>Login</a>
         </p>
+        <p className="text-center" style={{display : isOtpSent ? 'block' : 'none'}}>{`Didn’t receive the OTP? Resend in ${timer}s`}</p>
         <p className="title-error">{titleError}</p>
           </form>
         </>
