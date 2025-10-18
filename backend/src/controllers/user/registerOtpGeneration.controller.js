@@ -12,6 +12,9 @@ const registerOtpGeneration = async (req, res)=>{
     email=email.toLowerCase();
     try{
         const existinguser = await searchUserByEmail(email);
+        if(!existinguser){
+            return res.status(500).json({success: false,message: 'Database error occurred.'})
+        }
         if(existinguser.length>0){
             return res.status(401).json({success: false,message: "User Already exists"});
         }
