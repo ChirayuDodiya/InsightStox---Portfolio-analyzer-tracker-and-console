@@ -6,7 +6,7 @@ import { loginWithGoogle } from "./loginWithGoogle.controller.js";
 import { updateProfileImageController } from "./updateProfileImage.controller.js";
 import { updateProfileInfoController } from "./updateProfileInfo.controller.js";
 import { getProfile } from "./getProfile.controller.js";
-import { SendForgotPasswordOtp, VerifyOtpAndResetPassword} from "./forgotPassword.controller.js";
+import { SendForgotPasswordOtp, VerifyOtp, setNewPassword} from "./forgotPassword.controller.js";
 import { ResetPassword } from "./resetPassword.controller.js";
 import { registerWithGoogle } from "./registerWithGoogle.controller.js";
 export {
@@ -19,7 +19,8 @@ export {
     updateProfileInfoController,
     getProfile,
     SendForgotPasswordOtp,
-    VerifyOtpAndResetPassword,
+    VerifyOtp,
+    setNewPassword,
     ResetPassword,
     registerWithGoogle
 };
