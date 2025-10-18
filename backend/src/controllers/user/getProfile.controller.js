@@ -8,7 +8,7 @@ const getProfile = async (req, res) => {
             profileImage: req.user.profileimage,
             registrationMethod: req.user.registrationmethod,
         };
-        return res.status(200).json({ success: true, user: user });
+        return res.status(200).json({ success: true, data: user });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ success: false, message: error.message });
