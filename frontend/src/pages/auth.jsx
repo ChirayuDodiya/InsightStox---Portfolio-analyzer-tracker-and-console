@@ -21,10 +21,10 @@ const [isForgotPassword, setIsForgotPassword] = useState(() => {
 });
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [isOtpSubmitted, setIsOtpSubmitted] = useState(false);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
   const [otp, setOtp] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(true);
@@ -35,6 +35,7 @@ const [isForgotPassword, setIsForgotPassword] = useState(() => {
   const [titleError, setTitleError] = useState("");
   const [areAllFieldsValid, setAreAllFieldsValid] = useState(false);
   const [timer, setTimer] = useState(30);
+  const [forgotUserExists, setForgotUserExists] = useState(false);
   function resetFormStates(){
     setEmail("");
     setPassword("");
@@ -48,6 +49,7 @@ const [isForgotPassword, setIsForgotPassword] = useState(() => {
     setTitleError("");
     setIsOtpSubmitted(false);
     setIsOtpSent(false);
+    setForgotUserExists(false);
   }
 
 
@@ -59,7 +61,7 @@ React.useEffect(() => {
       setAreAllFieldsValid(email !== "");
       return;
     }
-    if(email !== "" && password !== "")
+    if(email !== "" && password !== "" && emailError === "")
       setAreAllFieldsValid(true);
     else
       setAreAllFieldsValid(false);
@@ -89,13 +91,16 @@ const handleLogin = async () => {
     try {
         const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/login", {email : email, password : password});
         console.log("Logged in successfully");
+        setIsLoading(false);
         navigate("/Dashboard");
     } catch (err) {
       if(err.response.data.message){
         setTitleError(err.response.data.message);
+        setIsLoading(false);
         return;
       }
        console.log("Login error:", err.response.data.message);
+       setIsLoading(false);
     }
   };
 
@@ -141,36 +146,62 @@ const handleLogin = async () => {
         setAreAllFieldsValid(true);
         setIsOtpSent(!isOtpSent);
         setTimer(30);
+         setIsLoading(false);
+
     } catch (err) {
       if(err.response.data.message === "User Already exists"){
         setTitleError("User already exists. Please login.");
+        setIsLoading(false);
         return;
       }
        console.log("OTP generation error:", err.response.data.message);
+        setIsLoading(false);
     }
   };
    const handleResendOtpGeneration = async () => {
     try {
         const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
         console.log("OTP resend successful");
+        setIsLoading(false);
         setTimer(30);
     } catch (err) {
        console.log("OTP resend error:", err.response.data.message);
+       setIsLoading(false);
     }
   };
-  
+  const handleSendOtpForForgotPassword = async () => {
+    try{
+      const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/forgotPasswordOtpGeneration", {email : email});
+      console.log(res);
+      setForgotUserExists(true);
+      setIsLoading(false);
+      setTimer(30);
+      // console.log("OTP sent for forgot password");
+    }catch(err){
+      setTitleError(err.response.data.message);
+      setForgotUserExists(false);
+      setIsLoading(false);
+      console.log("OTP send error for forgot password:", err.response.data.message);
+    }
+  }
+
+  // const 
+
   const handleRegister = async () => {
    try {
      const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/register", {email : email, otp: otp});
      console.log("Registered successfully");
      setIsOtpSent(!isOtpSent);
+     setIsLoading(false);
         navigate("/Dashboard");
     } catch (err) {
       if(err.response.data.message){
         setTitleError(err.response.data.message);
+        setIsLoading(false);
         return;
       }
        console.log("Register error:", err.response.data.message);
+        setIsLoading(false);
     }
   };
   useEffect(() => {
@@ -216,18 +247,18 @@ const toggleForgotPassword = () => {
             <h1>{isForgotPassword ? 'Reset your password' : 'Login to your account'}</h1>
           </div>
           <form className="form" style={{gap : isForgotPassword ? '0.5rem' : '0rem' }}>
-            <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: isOtpSubmitted ? 'none':'block' }}/>
+            <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: forgotUserExists ? 'none':'block' }}/>
 
               <p className="email-error error" style={{ display: isOtpSent ? 'none' : 'block' }}>{emailError}</p>
               <div className="forgot-password" >
                 <a onClick={() => {toggleForgotPassword();resetFormStates();}} style={{display: isForgotPassword ? 'none' : 'block'}} >Forgot?</a>
               </div>
             <PasswordInputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{display: isForgotPassword ? 'none' : 'block'}}/>
-            <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSubmitted ? 'block' : 'none' }} />
+            <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSubmitted && forgotUserExists ? 'block' : 'none' }} />
 
-            <button type="submit" disabled={!areAllFieldsValid} className="submit_forget_pass" style={{display: isForgotPassword ? 'none' : 'block', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault();handleLogin()}}>Login</button>
-            <button type="submit" disabled={!areAllFieldsValid} className="submit" onClick= {(e)=>{e.preventDefault();isOtpSent ? null : handleForgotPasswordInputToggle();setTitleError("");}} style={{display: isForgotPassword ? 'block' : 'none', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}>{isOtpSubmitted ? 'Verify OTP' : 'Send OTP'}</button>
-            <button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSubmitted ? 'block' : 'none'}} onClick={(e) => {e.preventDefault(); setTitleError("");handleResendOtpGeneration();}}>Resend</button>
+            <button type="submit" disabled={!areAllFieldsValid} className="submit_forget_pass loading" style={{display: isForgotPassword ? 'none' : 'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault();handleLogin();setIsLoading(true);}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Login"}</button>
+            <button type="submit" disabled={!areAllFieldsValid} className="submit loading" onClick= {(e)=>{e.preventDefault();setIsLoading(true);isOtpSubmitted ? null : handleForgotPasswordInputToggle();setTitleError("");handleSendOtpForForgotPassword();}} style={{display: isForgotPassword ? 'flex' : 'none', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSubmitted && forgotUserExists ? 'Verify OTP' : 'Send OTP'}</>}</button>
+            <button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSubmitted && forgotUserExists ? 'block' : 'none'}} onClick={(e) => {e.preventDefault(); setTitleError("");handleResendOtpGeneration();}}>Resend</button>
             <button type="button" className="google-btn" style={{display: isForgotPassword ? 'none' : 'flex'}}><img src={google_logo} alt="google logo"  />Continue with Google</button>
 
             <p className="auth-text" style={{display: isForgotPassword ? 'none' : 'block'}}>
@@ -240,7 +271,7 @@ const toggleForgotPassword = () => {
           <a onClick={()=>{toggleForgotPassword();setTitleError("");resetFormStates()}} style={{ cursor: 'pointer' }}>Login</a>
         </p>
       )}
-      <p className="text-center" style={{display : isOtpSubmitted ? 'block' : 'none'}}>{`Didn’t receive the OTP? Resend in ${timer}s`}</p>
+      <p className="text-center" style={{display : isOtpSubmitted && forgotUserExists ? 'block' : 'none'}}>{`Didn’t receive the OTP? Resend in ${timer}s`}</p>
       <p className="title-error">{titleError}</p>
           </form>
         </>
@@ -262,7 +293,7 @@ const toggleForgotPassword = () => {
           <p style={{ display: isOtpSent ? 'none' : 'block' }} className="confirm-pass-error error">{confirmPasswordError}</p>
         <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSent ? 'block' : 'none' }} />
 
-        <button type="submit" disabled={!areAllFieldsValid} className="submit" style = {{opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault(); (isOtpSent ? handleRegister() : handleOtpGeneration()); }}>{isOtpSent ? 'Verify OTP' : 'Sign Up'}</button>
+        <button type="submit" disabled={!areAllFieldsValid} className="submit loading" style = {{opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault();setIsLoading(true);setTitleError(""); (isOtpSent ? handleRegister() : handleOtpGeneration()); }}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSent ? 'Verify OTP' : 'Sign Up'}</>}</button>
         <button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSent ? 'block' : 'none'}} onClick={(e) => {e.preventDefault(); setTitleError("");handleResendOtpGeneration();}}>Resend</button>
 
         <p className="auth-text">

@@ -26,7 +26,7 @@ router.route("/updateProfileImage").patch(verifyToken, upload.single("profileIma
 router.route("/updateProfileInfo").patch(verifyToken, updateProfileInfoController);
 router.route("/myProfile").get(verifyToken, getProfile);
 router.route("/registerWithGoogle").post(registerWithGoogle);
-router.route("/forgotPasswordOtpGgeneration").post(SendForgotPasswordOtp);
+router.route("/forgotPasswordOtpGeneration").post(SendForgotPasswordOtp);
 router.route("/verifyOtpAndReset").post(VerifyOtpAndResetPassword);
 router.route("/resetpassword").post(ResetPassword);
 export default router;

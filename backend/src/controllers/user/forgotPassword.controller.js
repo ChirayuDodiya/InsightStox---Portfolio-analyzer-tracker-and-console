@@ -16,9 +16,9 @@ const SendForgotPasswordOtp = async (req, res) => {
     }
 
     try {
-        const userResult = searchUserByEmail(email);
+        const userResult = await searchUserByEmail(email);
 
-        if (userResult.length === 0) {
+        if (!userResult || userResult.length === 0) {
             return res.status(401).json({success: false,message: "User not found with this email address."});
         }
 
