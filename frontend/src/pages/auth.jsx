@@ -1,3 +1,4 @@
+import { GoogleLogin } from "@react-oauth/google";
 import React, { useEffect, useState } from "react";
 import "./auth.css";
 import bg_img from "../assets/dark-mode-login-bg.png";
@@ -7,10 +8,10 @@ import { InputField } from "../components/InputField.jsx";
 import { PasswordInputField } from "../components/PasswordInputField.jsx";
 import 'primeicons/primeicons.css';
 import axios from "axios";
+import { useGoogleLogin } from "@react-oauth/google";
 import {Link} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import  {checkPasswordStrength,validateNameStrength,validateEmail} from "../components/authFunctions.jsx";
-
 export const Auth = () => {
    const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(() => {
@@ -90,6 +91,24 @@ React.useEffect(() => {
   }
 },[email, password, name, confirmPassword, otp,passwordError,nameError,emailError,isLogin,isOtpSent,isForgotPassword]);
 
+const googleLogin = useGoogleLogin({
+  onSuccess: (tokenResponse) => handleGoogleLogin(tokenResponse),
+  onError: () => {
+    setTitleError('Google login failed');
+  }
+});
+
+const handleGoogleLogin = async (tokenResponse) => {
+  try{
+    const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/googleLogin", {
+      access_token: tokenResponse.access_token,
+    });
+    navigate("/Dashboard");
+  }catch(err){  
+    console.log("Google login error:", err.response.data.message);
+    setTitleError(err.response.data.message);
+  }
+}
 
 const handleLogin = async () => {
     try {
@@ -295,12 +314,12 @@ const toggleForgotPassword = () => {
             <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSubmitted && forgotUserExists && !forgotOtpvarified ? 'block' : 'none' }} />
 
             <button type="submit" disabled={!areAllFieldsValid} className="submit_forget_pass loading" style={{display: isForgotPassword ? 'none' : 'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={(e) => {e.preventDefault();handleLogin();setIsLoading(true);}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Login"}</button>
-            <button type="submit" disabled={!areAllFieldsValid} className="submit loading"style={{display: isForgotPassword && !forgotOtpvarified ? 'flex' : 'none', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}  onClick= {(e)=>{e.preventDefault();setIsLoading(true);setTitleError(""); if(isOtpSubmitted && forgotUserExists ){ handleOtpverificationForForgotPassword() } else { handleForgotPasswordInputToggle();handleSendOtpForForgotPassword();}}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSubmitted && forgotUserExists ? 'Verify OTP' : 'Send OTP'}</>}</button>
-            <p style={{ display : resetPassword ? 'block' : 'none'}} className="pass-error error">{newPasswordError}</p>
-            <button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSubmitted && forgotUserExists && !forgotOtpvarified ? 'block' : 'none'}} onClick={(e) => {e.preventDefault(); setTitleError("");handleSendOtpForForgotPassword();}}>Resend</button>
-            <button type="submit" className="resubmit resetpass loading" disabled = {newPasswordError!==""} style={{display: forgotOtpvarified ? 'flex' : 'none',opacity: newPasswordError!=="" ? 0.5 : 1,cursor: newPasswordError!=="" ? 'not-allowed' : 'pointer'}} onClick={(e) => {e.preventDefault(); handleResetPassword();setIsLoading(true)}}>{isLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Reset Password"}</button>
-            <button type="button" className="google-btn" style={{display: isForgotPassword ? 'none' : 'flex'}}><img src={google_logo} alt="google logo"  />Continue with Google</button>
-
+            <button type="submit" disabled={!areAllFieldsValid} className="submit loading" onClick= {(e)=>{e.preventDefault();setIsLoading(true);isOtpSubmitted ? null : handleForgotPasswordInputToggle();setTitleError("");handleSendOtpForForgotPassword();}} style={{display: isForgotPassword ? 'flex' : 'none', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSubmitted && forgotUserExists ? 'Verify OTP' : 'Send OTP'}</>}</button>
+            <button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSubmitted && forgotUserExists ? 'block' : 'none'}} onClick={(e) => {e.preventDefault(); setTitleError("");handleResendOtpGeneration();}}>Resend</button>
+            <button type="button" className="google-btn" onClick = {googleLogin}style={{display: isForgotPassword ? 'none' : 'flex'}} >
+              <img src={google_logo} alt="Google logo" className="google-logo" />
+              <span>Continue with Google</span>
+            </button>
             <p className="auth-text" style={{display: isForgotPassword ? 'none' : 'block'}}>
               Don't have an account ?
               <a onClick={() => {toggleForm();setTitleError("");resetFormStates()}} style={{ cursor: 'pointer' }}>Sign up</a>
