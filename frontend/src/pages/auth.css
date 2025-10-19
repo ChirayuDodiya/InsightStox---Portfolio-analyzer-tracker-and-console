@@ -10,13 +10,12 @@
 }
 .spin{
   font-size: 1.5rem;           
-  color: white;   
-  text-shadow: 0 0 10px rgb(255, 0, 0);
+  color: black;   
   animation: spin 1s linear infinite;
   position: relative;
 }
 .loading span{
-    color: white; 
+    color: black; 
     font-weight: 900; 
 }
 .loading{
@@ -24,7 +23,6 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
-
 }
 .container {
     min-width: 100vw;
@@ -236,12 +234,16 @@
     line-height: 1.2;
     margin-top: 2px;
     word-break: break-word;
+    margin-top: 0.3rem;
+    min-height: 1.1rem; 
 }
+
 .pass-error {
   display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  /* min-height: 1.1rem; */
 }
 .google-btn img {
     width: 24px;
