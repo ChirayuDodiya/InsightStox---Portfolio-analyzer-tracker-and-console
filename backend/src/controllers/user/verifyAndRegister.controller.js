@@ -19,7 +19,10 @@ export const register = async (req,res)=>{
         if(record.otp!==otp){
             return res.status(401).json({success: false,message: 'Invalid OTP'})
         }
-        const user = await insertUser({name:record.name,email,Password:record.hashedPassword});
+        const user = await insertUser({name:record.name,email,Password:record.hashedPassword,method:"normal"});
+        if(!user){
+            return res.status(500).json({success: false,message: 'Database error occurred during registration'})
+        }
         otpStore.remove(email);
         const token = jwt.sign({user:user.id,email:user.email}, process.env.JWT_SECRET,{expiresIn: process.env.JWT_EXPIRE})
         res.cookie('token',token,{

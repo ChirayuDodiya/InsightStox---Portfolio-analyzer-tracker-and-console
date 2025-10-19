@@ -10,7 +10,8 @@ import {
     getProfile,
     registerWithGoogle,
     SendForgotPasswordOtp,
-    VerifyOtpAndResetPassword,
+    VerifyOtp,
+    setNewPassword,
     ResetPassword,
 } from "../controllers/user/user.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
@@ -27,6 +28,7 @@ router.route("/updateProfileInfo").patch(verifyToken, updateProfileInfoControlle
 router.route("/myProfile").get(verifyToken, getProfile);
 router.route("/registerWithGoogle").post(registerWithGoogle);
 router.route("/forgotPasswordOtpGeneration").post(SendForgotPasswordOtp);
-router.route("/verifyOtpAndReset").post(VerifyOtpAndResetPassword);
+router.route("/verifyOtp").post(VerifyOtp);
+router.route("/setNewPassword").post(setNewPassword);
 router.route("/resetpassword").post(ResetPassword);
 export default router;
