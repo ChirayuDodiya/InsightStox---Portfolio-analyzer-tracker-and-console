@@ -3,6 +3,7 @@ import {
     deleteFromCloudinary,
 } from "../../utils/cloudinary.js";
 import { updateProfileImage } from "../../db/updateProfileImage.js";
+import { upload } from "../../middlewares/multer.middleware.js";
 import { defaultProfileImage } from "../../../constants.js";
 import { removeOldProfileImagesFromCloudionary } from "../../utils/removeOldProfile.js";
 const updateProfileImageController = async (req, res) => {
@@ -16,16 +17,9 @@ const updateProfileImageController = async (req, res) => {
                 message: "Please provide a valid image.",
             });
 
-        let uploadAttempt = 3;
+        const profileImage = await uploadOnCloudinary(profileImageLocalPath);
 
-        let profileImage;
-
-        while (uploadAttempt > 0 && !profileImage) {
-            profileImage = await uploadOnCloudinary(profileImageLocalPath);
-            uploadAttempt--;
-        }
-
-        if (!profileImage || !profileImage.url)
+        if (profileImage === null || !profileImage.url)
             return res.status(500).json({
                 success: false,
                 message: "Failed to upload profile image.",
