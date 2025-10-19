@@ -103,12 +103,10 @@ const handleGoogleLogin = async (tokenResponse) => {
     const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/googleLogin", {
       access_token: tokenResponse.access_token,
     });
-    console.log("Google login response:", res);
-    console.log("Google login successful");
     navigate("/Dashboard");
-  }catch(err){
+  }catch(err){  
     console.log("Google login error:", err.response.data.message);
-    setTitleError('Google login failed');
+    setTitleError(err.response.data.message);
   }
 }
 
