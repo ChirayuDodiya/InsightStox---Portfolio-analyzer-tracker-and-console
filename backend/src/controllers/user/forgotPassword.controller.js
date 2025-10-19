@@ -5,6 +5,7 @@ import { transporter } from "../../utils/nodemailer.js";
 import { otpStore } from "../../utils/registrationOtpStore.js";
 import crypto from 'crypto';
 import bcrypt from "bcrypt";
+import { getOtpEmailTemplate } from "../../utils/mailOtpTemplate.js";
 
 const SendForgotPasswordOtp = async (req, res) => {
     const { email } = req.body;
@@ -31,7 +32,7 @@ const SendForgotPasswordOtp = async (req, res) => {
             from: process.env.GOOGLE_USER_EMAIL,
             to: email,
             subject: "Your One-Time Password (OTP) for Insightstox",
-            text: `Welcome to Insightstox!\n\nYour OTP for registration is: ${otp}\n\nThis OTP is valid for 5 minutes.`
+            html: getOtpEmailTemplate(otp,"reset your password.","5 minutes"),
         }
         
         await transporter.sendMail(mailOptions);
