@@ -88,7 +88,7 @@ React.useEffect(() => {
 },[email, password, name, confirmPassword, otp,passwordError,nameError,emailError,isLogin,isOtpSent,isForgotPassword]);
 
 const googleLogin = useGoogleLogin({
-  onSuccess: credentialResponse => handleGoogleLogin(credentialResponse),
+  onSuccess: (tokenResponse) => handleGoogleLogin(tokenResponse),
   onError: () => {
     setTitleError('Google login failed');
   }
@@ -97,8 +97,9 @@ const googleLogin = useGoogleLogin({
 const handleGoogleLogin = async (tokenResponse) => {
   try{
     const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/googleLogin", {
-      access_token: tokenResponse.credential,
+      access_token: tokenResponse.access_token,
     });
+    console.log("Google login response:", res);
     console.log("Google login successful");
     navigate("/Dashboard");
   }catch(err){
