@@ -1,5 +1,10 @@
- function checkPasswordStrength(password) {
- let missing = [];
+export function validateEmail(email) {
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+  return regex.test(email);
+}
+
+export function checkPasswordStrength(password) {
+  let missing = [];
 
   // Check for lowercase letters
   if (!/[a-z]/.test(password)) missing.push("lowercase letters");
@@ -23,15 +28,8 @@
     return `Password must contain ${missing.join(", ")}.`;
   }
 }
- function validateNameStrength(name) {
-    const nameRegex = /^[a-zA-Z\s]*$/;
-    return nameRegex.test(name);
-  }
 
-  function validateEmail(email) {
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-  return regex.test(email);
+export function validateNameStrength(name) {
+  const nameRegex = /^[a-zA-Z\s]*$/;
+  return nameRegex.test(name);
 }
-
-
-export { checkPasswordStrength , validateNameStrength , validateEmail };
