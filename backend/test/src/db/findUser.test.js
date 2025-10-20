@@ -31,7 +31,16 @@ describe("searchUserByEmail", () => {
     expect(result).toEqual(responce);
   });
 
-  it("should return null when email does not exist or query fails", async () => {
+  it("should return null array when email does not exist", async () => {
+    
+    sql.mockResolvedValue([]);
+    const result = await searchUserByEmail("fail@example.com");
+    
+    expect(sql).toHaveBeenCalled();
+    expect(result).toEqual([]);
+  });
+
+  it("should return null when query fails", async () => {
 
     sql.mockRejectedValue();
     
