@@ -10,7 +10,11 @@ export const ResetPassword = async (req, res) => {
 
     try {
         const userResult = await searchUserByEmail(email);
-        console.log(userResult);
+        
+        if(!userResult) {
+            return res.status(500).json({success: false, message: "Database error. Please try again later."});
+        }
+
         if (userResult.length === 0) {
             return res.status(401).json({success: false, message: "Unauthorized user"});
         }
@@ -24,12 +28,16 @@ export const ResetPassword = async (req, res) => {
 
         const hashedNewPassword = await bcrypt.hash(newPassword, 10);
 
-        await updatePassword(email, hashedNewPassword);
+        const updatedPass = await updatePassword(email, hashedNewPassword);
+
+        if (!updatedPass) {
+            return res.status(500).json({success: false, message: "Database error. Please try again later."});
+        }
 
         return res.status(200).json({success: true, message: "Password reset successfully."});
 
     } catch (error) {
-        console.error('Password reset error:', error);
+        console.log('Password reset error:', error);
         return res.status(401).json({success: false, message: "Internal server error. Please try again."});
     }
 };
