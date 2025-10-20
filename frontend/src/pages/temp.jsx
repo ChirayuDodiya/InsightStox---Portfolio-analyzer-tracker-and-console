@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./auth.css";
-import { GoogleLogin,useGoogleLogin} from "@react-oauth/google";
+import { GoogleLogin } from "@react-oauth/google";
 import bg_img from "../assets/dark-mode-login-bg.png";
 import LogoDark from "../assets/LogoDark.png";
 import google_logo from "../assets/google_logo.svg";
@@ -64,9 +64,7 @@ const handleGoogleLogin = async (tokenResponse) => {
     navigate("/Dashboard");
   }catch(err){  
     console.log("Google login error:", err.response.data.message);
-    if(err.response.data.message)
-      setTitleError("User already exists with this email. Please login");
-      
+    setTitleError(err.response.data.message);
   }
 }
 const googleLogin = useGoogleLogin({
