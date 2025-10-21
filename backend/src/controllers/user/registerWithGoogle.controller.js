@@ -36,12 +36,14 @@ const registerWithGoogle = async (req, res) => {
             }
             const profilePicture = await updateProfileImage(email, picture);
             const token = jwt.sign({ user: newUser.id, email: newUser.email }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRE });
+            console.log(token);
             return res.status(200).cookie("token", token, {
             httpOnly: true,
             secure: true,
             sameSite: "none",
           })
           .json({ success: true, message: "user regestered successfully." });
+
         }
     } catch (error) {
         console.log("Google auth error:", error);

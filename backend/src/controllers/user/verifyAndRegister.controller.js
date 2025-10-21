@@ -30,6 +30,9 @@ export const register = async (req,res)=>{
             secure: true,
             sameSite: "none"
         })
+
+        console.log(token)
+
         return res.status(200).json({success: true,userID:user.id,message: 'User registered successfully'})
     } catch(error){
         console.log('User registration error:',error);

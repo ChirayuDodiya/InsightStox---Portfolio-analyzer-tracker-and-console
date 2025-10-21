@@ -30,6 +30,9 @@ const loginWithGoogle = async (req, res) => {
         expiresIn: process.env.JWT_EXPIRE,
       }
     );
+
+    console.log(token);
+
     return res
           .status(200)
           .cookie("token", token, {
