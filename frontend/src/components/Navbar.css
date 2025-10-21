@@ -84,25 +84,39 @@
   height: 100%;
   z-index: 1000;
 }
-
-.profilepopup {
-  position: fixed;
-  top: 100px;
-  right: 3rem;
-  background: black;
-  color: white;
-  min-width: 300px;
-  height: 250px;
-  border-radius: 20px;
-  z-index: 10000;
-  padding: 0 16px 16px 16px;
-  border: 1px solid #00C853;
-  animation: popup 0.3s ease-in-out;
+.menuoptions li {
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  border-bottom:1px solid transparent;
+  transition: all 0.25s ease;
+  cursor: pointer;
 }
 
-@keyframes popup {
-  from { opacity: 0; transform: translateZ(-20px); }
-  to { opacity: 1; transform: translateZ(0); }
+.menuoptions li:hover {
+   background-color: rgba(255, 255, 255, 0.078);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(10px);
+  color : #00C853;
+  transform: translateX(3px);
+  box-shadow: 0 4px 12px rgba(0, 200, 83, 0.1);
+}
+.profilepopup {
+  position: fixed;
+  top: 90px;
+  right: 3rem;
+  background-color: rgba(0, 0, 0, 0.432);
+  backdrop-filter: blur(3px);
+  color: white;
+  min-width: 390px;
+  /* height: fit-content; */
+  border-radius: 16px;
+  z-index: 10000;
+  padding: 0 16px 16px 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(0, 200, 83, 0.4);
+   animation: slideDown 0.3s ease;
+  transform-origin: top right;
 }
 
 .popupheading {
@@ -114,17 +128,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 0 5px 20px 5px;
+  margin: 0 5px 15px 5px;
   padding-top: 15px;
 }
 
 .name-email h3 {
-  font-size: 23px;
+  font-size: 1.5rem;
   font-weight: 500;
 }
 
 .name-email span {
-  font-size: 14px;
+  font-size: 1.2rem;
   color: #F5F5F5;
   font-weight: 300;
 }
@@ -132,38 +146,34 @@
 .popupoptions ul {
   list-style: none;
 }
-
 .popupoptions li {
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  padding: 8px 8px;
+  padding: 10px 12px;
   margin: 2px 0;
+  border-bottom:1px solid transparent;
   border-radius: 8px;
-  font-size: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1rem;
 }
-.popupoptions li:last-child {
-  border-bottom: none;
-}
+
 .popupoptions li:hover {
-  background-color: rgba(112, 112, 112, 0.295);
-  font-weight: 500;
+   /* transform: translateX(3px); */
+  background-color: rgba(255, 255, 255, 0.078);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(10px);
+  color : #00C853;
+  box-shadow: 0 4px 12px rgba(0, 200, 83, 0.1);
 }
 .popupoptions img {
     height: 12px;
     width: 12px;
 }
-
-
 .menu_toggle {
   display: none;
 }
 .mobile_menu {
   display: none;
-}
-
-.mobile_menu {
   position: fixed;
   top: 90px;
   right: 2rem;
@@ -189,24 +199,22 @@
     transform: translateY(0) scale(1);
   }
 }
-.menuoptions li {
-  padding: 10px 12px;
-  border-radius: 8px;
-  margin-bottom: 6px;
-  border-bottom:1px solid transparent;
-  transition: all 0.25s ease;
-  cursor: pointer;
-}
 
-.menuoptions li:hover {
-  border-bottom: 1px solid #00C853;
-  color: #00C853;
+.popupheading{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 .menuoptions a {
   font-weight: 500;
 }
-
-
+.right_btn{
+  gap : 1rem;
+}
+.profile_btn{
+  display: flex;
+  align-items: center;
+}
 /* XXL (very large screens) */
 @media (min-width:1600px) {
 .logo img{
@@ -226,17 +234,38 @@
 .login_btn button{
   font-size : 1.25rem
 }
+.name-email h3 {
+  font-size: 1.4rem;
+}
+.name-email span {
+  font-size: 1.15rem;
+}
+
+.popupoptions li {
+  font-size: 1rem;
+}
+.popupoptions img {
+    height: 15px;
+    width: 15px;
+}
+
 }
 /* Extra large (desktop) */
 @media (min-width:1200px) and (max-width:1599px) {
   .navbar{
     padding: 0 2rem;
   }
+  .center_btn
+{
+  gap: 2rem;
+  
+}
 .logo img{
-    height: 45px;
+    height: 42px;
 } 
 .navbar_btn {
-  padding: 8px 24px;
+  padding: 8px 20px;
+  font-size: 0.95rem;
 }
 .login_btn{
   padding: 10px 24px; 
@@ -244,17 +273,44 @@
 .login_btn button{
   font-size: 1rem;
 }
+
+.profilepopup {
+  min-width: 350px;
+}
+.name-email h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+}
+
+.name-email span {
+  font-size: 1rem;
+}
+
+.popupoptions li {
+  font-size: 0.95rem;
+}
 }
 /* Large (laptop) */
 @media (min-width:992px) and (max-width:1199px) {
   .logo img{
-    height: 42px;
+    height: 40px;
 } 
 .navbar {
   padding: 0 1.5rem;
 }
+.center_btn
+{
+  gap: 1.5rem;
+}
+.right_btn{
+  gap: 0.5rem;
+}
+.left_btn{
+  gap: 0.5rem;
+}
 .navbar_btn {
-  padding: 8px 20px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
 }
 .login_btn{
   padding: 10px 20px; 
@@ -262,13 +318,27 @@
 .login_btn button{
   font-size: 1rem;
 }
+.profilepopup {
+  min-width: 320px;
+}
+.name-email h3 {
+  font-size: 1.25rem;
+}
 
+.name-email span {
+  font-size: 1rem;
+}
+.popupoptions li {
+  font-size: 0.9rem;
+}
+
+.popupoptions img {
+    height: 10px;
+    width: 10px;
+}
 }
 /* Medium (tablet) */
 @media (min-width:768px) and (max-width:992px) {
- .navbar {
-  padding: 0 2rem;
-}
 .logo img{
     height: 42px;
 } 
@@ -288,20 +358,58 @@
     padding-left: 1.5rem;
   }
   .menuoptions li{
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: left;
   }
+  .profile_btn img{
+    height:2.2rem;
+    width:2.2rem;
+}
 .menu_toggle {
     cursor: pointer;
     padding: 1rem;
     color:#00C853;
-    font-size: 2.5rem;
+    font-size: 2.2rem;
   }
+
+.navbar {
+  padding: 0 2rem;
+}
+
+.right_btn{
+  gap: 0.5rem;
+}
+.left_btn{
+  gap: 1rem;
+}
+
+.profilepopup {
+  min-width: 300px; 
+}
+
+.name-email h3 {
+  font-size: 1.2rem;
+ 
+}
+
+.name-email span {
+  font-size: 0.95rem;
+ 
+}
+.popupoptions li {
+  font-size: 0.9rem;
+}
+
+.popupoptions img {
+    height: 10px;
+    width: 10px;
+}
+
 }
 /* Small (mobile landscape) */
 @media (min-width: 576px) and (max-width: 768px) {
   .navbar {
-    padding: 0 1.5rem;
+    padding: 0 1rem;
   }
   .logo img{
     height: 42px;
@@ -323,20 +431,50 @@
     padding-left: 1.5rem;
   }
   .menuoptions li{
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: left;
   }
-.menu_toggle {
+  .menu_toggle {
     cursor: pointer;
     padding: 1rem;
     color:#00C853;
-    font-size: 2.3rem;
+    font-size: 2.1rem;
   }
+  .profile_btn img{
+   height:2.1rem;
+   width:2.1rem;
+}
+.right_btn{
+  gap: 0.5rem;
+}
+.left_btn{
+  gap: 1rem;
+}
+
+.profilepopup {
+  min-width: 300px;
+}
+
+.name-email h3 {
+  font-size: 1.15rem;
+}
+
+.name-email span {
+  font-size: 0.9rem;
+}
+
+.popupoptions li {
+  font-size: 0.85rem;
+}
+.popupoptions img {
+    height: 10px;
+    width: 10px;
+}
 }
 /* Extra small (mobile portrait) */
 @media (max-width: 576px) {
   .navbar {
-    padding: 1rem;
+    padding: 0rem 1rem;
   }
 
   .logo img{
@@ -359,13 +497,47 @@
     padding-left: 1.5rem;
   }
   .menuoptions li{
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: left;
   }
 .menu_toggle {
     cursor: pointer;
     padding: 1rem;
     color:#00C853;
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
+  .profile_btn img{
+   height:1.8rem;
+   width:1.8rem;
+}
+.right_btn{
+  gap: 0.1rem;
+}
+.left_btn{
+  gap: 0.1rem;
+}
+
+
+.profilepopup {
+  min-width: 300px;
+}
+
+.name-email h3 {
+  font-size: 1.1rem;
+}
+.popupheading img{
+  height: 35px;
+  width: 35px;
+}
+.name-email span {
+  font-size: 0.85rem;
+}
+
+.popupoptions li {
+  font-size: 0.8rem;
+}
+.popupoptions img {
+    height: 9px;
+    width: 9px;
+}
 }
