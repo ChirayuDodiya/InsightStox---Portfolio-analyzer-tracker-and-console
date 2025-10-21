@@ -9,7 +9,7 @@
     width: 100%;
     height: 100%;
     background-color: black;
-
+    overflow-x: hidden;
 }
 
 .main_page{
@@ -84,6 +84,16 @@
     top: 0;
     left: 0;
     z-index: 1;
+    mask-image: linear-gradient(to bottom, 
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 1) 70%,
+        rgba(0, 0, 0, 0) 100%
+    );
+    -webkit-mask-image: linear-gradient(to bottom, 
+        rgba(0, 0, 0, 1) 0%,
+        rgba(0, 0, 0, 1) 70%,
+        rgba(0, 0, 0, 0) 100%
+    );
 }
 
 .dash_board_template{
@@ -564,3 +574,8 @@
 .github_logo img{
     height: 50px;
 }
+
+/* XXL (very large screens) */
+/* @media (min-width:1400px) {
+   
+} */

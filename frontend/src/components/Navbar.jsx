@@ -94,7 +94,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
                 <li><a href="#HowItWorks">How it Works?</a></li> 
                 <li className="lastli"><a href="#FAQs">FAQs</a></li>
               </ul>
-              </div>
+            </div>
           ) : (
             <div className="menuoptions">
               <ul>
