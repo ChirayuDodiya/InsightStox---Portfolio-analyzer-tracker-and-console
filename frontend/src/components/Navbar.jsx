@@ -8,6 +8,7 @@ import profileicon from "../assets/profileicon.svg";
 import routeicon from "../assets/routeicon.svg";
 import exiticon from "../assets/exiticon.svg";
 import "./Navbar.css";
+// import tailwind from "tailwindcss/tailwind.css";
 const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
@@ -120,13 +121,9 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           <div className="popupoptions">
             <ul>
               <li>My Profile <img src={routeicon} alt="" /></li>
-              <hr/>
               <li>Manage <img src={routeicon} alt="" /></li>
-              <hr/>
               <li>Help & Support <img src={routeicon} alt="" /></li>
-              <hr/>
-              <li>Log Out <img src={exiticon} alt="" /></li>
-              <hr/>
+              <li className="lastli">Log Out <img src={exiticon} alt="" /></li>
             </ul>
           </div>
         </div>
