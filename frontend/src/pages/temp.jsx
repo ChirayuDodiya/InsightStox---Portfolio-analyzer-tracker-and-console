@@ -59,8 +59,11 @@ const [isForgotPassword, setIsForgotPassword] = useState(() => {
 const handleGoogleLogin = async (tokenResponse) => {
   try{
     const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/googleLogin", {
-      access_token: tokenResponse.access_token,
-    });
+      access_token: tokenResponse.access_token},
+      {
+        withCredentials: true,
+      }
+    );
     navigate("/Dashboard");
   }catch(err){  
     console.log("Google login error:", err.response.data.message);

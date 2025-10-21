@@ -65,9 +65,12 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
 // Function to handle Google login
       const handleGoogleLogin = async (tokenResponse) => {
         try{
-          const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/googleLogin", {
-            access_token: tokenResponse.access_token,
-          });
+          const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/googleLogin",
+            {access_token: tokenResponse.access_token},
+            {
+    withCredentials: true,  // <-- must include this
+  }
+          );
           navigate("/Dashboard");
         }catch(err){  
           console.log("Google login error:", err.response.data.message);
