@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
-import { searchUserByEmail } from "../../db/findUser.js";
 import bcrypt from "bcrypt";
+import { searchUserByEmail } from "../../db/findUser.js";
+import { checkEmailSyntax } from "../../utils/checkUserSyntax.js";
+import { checkPasswordSyntax } from "../../utils/checkUserSyntax.js";
 
 const loginUser = async (req, res) => {
     try {
@@ -10,6 +12,20 @@ const loginUser = async (req, res) => {
             return res.status(400).json({
                 success: false,
                 message: "Please provide email and password",
+            });
+        }
+
+        if (!checkEmailSyntax(email)) {
+            return res.status(400).json({
+                success: false,
+                message: "Please provide a valid email address",
+            });
+        }
+        if (!checkPasswordSyntax(password)) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one special character and one number",
             });
         }
 

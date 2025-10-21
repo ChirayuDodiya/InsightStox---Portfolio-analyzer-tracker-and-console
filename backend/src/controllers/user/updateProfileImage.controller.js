@@ -3,7 +3,6 @@ import {
     deleteFromCloudinary,
 } from "../../utils/cloudinary.js";
 import { updateProfileImage } from "../../db/updateProfileImage.js";
-import { upload } from "../../middlewares/multer.middleware.js";
 import { defaultProfileImage } from "../../../constants.js";
 import { removeOldProfileImagesFromCloudionary } from "../../utils/removeOldProfile.js";
 const updateProfileImageController = async (req, res) => {
