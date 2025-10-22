@@ -8,7 +8,7 @@ function mapStockData(rawStock) {
       timeStyle: "short",
     });
   };
-
+  rawStock = rawStock.price;
   return {
     // Basic Info
     symbol: rawStock.symbol ?? 'N/A',

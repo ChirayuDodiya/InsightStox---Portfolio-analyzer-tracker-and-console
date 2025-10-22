@@ -1,4 +1,6 @@
 import { searchStock } from "./searchStock.controller.js";
 import { starter } from "./starterStocks.controller.js";
 import { getNews } from "./getNews.controller.js";
-export {searchStock, starter, getNews}
+import { calculatePortfolio } from "./portfolioCalculation.controller.js";
+import { addTransaction } from "./addTransaction.controller.js";
+export {searchStock, starter, getNews, calculatePortfolio, addTransaction};

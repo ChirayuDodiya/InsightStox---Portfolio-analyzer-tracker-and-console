@@ -1,10 +1,10 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import { neon } from "@neondatabase/serverless";
+import { neon,neonConfig } from "@neondatabase/serverless";
 
 let sql;
-
+neonConfig.fetchConnectionCache = true;
 const connectDB = () => {
     try {
         if(!sql){sql = neon(process.env.DATABASE_URL);
