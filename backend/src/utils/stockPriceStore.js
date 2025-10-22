@@ -5,12 +5,12 @@ const createStockPriceStore = () => {
         // console.log('Running cleanup for expired registrations...');
         for (const symbol in cache) {
             if (cache[symbol].expiresAt < now) {
-                delete cache[email];
+                delete cache[symbol];
                 console.log(`Cleaned up expired registration for: ${cache}`);
             }
         }
     };
-    setInterval(cleanupExpiredRegistrations, 60*1000);
+    setInterval(cleanupStocks, 60*1000);
     return {
         add: (symbol, data) => {
             cache[symbol] = data;

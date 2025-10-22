@@ -29,7 +29,9 @@ export const getData  = async (searchitem) => {
                 }))
             )
         ]);
+        //console.log(quotes);
         const mappedQuotes = quotes.map(mapStockData);
+        //console.log(mappedQuotes);
         return {quotes:mappedQuotes, news};
     } catch (error) {
         console.log('Error fetching symbol data:', error);
