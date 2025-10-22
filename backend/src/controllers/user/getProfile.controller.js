@@ -7,6 +7,8 @@ const getProfile = async (req, res) => {
             riskProfile: req.user.riskprofile,
             profileImage: req.user.profileimage,
             registrationMethod: req.user.registrationmethod,
+            financialGoals: req.user.financialgoals,
+            investmentHorizon: req.user.investmenthorizon,
         };
         return res.status(200).json({ success: true, data: user });
     } catch (error) {

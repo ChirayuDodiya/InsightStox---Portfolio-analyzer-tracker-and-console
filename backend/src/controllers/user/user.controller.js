@@ -9,6 +9,7 @@ import { getProfile } from "./getProfile.controller.js";
 import { dataAndPrivacy } from "./dataAndPrivacy.controller.js";
 import { SendForgotPasswordOtp, VerifyOtpAndResetPassword } from "./forgotPassword.controller.js";
 import { ResetPassword } from "./resetPassword.controller.js";
+import { toggleAiSuggestionController } from "./toggleAiSuggestion.controller.js";
 export {
     loginUser,
     logoutUser,
@@ -22,4 +23,5 @@ export {
     SendForgotPasswordOtp,
     VerifyOtpAndResetPassword,
     ResetPassword,
+    toggleAiSuggestionController
 };

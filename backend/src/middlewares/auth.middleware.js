@@ -28,6 +28,9 @@ const verifyToken = async (req, res, next) => {
             riskprofile:user[0].riskprofile,
             theme:user[0].theme,
             aisuggestion:user[0].aisuggestion,
+            financialgoals:user[0].financialgoals,
+            investmenthorizon:user[0].investmenthorizon,
+            dashboardlayout:user[0].dashboardlayout,
         }
         next();
     } catch (error) {
