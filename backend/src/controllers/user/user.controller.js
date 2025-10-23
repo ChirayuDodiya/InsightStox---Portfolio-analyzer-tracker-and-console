@@ -6,6 +6,8 @@ import { loginWithGoogle } from "./loginWithGoogle.controller.js";
 import { updateProfileImageController } from "./updateProfileImage.controller.js";
 import { updateProfileInfoController } from "./updateProfileInfo.controller.js";
 import { getProfile } from "./getProfile.controller.js";
+import { dataAndPrivacy } from "./dataAndPrivacy.controller.js";
+import { toggleAiSuggestionController } from "./toggleAiSuggestion.controller.js";
 import { SendForgotPasswordOtp, VerifyOtp, setNewPassword} from "./forgotPassword.controller.js";
 import { ResetPassword } from "./resetPassword.controller.js";
 import { registerWithGoogle } from "./registerWithGoogle.controller.js";
@@ -18,6 +20,8 @@ export {
     updateProfileImageController,
     updateProfileInfoController,
     getProfile,
+    dataAndPrivacy,
+    toggleAiSuggestionController,
     SendForgotPasswordOtp,
     VerifyOtp,
     setNewPassword,
