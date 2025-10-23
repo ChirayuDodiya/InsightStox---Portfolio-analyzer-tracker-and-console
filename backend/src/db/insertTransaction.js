@@ -37,7 +37,7 @@ import yahooFinance from "yahoo-finance2";
             }
             const totalSpend = quantity * price;
             const queries = [sql`
-                INSERT INTO "user_transactions" (email, symbol, quantity, price, transaction_type, transaction_date) VALUES (${email}, ${symbol}, ${quantity}, ${price}, ${transaction_type}, ${time})
+                INSERT INTO "user_transactions" (email, symbol, quantity, price, transaction_type, transaction_date) VALUES (${email}, ${symbol}, ${Math.abs(quantity)}, ${price}, ${transaction_type}, ${time})
                 RETURNING *;
                 `,
                 sql`

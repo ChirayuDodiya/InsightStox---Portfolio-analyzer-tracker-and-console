@@ -15,7 +15,7 @@ export const calculatePortfolio = async (req, res) => {
         let todayPL = 0;
         let totalspending = 0;
         for (const row of stockSummary) {
-            const { current_holding, spended_amount, yesterday_holding } = row;
+            const { current_holding, spended_amount, yestarday_holding } = row;
             if(!priceData.get(row.symbol)){
                 const q = await getPrice(row.symbol);
                 if (!q) {
@@ -30,14 +30,16 @@ export const calculatePortfolio = async (req, res) => {
             const data = priceData.get(row.symbol);
             if (!data) continue;
             const currentValue = current_holding * data.current;
-            const yesterdayValue = yesterday_holding * data.yesterdayClose;
+            const yesterdayValue = yestarday_holding * data.yesterdayClose;
             const overallProfit = currentValue - spended_amount;
             const todayProfit = currentValue - yesterdayValue;
+            console.log(data.yesterdayClose);
             totalspending += spended_amount;
             totalValuation += currentValue;
             overallPL += overallProfit;
             todayPL += todayProfit;
         }
+        //console.log({totalValuation, overallPL, todayPL, totalspending});
         return res.status(200).json({
             success: true,
             totalValuation: totalValuation.toFixed(2),

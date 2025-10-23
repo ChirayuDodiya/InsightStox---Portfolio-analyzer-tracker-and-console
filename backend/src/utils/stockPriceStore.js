@@ -6,7 +6,7 @@ const createStockPriceStore = () => {
         for (const symbol in cache) {
             if (cache[symbol].expiresAt < now) {
                 delete cache[symbol];
-                console.log(`Cleaned up expired registration for: ${cache}`);
+                console.log(`Cleaned up stock data for: ${symbol}`);
             }
         }
     };
