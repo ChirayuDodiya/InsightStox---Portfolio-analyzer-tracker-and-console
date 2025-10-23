@@ -21,6 +21,7 @@ const loginUser = async (req, res) => {
                 message: "Please provide a valid email address",
             });
         }
+        
         if (!checkPasswordSyntax(password)) {
             return res.status(400).json({
                 success: false,
@@ -31,7 +32,13 @@ const loginUser = async (req, res) => {
 
         const user = await searchUserByEmail(email);
 
-        if (!user || user.length == 0) {
+        if(!user) {
+            return res
+                .status(500)
+                .json({ success: false, message: "Database error" });
+        }
+
+        if (user.length == 0) {
             return res
                 .status(400)
                 .json({ success: false, message: "User is not registered" });
