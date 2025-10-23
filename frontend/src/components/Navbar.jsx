@@ -91,20 +91,20 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
                                               sessionStorage.setItem("forgotpassword", "false");}}>
                 <li>Log In</li>
                 </Link>
-                <li><a href="#feature">Features</a></li>
-                <li><a href="#HowItWorks">How it Works?</a></li> 
-                <li className="lastli"><a href="#FAQs">FAQs</a></li>
+                <a href="#feature"><li>Features</li></a>
+                <a href="#HowItWorks"><li>How it Works?</li></a>
+                <a href="#FAQs"><li className="lastli">FAQs</li></a>
               </ul>
             </div>
           ) : (
             <div className="menuoptions">
               <ul>
-              <li><a href="#">Dashboard</a> </li>
-              <li><a href="#">Portfolio</a></li>
-              <li><a href="#">AI Insights</a></li>
-              <li><a href="#">Compare Stocks</a></li>
-              <li className="lastli"><a href="#">Watchlist</a></li>
-             </ul> 
+              <a href="#"><li>Dashboard </li></a>
+              <a href="#"><li>Portfolio</li></a>
+              <a href="#"><li>AI Insights</li></a>
+              <a href="#"><li>Compare Stocks</li></a>
+              <a href="#"><li className="lastli">Watchlist</li></a>
+             </ul>
               </div>
           )}
         </div>
@@ -121,7 +121,9 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           <div className="popupoptions">
             <ul>
               <li>My Profile <img src={routeicon} alt="" /></li>
-              <li>Manage <img src={routeicon} alt="" /></li>
+              <li>Data & Privacy<img src={routeicon} alt="" /></li>
+              <li>Activity <img src={routeicon} alt="" /></li>
+              <li>Preferences <img src={routeicon} alt="" /></li>
               <li>Help & Support <img src={routeicon} alt="" /></li>
               <li className="lastli">Log Out <img src={exiticon} alt="" /></li>
             </ul>
