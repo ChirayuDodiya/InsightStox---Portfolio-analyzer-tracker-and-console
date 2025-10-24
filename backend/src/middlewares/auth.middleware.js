@@ -16,7 +16,7 @@ const verifyToken = async (req, res, next) => {
         if(!user) {
             return res
                 .status(500)
-                .json({ success: false, message: "Database error" });
+                .json({ success: false, message: "Database error while verifying token" });
         }
 
         if (user.length == 0) {

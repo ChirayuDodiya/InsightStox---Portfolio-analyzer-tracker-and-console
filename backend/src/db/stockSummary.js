@@ -15,7 +15,7 @@ export const getPortfolioStockSummary = async (email) => {
         const result = await sql`SELECT s.short_name,s.long_name,ss.current_holding,ss.spended_amount FROM "stock_summary" as ss join "stocks" as s on ss.symbol=s.symbol Where ss.email=${email} ORDER BY s.short_name ASC`;
         return result;
     } catch (error) {
-        console.log('Error fetching stock summary:', error);
+        console.log('Database error - getPortfolioStockSummary');
         return null;
     }
 };

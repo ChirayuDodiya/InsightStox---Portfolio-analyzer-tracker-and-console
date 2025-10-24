@@ -24,10 +24,17 @@ const createExcel = async (req, res) => {
                 investmentHorizon: req.user.investmenthorizon,
             },
         ];
+
         if (!userData) {
             return res
                 .status(500)
                 .json({ success: false, message: "Internal server error" });
+            }
+            
+        if (userData.length === 0) {
+            return res
+                .status(400)
+                .json({ success: false, message: "unauthorized request" });
         }
 
         const userStockSummary = await getPortfolioStockSummary(email);
@@ -44,16 +51,6 @@ const createExcel = async (req, res) => {
                 .json({ success: false, message: "Database error" });
         }
 
-        if (
-            userData.length === 0 ||
-            userStockSummary.length === 0 ||
-            userTransactions.length === 0
-        ) {
-            return res
-                .status(400)
-                .json({ success: false, message: "unauthorized request" });
-        }
-
         const length = 8;
         const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const bytes = randomBytes(length);
@@ -67,13 +64,12 @@ const createExcel = async (req, res) => {
 
         const sheet1 = workbook.sheet(0);
         sheet1.name("userData");
-
         if (Array.isArray(userData) && userData.length == 1) {
-            const headers = Object.keys(userData[0]);
-            headers.forEach((h, i) => sheet1.cell(1, i + 1).value(h));
+            const header1 = Object.keys(userData[0]);
+            header1.forEach((h, i) => sheet1.cell(1, i + 1).value(h));
 
             userData.forEach((row, r) => {
-                headers.forEach((h, c) =>
+                header1.forEach((h, c) =>
                     sheet1.cell(r + 2, c + 1).value(row[h])
                 );
             });
@@ -81,11 +77,11 @@ const createExcel = async (req, res) => {
 
         const sheet2 = workbook.addSheet("StockSummary");
         if (Array.isArray(userStockSummary) && userStockSummary.length > 0) {
-            const headers = Object.keys(userStockSummary[0]);
-            headers.forEach((h, i) => sheet2.cell(1, i + 1).value(h));
+            const header2 = Object.keys(userStockSummary[0]);
+            header2.forEach((h, i) => sheet2.cell(1, i + 1).value(h));
 
             userStockSummary.forEach((row, r) => {
-                headers.forEach((h, c) =>
+                header2.forEach((h, c) =>
                     sheet2.cell(r + 2, c + 1).value(row[h])
                 );
             });
@@ -93,12 +89,20 @@ const createExcel = async (req, res) => {
 
         const sheet3 = workbook.addSheet("TransactionHistory");
         if (Array.isArray(userTransactions) && userTransactions.length > 0) {
-            const headers = Object.keys(userTransactions[0]);
-            headers.forEach((h, i) => sheet3.cell(1, i + 1).value(h));
+            const header3 = Object.keys(userTransactions[0]);
+            header3.forEach((h, i) => sheet3.cell(1, i + 1).value(h));
+
             userTransactions.forEach((row, r) => {
-                headers.forEach((h, c) =>
-                    sheet3.cell(r + 2, c + 1).value(row[h])
-                );
+                header3.forEach((h, c) => {
+                    if (row[h] instanceof Date) {
+                        sheet3
+                            .cell(r + 2, c + 1)
+                            .value(row[h])
+                            .style("numberFormat", "dd-mm-yyyy");
+                    } else {
+                        sheet3.cell(r + 2, c + 1).value(row[h]);
+                    }
+                });
             });
         }
 

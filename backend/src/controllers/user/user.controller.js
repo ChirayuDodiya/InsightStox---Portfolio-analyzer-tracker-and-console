@@ -12,6 +12,7 @@ import { SendForgotPasswordOtp, VerifyOtp, setNewPassword} from "./forgotPasswor
 import { ResetPassword } from "./resetPassword.controller.js";
 import { registerWithGoogle } from "./registerWithGoogle.controller.js";
 import { createExcel } from "./downloadPortfolioData.controller.js";
+import { deleteAccount } from "./deleteAccount.controller.js";
 export {
     loginUser,
     logoutUser,
@@ -28,5 +29,6 @@ export {
     setNewPassword,
     ResetPassword,
     registerWithGoogle,
-    createExcel
+    createExcel,
+    deleteAccount,
 };

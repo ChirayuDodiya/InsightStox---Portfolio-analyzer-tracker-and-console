@@ -7,6 +7,6 @@ export const getOtpEmailTemplate = (otp,message,time) => {
     const __dirname = path.dirname(__filename);
     const templatePath = path.join(__dirname, "otpTemplate.html");
     let htmlTemplate = fs.readFileSync(templatePath, "utf8");
-    htmlTemplate = htmlTemplate.replace("{OTP}", otp).replace("{MESSAGE}", message).replace("{TIME}",time).replace("{LOGO}", defaultProfileImage);
+    htmlTemplate = htmlTemplate.replace("{OTP}", otp).replace("{MESSAGE}", message).replace("{TIME}",time).replace("{LOGO}", insightStoxLogo);
     return htmlTemplate;
 }
