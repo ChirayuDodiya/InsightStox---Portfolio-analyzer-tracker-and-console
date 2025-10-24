@@ -13,6 +13,8 @@ import { ResetPassword } from "./resetPassword.controller.js";
 import { registerWithGoogle } from "./registerWithGoogle.controller.js";
 import { createExcel } from "./downloadPortfolioData.controller.js";
 import { deleteAccount } from "./deleteAccount.controller.js";
+import { getPreferencesAndPersonalisation } from "./getPreferencesAndPersonalisation.controller.js";
+import { updatePreferencesAndPersonalisationController } from "./updatePreferencesAndPersonalisation.controller.js";
 export {
     loginUser,
     logoutUser,
@@ -31,4 +33,6 @@ export {
     registerWithGoogle,
     createExcel,
     deleteAccount,
+    getPreferencesAndPersonalisation,
+    updatePreferencesAndPersonalisationController,
 };
