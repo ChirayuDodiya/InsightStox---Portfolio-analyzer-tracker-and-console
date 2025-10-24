@@ -27,6 +27,7 @@
     "nodemailer-brevo-transport": "^2.2.1",
     "path": "^0.12.7",
     "url": "^0.11.4",
+    "xlsx-populate": "^1.21.0",
     "yahoo-finance2": "^2.13.3",
     "zod": "^4.1.11"
   },

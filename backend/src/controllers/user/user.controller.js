@@ -11,6 +11,7 @@ import { toggleAiSuggestionController } from "./toggleAiSuggestion.controller.js
 import { SendForgotPasswordOtp, VerifyOtp, setNewPassword} from "./forgotPassword.controller.js";
 import { ResetPassword } from "./resetPassword.controller.js";
 import { registerWithGoogle } from "./registerWithGoogle.controller.js";
+import { createExcel } from "./downloadPortfolioData.controller.js";
 export {
     loginUser,
     logoutUser,
@@ -26,5 +27,6 @@ export {
     VerifyOtp,
     setNewPassword,
     ResetPassword,
-    registerWithGoogle
+    registerWithGoogle,
+    createExcel
 };

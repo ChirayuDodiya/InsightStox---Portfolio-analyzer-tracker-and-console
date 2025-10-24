@@ -15,6 +15,7 @@ import {
     ResetPassword,
     dataAndPrivacy,
     toggleAiSuggestionController,
+    createExcel,
 } from "../controllers/user/user.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -52,5 +53,6 @@ router.route("/updateProfileImage").patch(verifyToken,
     });
 });
 router.route("/toggleAiSuggestion").post(verifyToken, toggleAiSuggestionController);
+router.route("/downloadPortfolioData").get(verifyToken, createExcel);
 
 export default router;

@@ -13,6 +13,12 @@ const verifyToken = async (req, res, next) => {
 
         const user = await searchUserByEmail(decoded.email);
 
+        if(!user) {
+            return res
+                .status(500)
+                .json({ success: false, message: "Database error" });
+        }
+
         if (user.length == 0) {
             return res
                 .status(401)

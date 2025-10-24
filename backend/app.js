@@ -2,6 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import multer from "multer";
 import cors from "cors";
+import { removePortfolioExcelSheet } from "./src/utils/removePortfolioExcelSheets.js";
 
 const allowedOrigins = [
     process.env.FRONTEND_LINK

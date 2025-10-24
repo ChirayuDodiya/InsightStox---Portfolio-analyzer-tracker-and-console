@@ -2,9 +2,9 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>InsightStox OTP</title>
+  <title>Your InsightStox Portfolio Data</title>
   <style>
-   body {
+    body {
       margin: 0;
       padding: 0;
       background-color: #0a0a0a;
@@ -46,17 +46,21 @@
       color: #cccccc;
       margin: 12px 0;
     }
-    .otp-box {
+    .download-btn {
       display: inline-block;
       background: #1db954;
       color: #000000;
-      font-size: 32px;
-      font-weight: bold;
-      letter-spacing: 10px;
-      padding: 18px 35px;
-      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      padding: 14px 35px;
+      border-radius: 10px;
       margin: 25px 0;
+      text-decoration: none;
       box-shadow: 0 4px 12px rgba(29, 185, 84, 0.4);
+      transition: all 0.3s ease;
+    }
+    .download-btn:hover {
+      background: #17a44d;
     }
     .note {
       font-size: 14px;
@@ -76,7 +80,7 @@
       text-decoration: none;
     }
 
-    /* 📱 Responsive styles */
+    /* 📱 Responsive */
     @media only screen and (max-width: 480px) {
       .content {
         padding: 25px 15px;
@@ -84,10 +88,9 @@
       .content h1 {
         font-size: 22px !important;
       }
-      .otp-box {
-        font-size: 24px !important;
-        padding: 14px 20px !important;
-        letter-spacing: 6px !important;
+      .download-btn {
+        font-size: 16px !important;
+        padding: 12px 24px !important;
       }
       .content p {
         font-size: 14px !important;
@@ -104,16 +107,12 @@
 
     <!-- Content -->
     <div class="content">
-      <h1>Your Secure OTP</h1>
-      <p>Use the following One-Time Password (OTP) to {MESSAGE}<!--complete your sign-in or verification process.   -->
-      This OTP is valid for the next <strong>{TIME}</strong>.</p>
-      
-      <!-- OTP Display -->
-      <div class="otp-box">
-        {OTP}
-      </div>
+      <h1>Your Complete Portfolio Data</h1>
+      <p>Hello <strong>{USERNAME}</strong>,</p>
+      <p>As per your request on <strong>{DATE}</strong>, we’ve generated your complete portfolio data containing all your stocks and transactions details.</p>
+      <p>You can download your Excel file attached below,password to open excel sheet is <strong>{PASSWORD}</strong>.</p>
 
-      <p class="note">If you didn't request this OTP, please ignore this email or contact our support team.</p>
+      <p class="note">If you didn’t request this, please ignore this email.</p>
     </div>
 
     <!-- Footer -->
