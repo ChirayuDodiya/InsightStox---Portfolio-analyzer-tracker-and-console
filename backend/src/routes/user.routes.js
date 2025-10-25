@@ -19,6 +19,7 @@ import {
     deleteAccount,
     getPreferencesAndPersonalisation,
     updatePreferencesAndPersonalisationController,
+    sendUserQuery,
 } from "../controllers/user/user.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -60,5 +61,6 @@ router.route("/downloadPortfolioData").get(verifyToken, createExcel);
 router.route("/deleteAccount").get(verifyToken, deleteAccount, logoutUser);
 router.route("/getPreferencesAndPersonalisation").get(verifyToken, getPreferencesAndPersonalisation);
 router.route("/updatePreferencesAndPersonalisation").patch(verifyToken, updatePreferencesAndPersonalisationController);
+router.route("/sendUserQuery").post(verifyToken, sendUserQuery);
 
 export default router;

@@ -15,6 +15,7 @@ import { createExcel } from "./downloadPortfolioData.controller.js";
 import { deleteAccount } from "./deleteAccount.controller.js";
 import { getPreferencesAndPersonalisation } from "./getPreferencesAndPersonalisation.controller.js";
 import { updatePreferencesAndPersonalisationController } from "./updatePreferencesAndPersonalisation.controller.js";
+import { sendUserQuery } from "./sendUserQuery.controller.js";
 export {
     loginUser,
     logoutUser,
@@ -35,4 +36,5 @@ export {
     deleteAccount,
     getPreferencesAndPersonalisation,
     updatePreferencesAndPersonalisationController,
+    sendUserQuery,
 };
