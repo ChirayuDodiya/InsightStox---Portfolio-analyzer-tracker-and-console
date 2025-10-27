@@ -9,6 +9,10 @@ export const ResetPassword = async (req, res) => {
     }
 
     try {
+        const newPasswordValidation = checkPasswordSyntax(password);
+        if(!newPasswordValidation.success){
+            return res.status(401).json({success: false, message: "Password Syntex Not Valid"});
+        }
         const ispasswordValid = await bcrypt.compare(password, user.password);
         if (!ispasswordValid) {
             return res.status(401).json({success: false, message: "Current password is incorrect."});
