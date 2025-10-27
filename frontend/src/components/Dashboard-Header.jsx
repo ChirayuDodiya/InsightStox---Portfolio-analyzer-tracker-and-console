@@ -14,55 +14,55 @@ const DashboardHeader = () => {
       {isSearchActive && <div className="overlay" onClick={handleClose}></div>}
 
       <div className="dashboard-header">  
-        <div className="stock-display-container">
-          <div className="stock-info">
-            <div className="stock-header">
-              <span className="stock-name">NIFTY 50</span>
-              <span className="stock-exchange">NSE</span>
+        <div className="d-stock-display-container">
+          <div className="d-stock-info">
+            <div className="d-stock-header">
+              <span className="d-stock-name">NIFTY 50</span>
+              <span className="d-stock-exchange">NSE</span>
             </div>
-            <div className="stock-details">
-              <span className="stock-price">
+            <div className="d-stock-details">
+              <span className="d-stock-price">
                 25,237.05
-                <span className="change-icon negative pi pi-arrow-down"></span>
+                <span className="d-change-icon negative pi pi-arrow-down"></span>
               </span>
-              <span className="stock-change negative">
-                <span className="change-text">-96.55 (-0.38%)</span>
+              <span className="d-stock-change negative">
+                <span className="d-change-text">-96.55 (-0.38%)</span>
               </span>
             </div>
           </div>
 
           <span className="divider">|</span> 
 
-          <div className="stock-info">
-            <div className="stock-header">
-              <span className="stock-name">NIFTY BANK</span>
-              <span className="stock-exchange">NSE</span>
+          <div className="d-stock-info">
+            <div className="d-stock-header">
+              <span className="d-stock-name">NIFTY BANK</span>
+              <span className="d-stock-exchange">NSE</span>
             </div>
-            <div className="stock-details">
-              <span className="stock-price">
+            <div className="d-stock-details">
+              <span className="d-stock-price">
                 55,458.85
-                <span className="change-icon negative pi pi-arrow-down"></span>
+                <span className="d-change-icon negative pi pi-arrow-down"></span>
               </span>
-              <span className="stock-change negative">
-                <span className="change-text">-268.60 (-0.48%)</span>
+              <span className="d-stock-change negative">
+                <span className="d-change-text">-268.60 (-0.48%)</span>
               </span>
             </div>
           </div>
 
           <span className="divider">|</span> 
 
-          <div className="stock-info">
-            <div className="stock-header">
-              <span className="stock-name">SENSEX</span>
-              <span className="stock-exchange">BSE</span>
+          <div className="d-stock-info">
+            <div className="d-stock-header">
+              <span className="d-stock-name">SENSEX</span>
+              <span className="d-stock-exchange">BSE</span>
             </div>
-            <div className="stock-details">
-              <span className="stock-price">
+            <div className="d-stock-details">
+              <span className="d-stock-price">
                 82,626.23
-                <span className="change-icon negative pi pi-arrow-down"></span>
+                <span className="d-change-icon negative pi pi-arrow-down"></span>
               </span>
-              <span className="stock-change negative">
-                <span className="change-text">-347.73 (-0.42%)</span>
+              <span className="d-stock-change negative">
+                <span className="d-change-text">-347.73 (-0.42%)</span>
               </span>
             </div>
           </div>
@@ -80,7 +80,7 @@ const DashboardHeader = () => {
             <i className="pi pi-search popup-search-icon"></i>
             <input type="text"className="popup-search-input"placeholder="Search for a Stock (e.g., RELIANCE.NS, TATA MOTORS)"autoFocus/>
           </div>
-
+          <hr />
           <div className="search-results">
             <ul>
               <li><img src={historyicon}></img>Tata Investment Corporation Ltd.</li>

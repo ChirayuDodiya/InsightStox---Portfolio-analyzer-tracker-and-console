@@ -38,7 +38,7 @@ router.route("/registerWithGoogle").post(registerWithGoogle);
 router.route("/forgotPasswordOtpGeneration").post(SendForgotPasswordOtp);
 router.route("/verifyOtp").post(VerifyOtp);
 router.route("/setNewPassword").post(setNewPassword);
-router.route("/resetpassword").post(ResetPassword);
+router.route("/resetpassword").post(verifyToken, ResetPassword);
 router.route("/getDataAndPrivacy").get(verifyToken, dataAndPrivacy);
 router.route("/getEmailForgotPassword").post(SendForgotPasswordOtp);
 router.route("/updateProfileImage").patch(verifyToken, 

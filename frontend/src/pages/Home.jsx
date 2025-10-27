@@ -42,7 +42,7 @@ export const Home = () => {
 
           <div className="home-body">
             <ImgDiv className="home_img" src={home_background} alt="Home Background" />
-
+            
             <div className="middle_text_part">
               <TextDiv tagName="h1" className="title" data_aos="fade-down" val={<>Go Beyond Guesswork.<br />Invest with <span style={{color : "#00C853"}}>Insight</span>.</>}/>
               <TextDiv tagName="p" className="subtitle" data_aos="fade-up" val={<>Empower your financial decisions with our platform's <br /> advanced analytics and intelligent forecasting.</>}/>
