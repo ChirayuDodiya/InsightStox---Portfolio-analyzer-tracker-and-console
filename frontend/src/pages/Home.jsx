@@ -56,11 +56,11 @@ export const Home = () => {
       
 
           <div className="dash_board_template" data-aos="fade-up">
-            <h1>Unified Dashboard</h1>
+            <h1>Your entire portfolio, beautifully visualized.</h1>
             <img src={dashboard_background} alt="Dashboard Background" />
           </div>
 
-          <div className="features_div" id="feature">
+          <div className="features_div" id="feature" data-aos="fade-up">
             <TextDiv tagName="h1" className="features_title_div" val={<>Everything You Need to Invest <br /> Smarter</>}/>
             <div className={`features_section ${expandedCard ? 'expanded' : ''}`} >
 
@@ -202,7 +202,7 @@ export const Home = () => {
             <TextDiv className="_text" tagName="h1" tagName2="p" val={<>Ready to Take Control of Your <br/>Investments ?</>} val2="Sign up for free and start making smarter, data-backed decisions today."/>
             <Link to ={`/auth`} onClick={() => {sessionStorage.setItem("isLogin", "false");
                                               sessionStorage.setItem("forgotpassword", "false");}}>
-            <ButtonDiv className="login_btn navbar_btn" val="Sign Up Now" />
+            <ButtonDiv className="signup_btn" val="Sign Up Now" />
             </Link>
           </div>
         <Footer darkMode={darkMode}  

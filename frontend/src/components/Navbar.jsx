@@ -8,6 +8,7 @@ import profileicon from "../assets/profileicon.svg";
 import routeicon from "../assets/routeicon.svg";
 import exiticon from "../assets/exiticon.svg";
 import "./Navbar.css";
+// import tailwind from "tailwindcss/tailwind.css";
 const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
@@ -60,7 +61,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           {pageType === "home" && (
             <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
                                               sessionStorage.setItem("forgotpassword", "false");}}>
-              <ButtonDiv className="login_btn navbar_btn" val="Log In" />
+              <ButtonDiv className="login_btn" val="Log In" />
             </Link>
           )}
 
@@ -73,7 +74,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           )}
 
           <div className="toggle_btn">
-            <button onClick={() => setDarkMode(!darkMode)}>
+            <button style = {{display : "none"}}onClick={() => setDarkMode(!darkMode)}>
               <img src={themetoggledark} alt="Toggle Theme" />
             </button>
           </div>
@@ -90,20 +91,20 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
                                               sessionStorage.setItem("forgotpassword", "false");}}>
                 <li>Log In</li>
                 </Link>
-                <li><a href="#feature">Features</a></li>
-                <li><a href="#HowItWorks">How it Works?</a></li> 
-                <li className="lastli"><a href="#FAQs">FAQs</a></li>
+                <a href="#feature"><li>Features</li></a>
+                <a href="#HowItWorks"><li>How it Works?</li></a>
+                <a href="#FAQs"><li className="lastli">FAQs</li></a>
               </ul>
-              </div>
+            </div>
           ) : (
             <div className="menuoptions">
               <ul>
-              <li><a href="#">Dashboard</a> </li>
-              <li><a href="#">Portfolio</a></li>
-              <li><a href="#">AI Insights</a></li>
-              <li><a href="#">Compare Stocks</a></li>
-              <li className="lastli"><a href="#">Watchlist</a></li>
-             </ul> 
+              <a href="#"><li>Dashboard </li></a>
+              <a href="#"><li>Portfolio</li></a>
+              <a href="#"><li>AI Insights</li></a>
+              <a href="#"><li>Compare Stocks</li></a>
+              <a href="#"><li className="lastli">Watchlist</li></a>
+             </ul>
               </div>
           )}
         </div>
