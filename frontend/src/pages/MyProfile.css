@@ -1,0 +1,472 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.Page {
+    height: 100%;
+    width: 100%;
+    background-color: #000;
+}
+
+hr {
+    border: none;
+    border-top: 3px solid #28282889;
+    margin-right: 3rem;
+    margin-top: 1.8rem;
+}
+
+.PasswordEditFields input {
+    background-color: #000;
+    height: 3rem;
+    width: 15.4rem;
+    color: #fff;
+    border-radius: 6px;
+    padding: 0.3rem 0.8rem;
+    margin-right: 1.2rem;
+    border: 1px solid #fff;
+    flex-wrap: wrap;
+    flex: 1;
+    min-width: 0;
+}
+
+.InfRow1 input,
+.InfRow2 input {
+    background-color: #000;
+    border: 1px solid #fff;
+    height: 3rem;
+    min-width: 50%;
+    color: #fff;
+    border-radius: 6px;
+    padding: 0.3rem 0.8rem;
+}
+
+.popup {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.Container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: #000;
+}
+
+.Container::-webkit-scrollbar {
+    display: none;
+}
+
+.MainContent {
+    width: 60%;
+    min-height: 1080px;
+    margin-top: 7rem;
+    margin-bottom: 30px;
+    border: 4px solid #28282889;
+    background-color: #0f0f0f;
+
+}
+
+.PersProfile {
+    margin-bottom: 4rem;
+    margin-top: 3rem;
+    margin-left: 3rem;
+    font-size: 2rem;
+    display: flex;
+    font-weight: 500;
+    justify-content: space-between;
+
+}
+
+.InvProfile {
+    font-weight: 500;
+    margin-top: 3rem;
+    font-size: 2rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.EditDetails,
+.SaveBtn,
+.CancelBtn {
+    height: 30px;
+    color: #0f0f0f;
+    border: 1px solid #00c853;
+    background-color: #00c853;
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    margin-right: 3rem;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.EditDetails:hover,
+.SaveBtn:hover,
+.CancelBtn:hover {
+    color: #fff;
+    background-color: transparent;
+    border-color: #00c853;
+    transition: 0.3s;
+}
+
+.SaveCancelBtns {
+    display: flex;
+    margin-top: 2.5rem;
+    justify-content: space-between;
+    max-width: 30%;
+}
+
+.SaveBtn {
+    white-space: nowrap;
+}
+
+.Handler {
+    min-width: 20%;
+    display: block;
+}
+
+.PasswordEditFields {
+    min-width: 20%;
+    display: flex;
+}
+
+.ProfilePic {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    margin-left: 3rem;
+    margin-top: -20px;
+}
+
+.ProfilePic label {
+    font-weight: bold;
+    white-space: nowrap;
+    margin-bottom: 3rem;
+    display: inline-flex;
+    margin-left: 1rem;
+}
+
+.PicSection {
+    display: flex;
+    justify-content: space-between;
+    min-width: 100%;
+}
+
+.PicPlaceholder {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #000000;
+    margin-top: 3rem;
+    margin-left: -8.2rem;
+
+}
+
+.Information {
+    display: flex;
+    flex-direction: column;
+    margin-left: 3rem;
+}
+
+.InfRow1 label {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+    margin-top: 4rem;
+}
+
+.InfRow2 label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    margin-top: 2.5rem;
+}
+
+.InfRow3 {
+    display: flex;
+    margin-top: 0.8rem;
+}
+
+.InfRow6 {
+    display: flex;
+    margin-bottom: 3rem;
+}
+
+.InfRow3 label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    margin-top: 2.5rem;
+}
+
+.InfRow6 label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    margin-top: 2.5rem;
+}
+
+.InfRow5 label {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+    margin-top: 2.5rem;
+}
+
+.InfRow4 label {
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 0.6rem;
+    margin-top: 2.5rem;
+}
+
+.InvExp {
+    width: 50%;
+}
+
+.RiskProfile {
+    width: 50%;
+}
+
+.InfValueDropDown1 {
+    display: flex;
+}
+
+.InfValueDropDown2 {
+    display: flex;
+}
+
+.InfRow3 img {
+    display: flex;
+    width: 13px;
+    height: 13px;
+    margin-top: 37px;
+    margin-left: -25px;
+    transform: rotate(90deg);
+    cursor: pointer;
+}
+
+.InfRow3 select {
+    appearance: none;
+    margin-top: 1.2rem;
+    display: flex;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 0.7rem;
+    width: 85%;
+    cursor: pointer;
+    min-width: 0;
+    flex-shrink: 0;
+}
+
+.InfRow3 select:hover {
+    border-color: #00c853;
+    transition: 0.3s;
+    box-shadow: 0 0 4px#00c853;
+}
+
+.InfRow3 select:focus {
+    outline: none;
+    border-color: #00c853;
+}
+
+.InfRow3 option {
+    background-color: #616161;
+    color: #fff;
+}
+
+.AIspan {
+    display: block;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    opacity: 0.8;
+}
+
+.FinGoals {
+    width: 50%;
+}
+
+.InvHorizon {
+    width: 50%;
+}
+
+.InfValueDropDown3 {
+    display: flex;
+}
+
+.InfValueDropDown4 {
+    display: flex;
+}
+
+.InfRow6 img {
+    display: flex;
+    width: 13px;
+    height: 13px;
+    margin-top: 37px;
+    transform: rotate(90deg);
+    margin-left: -25px;
+    cursor: pointer;
+}
+
+.InfRow6 select {
+    appearance: none;
+    margin-top: 1.2rem;
+    display: flex;
+    border: 1px solid #fff;
+    border-radius: 5px;
+    padding: 0.7rem;
+    width: 85%;
+    cursor: pointer;
+    min-width: 0;
+    flex-shrink: 0;
+}
+
+.InfRow6 select:hover {
+    border-color: #00c853;
+    transition: 0.3s;
+    box-shadow: 0 0 4px#00c853;
+}
+
+.InfRow6 select:focus {
+    outline: none;
+    border-color: #00c853;
+}
+
+.InfRow6 option {
+    background-color: #616161;
+    color: #fff;
+}
+
+.InfRow3 hr {
+    width: 355px;
+}
+
+.InfRow6 hr {
+    width: 355px;
+}
+
+.InfValue {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+}
+
+
+.InfValue span {
+    opacity: 0.7;
+}
+
+.CurrPass, .NewPass, .ConfPass{
+    display: flex;
+    justify-content: space-between;
+    width: 32.8%;
+}
+
+.eye-icon{
+    margin-left: -3rem;
+}
+
+.password-toggle1, .password-toggle2, .password-toggle3 {
+    cursor: pointer;
+    width: auto;
+    margin-top: 0.8rem;
+    color: #00C853;
+    background: none;
+}
+
+.password-toggle1:hover, .password-toggle2:hover, .password-toggle3:hover {
+    background: none;
+    box-shadow: none;
+    color: #00a844;
+}
+
+.ChangePhoto {
+    display: block;
+    height: 30px;
+    white-space: nowrap;
+    color: #000;
+    margin-top: 4.5rem;
+    margin-left: 1.5rem;
+    border: 1px solid #00c853;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    background-color: #00c853;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.3s;
+}
+
+.ChangePhoto:hover {
+    background-color: transparent;
+    color: #fff;
+}
+
+.LinkedBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 94%;
+    border: 1px solid #00c853;
+    padding: 0.7rem 1rem;
+    height: 70px;
+    border-radius: 8px;
+    background-color: #111;
+    margin-top: 1rem;
+    gap: 1rem;
+    flex-wrap: nowrap;
+}
+
+.LinkedBox img {
+    height: 45px;
+    border: 1px solid #fff;
+    padding: 0.5rem;
+    border-radius: 15%;
+    flex-shrink: 0;
+}
+
+.InsideBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-width: 0;
+}
+
+.ServiceName,
+.AccName {
+    white-space: nowrap;
+    font-size: 0.9rem;
+    color: #fff;
+}
+
+.ServiceName {
+    font-weight: 600;
+}
+
+.Disconnect {
+    background: #C81B00;
+    color: #fff;
+    border: 1px solid #C81B00;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: 0.3s;
+    flex-shrink: 0;
+}
+
+.Disconnect:hover {
+    color: #fff;
+    background-color: transparent;
+}

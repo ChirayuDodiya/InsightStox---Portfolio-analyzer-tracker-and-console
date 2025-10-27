@@ -20,11 +20,18 @@
 .logo img{
     height: 45px;
 } 
-.profile_btn img,.toggle_btn img{
+.profile_btn img{
     cursor: pointer;
     height:2.75rem;
     width:2.75rem;
 }
+
+.toggle_btn img{
+    cursor: pointer;
+    height: 2rem;
+    width: 2rem;
+}
+
 .center_btn, .right_btn, .left_btn {
   display: flex;
   align-items: center;
@@ -85,28 +92,27 @@
   z-index: 1000;
 }
 .menuoptions li {
+  font-weight: 600;
   padding: 10px 12px;
-  border-radius: 8px;
+  border-radius: 2px;
   margin-bottom: 6px;
-  border-bottom:1px solid transparent;
+  border-bottom:1px solid rgba(255, 255, 255, 0.183);
   transition: all 0.25s ease;
   cursor: pointer;
 }
 
+
 .menuoptions li:hover {
-   background-color: rgba(255, 255, 255, 0.078);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(10px);
-  color : #00C853;
-  transform: translateX(3px);
-  box-shadow: 0 4px 12px rgba(0, 200, 83, 0.1);
+   border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.078);
+  transform: translateX(2px);
 }
 .profilepopup {
   position: fixed;
   top: 90px;
-  right: 3rem;
-  background-color: rgba(0, 0, 0, 0.432);
-  backdrop-filter: blur(3px);
+  right: 2rem;
+   background-color: rgba(0, 0, 0, 0.911);
+  backdrop-filter: blur(5px);
   color: white;
   min-width: 390px;
   /* height: fit-content; */
@@ -115,10 +121,9 @@
   padding: 0 16px 16px 16px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(0, 200, 83, 0.4);
-   animation: slideDown 0.3s ease;
+  animation: slideDown 0.3s ease;
   transform-origin: top right;
 }
-
 .popupheading {
   display: flex;
   gap: 10px;
@@ -149,22 +154,23 @@
 .popupoptions li {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   cursor: pointer;
-  padding: 10px 12px;
+  padding: 12px 12px;
   margin: 2px 0;
-  border-bottom:1px solid transparent;
-  border-radius: 8px;
+  /* border-bottom:1px solid rgba(255, 255, 255, 0.383); */
+  /* border-radius: 3px; */
+  transition: all 0.25s linear;
   font-size: 1rem;
 }
 
 .popupoptions li:hover {
    /* transform: translateX(3px); */
+   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.078);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(10px);
-  color : #00C853;
-  box-shadow: 0 4px 12px rgba(0, 200, 83, 0.1);
+  transform: translateX(2px);
 }
+
 .popupoptions img {
     height: 12px;
     width: 12px;
@@ -177,8 +183,8 @@
   position: fixed;
   top: 90px;
   right: 2rem;
-  background-color: rgba(0, 0, 0, 0.432);
-  backdrop-filter: blur(3px);
+ background-color: rgba(0, 0, 0, 0.911);
+  backdrop-filter: blur(5px);
   color: white;
   width: 250px;
   border-radius: 16px;
@@ -369,7 +375,8 @@
     cursor: pointer;
     padding: 1rem;
     color:#00C853;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.4rem;
   }
 
 .navbar {
@@ -396,6 +403,7 @@
   font-size: 0.95rem;
  
 }
+
 .popupoptions li {
   font-size: 0.9rem;
 }
@@ -423,7 +431,6 @@
   } 
   .mobile_menu {
     display: block ;
-    backdrop-filter: blur(5px);
     right: 2rem;
   }
   .menuoptions ul{
@@ -489,7 +496,6 @@
   } 
   .mobile_menu {
     display: block ;
-    backdrop-filter: blur(5px);
     right: 1.5rem;
   }
   .menuoptions ul{

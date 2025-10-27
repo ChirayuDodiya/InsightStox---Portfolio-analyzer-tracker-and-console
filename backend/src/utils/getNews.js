@@ -2,7 +2,7 @@ import yahooFinance from 'yahoo-finance2';
 export const getNews = async (symbol) => {
   try {
     const result = await yahooFinance.news(symbol);
-    console.log(result);
+    //console.log(result);
     return result.map((news) => ({
         title: news.title,
         link: news.link,

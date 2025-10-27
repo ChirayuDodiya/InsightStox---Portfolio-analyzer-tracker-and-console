@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
-import { searchUserByEmail } from "../../db/findUser.js";
 import bcrypt from "bcrypt";
+import { searchUserByEmail } from "../../db/findUser.js";
+import { checkEmailSyntax } from "../../utils/checkUserSyntax.js";
+import { checkPasswordSyntax } from "../../utils/checkUserSyntax.js";
 
 const loginUser = async (req, res) => {
     try {
@@ -13,12 +15,27 @@ const loginUser = async (req, res) => {
             });
         }
 
+        if (!checkEmailSyntax(email)) {
+            return res.status(400).json({
+                success: false,
+                message: "Please provide a valid email address",
+            });
+        }
+        
+        if (!checkPasswordSyntax(password)) {
+            return res.status(400).json({
+                success: false,
+                message:
+                    "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one special character and one number",
+            });
+        }
+
         const user = await searchUserByEmail(email);
 
         if(!user) {
             return res
                 .status(500)
-                .json({ success: false, message: "Database error. Please try again later" });
+                .json({ success: false, message: "Database error" });
         }
 
         if (user.length == 0) {
