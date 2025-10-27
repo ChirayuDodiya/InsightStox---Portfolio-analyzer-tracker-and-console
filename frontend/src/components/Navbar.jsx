@@ -123,8 +123,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
               <li>My Profile <img src={routeicon} alt="" /></li>
               <li>Manage <img src={routeicon} alt="" /></li>
               <li>Help & Support <img src={routeicon} alt="" /></li>
-              <li>Log Out <img src={exiticon} alt="" /></li>
-              <hr/>
+              <li className="lastli">Log Out <img src={exiticon} alt="" /></li>
             </ul>
           </div>
         </div>
