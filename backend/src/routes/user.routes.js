@@ -30,5 +30,5 @@ router.route("/registerWithGoogle").post(registerWithGoogle);
 router.route("/forgotPasswordOtpGeneration").post(SendForgotPasswordOtp);
 router.route("/verifyOtp").post(VerifyOtp);
 router.route("/setNewPassword").post(setNewPassword);
-router.route("/resetpassword").post(ResetPassword);
+router.route("/resetpassword").post(verifyToken, ResetPassword);
 export default router;
