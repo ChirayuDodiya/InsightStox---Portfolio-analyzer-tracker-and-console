@@ -82,38 +82,7 @@
     display: none;
 }
 
-.i1 {
-    margin-top: 4px;
-    margin-left: 144px;
+.go-to{
     height: 17px;
-}
-
-.i2 {
-    margin-top: 4px;
-    margin-left: 99px;
-    height: 17px;
-}
-
-.i3 {
-    margin-top: 4px;
-    margin-left: 154px;
-    height: 17px;
-}
-
-.i4 {
-    margin-top: 4px;
-    margin-left: 69px;
-    height: 17px;
-}
-
-.i5 {
-    margin-top: 4px;
-    margin-left: 69px;
-    height: 17px;
-}
-
-.i6 {
-    margin-top: 4px;
-    margin-left: 166px;
-    height: 17px;
+    width: 17px;
 }

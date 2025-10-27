@@ -43,12 +43,11 @@ export const Sidebar = ({ primaryData = {} }) => {
                     <button
                         key={index}
                         onClick={() => handleMenuClick(item)}
-                        className={`Sidebar-item ${currentField === item ? "Active" : ""
-                            }`}
+                        className={`Sidebar-item ${currentField === item ? "Active" : ""}`}
                     >
                         {item}
                         <img
-                            className={`i${index + 1}`}
+                            className={`go-to`}
                             src={item === "Logout" ? LogoutSym : GoToArrow}
                             alt="go-to"
                         />
