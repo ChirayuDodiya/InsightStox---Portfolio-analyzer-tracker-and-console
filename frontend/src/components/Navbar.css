@@ -20,18 +20,11 @@
 .logo img{
     height: 45px;
 } 
-.profile_btn img{
+.profile_btn img,.toggle_btn img{
     cursor: pointer;
     height:2.75rem;
     width:2.75rem;
 }
-
-.toggle_btn img{
-    cursor: pointer;
-    height: 2rem;
-    width: 2rem;
-}
-
 .center_btn, .right_btn, .left_btn {
   display: flex;
   align-items: center;
@@ -375,8 +368,7 @@
     cursor: pointer;
     padding: 1rem;
     color:#00C853;
-    font-size: 2.5rem;
-    margin-bottom: 0.4rem;
+    font-size: 2.2rem;
   }
 
 .navbar {
