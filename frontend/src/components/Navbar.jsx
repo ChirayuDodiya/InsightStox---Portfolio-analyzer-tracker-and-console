@@ -121,11 +121,10 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           <div className="popupoptions">
             <ul>
               <li>My Profile <img src={routeicon} alt="" /></li>
-              <li>Data & Privacy<img src={routeicon} alt="" /></li>
-              <li>Activity <img src={routeicon} alt="" /></li>
-              <li>Preferences <img src={routeicon} alt="" /></li>
+              <li>Manage <img src={routeicon} alt="" /></li>
               <li>Help & Support <img src={routeicon} alt="" /></li>
-              <li className="lastli">Log Out <img src={exiticon} alt="" /></li>
+              <li>Log Out <img src={exiticon} alt="" /></li>
+              <hr/>
             </ul>
           </div>
         </div>
