@@ -37,5 +37,32 @@ router.route("/registerWithGoogle").post(registerWithGoogle);
 router.route("/forgotPasswordOtpGeneration").post(SendForgotPasswordOtp);
 router.route("/verifyOtp").post(VerifyOtp);
 router.route("/setNewPassword").post(setNewPassword);
-router.route("/resetpassword").post(ResetPassword);
+router.route("/resetpassword").post(verifyToken, ResetPassword);
+router.route("/getDataAndPrivacy").get(verifyToken, dataAndPrivacy);
+router.route("/getEmailForgotPassword").post(SendForgotPasswordOtp);
+router.route("/updateProfileImage").patch(verifyToken, 
+    (req, res) => {
+    upload.single("profileImage")(req, res, (err) => {
+        if (err) {
+            return res
+                .status(400)
+                .json({ success: false, message: err.message });
+        }
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "Please provide a valid image.",
+            });
+        }
+        updateProfileImageController(req, res);
+    });
+});
+router.route("/toggleAiSuggestion").post(verifyToken, toggleAiSuggestionController);
+router.route("/downloadPortfolioData").get(verifyToken, createExcel);
+router.route("/deleteAccount").get(verifyToken, deleteAccount, logoutUser);
+router.route("/getPreferencesAndPersonalisation").get(verifyToken, getPreferencesAndPersonalisation);
+router.route("/updatePreferencesAndPersonalisation").patch(verifyToken, updatePreferencesAndPersonalisationController);
+router.route("/sendUserQuery").post(verifyToken, sendUserQuery);
+router.route("/sendUserSuggestion").post(verifyToken, sendUserSuggestion);
+
 export default router;
