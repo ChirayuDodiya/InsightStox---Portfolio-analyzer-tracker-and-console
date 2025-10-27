@@ -1,4 +1,5 @@
-import yahooFinance from 'yahoo-finance2';
+import YahooFinance from 'yahoo-finance2';
+const yahooFinance = new YahooFinance();
 export const getNews = async (symbol) => {
   try {
     const result = await yahooFinance.news(symbol);

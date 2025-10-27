@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt'
-import {transporter} from '../../utils/nodemailer.js';
 import crypto from 'crypto';
 import { otpStore } from '../../utils/registrationOtpStore.js';
 import { searchUserByEmail } from '../../db/findUser.js';
 import { checkUserSyntax } from '../../utils/checkUserSyntax.js';
 import { getOtpEmailTemplate } from '../../utils/mailOtpTemplate.js';
+import { sendMail } from '../../utils/nodemailer.js';
 const registerOtpGeneration = async (req, res)=>{
     let {name,email,password} = req.body;
     if(!name||!email||!password){
@@ -39,8 +39,12 @@ const registerOtpGeneration = async (req, res)=>{
             to: email,
             subject: "Your One-Time Password (OTP) for Insightstox",
             html: getOtpEmailTemplate(otp,"complete your registration on InsightStox.","5 minutes."),};
-        await transporter.sendMail(mailOptions)
-        return res.status(200).json({success: true});
+        if(sendMail(mailOptions)){
+            return res.status(200).json({success: true});
+        }
+        else{
+            return res.status(500).json({success: false,message: "Failed to send OTP email."});
+        }
     } catch(error){
         console.log('OTP generation error:',error);
         res.status(401).json({success: false,message: error.message})

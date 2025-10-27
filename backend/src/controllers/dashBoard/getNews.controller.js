@@ -1,8 +1,7 @@
-import yahooFinance from 'yahoo-finance2';
 import { getData } from '../../utils/getData.js';
 
 export const getNews = async (req,res) => { 
-    const {query} = req.body;
+    const {query} = req.params;
     if(!query || query.length<1){
         return res.status(401).json({success:false,message:"Query is required"})
     }

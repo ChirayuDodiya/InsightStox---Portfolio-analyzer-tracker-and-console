@@ -1,6 +1,7 @@
 import { getPrice } from "../utils/getQuotes.js";
 import { sql } from "./dbConnection.js";
-import yahooFinance from "yahoo-finance2";
+import YahooFinance from 'yahoo-finance2';
+const yahooFinance = new YahooFinance();
     export const insertTransaction = async (email, symbol, quantity, transaction_type, time) => {
         try {
             if(transaction_type==='SELL'){                    

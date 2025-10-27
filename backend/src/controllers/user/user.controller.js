@@ -17,6 +17,7 @@ import { getPreferencesAndPersonalisation } from "./getPreferencesAndPersonalisa
 import { updatePreferencesAndPersonalisationController } from "./updatePreferencesAndPersonalisation.controller.js";
 import { sendUserQuery } from "./sendUserQuery.controller.js";
 import { sendUserSuggestion } from "./sendUserSuggestion.controller.js";
+import { checkToken } from "./checkToken.controller.js";
 export {
     loginUser,
     logoutUser,
@@ -39,4 +40,5 @@ export {
     updatePreferencesAndPersonalisationController,
     sendUserQuery,
     sendUserSuggestion,
+    checkToken,
 };

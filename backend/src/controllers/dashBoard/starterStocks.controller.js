@@ -1,4 +1,5 @@
-import yahooFinance from "yahoo-finance2";
+import YahooFinance from 'yahoo-finance2';
+const yahooFinance = new YahooFinance();
 import { mapStockData, starterStocks } from "../../utils/requiredMap.js";
 
 export const starter = async(req,res)=>{

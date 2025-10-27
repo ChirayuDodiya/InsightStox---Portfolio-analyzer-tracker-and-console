@@ -1,5 +1,7 @@
-import yahooFinance from 'yahoo-finance2';
+import YahooFinance from 'yahoo-finance2';
+const yahooFinance = new YahooFinance();
 import { mapStockData } from './requiredMap.js';
+console.log(YahooFinance);
 export const getData  = async (searchitem) => {
     const searchOptions = {
         enableFuzzyQuery: true,

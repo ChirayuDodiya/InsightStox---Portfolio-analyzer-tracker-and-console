@@ -21,6 +21,7 @@ import {
     updatePreferencesAndPersonalisationController,
     sendUserQuery,
     sendUserSuggestion,
+    checkToken,
 } from "../controllers/user/user.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -64,5 +65,5 @@ router.route("/getPreferencesAndPersonalisation").get(verifyToken, getPreference
 router.route("/updatePreferencesAndPersonalisation").patch(verifyToken, updatePreferencesAndPersonalisationController);
 router.route("/sendUserQuery").post(verifyToken, sendUserQuery);
 router.route("/sendUserSuggestion").post(verifyToken, sendUserSuggestion);
-
+router.route("/checkToken").get(checkToken);
 export default router;

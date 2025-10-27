@@ -3,4 +3,5 @@ import { starter } from "./starterStocks.controller.js";
 import { getNews } from "./getNews.controller.js";
 import { calculatePortfolio } from "./portfolioCalculation.controller.js";
 import { addTransaction } from "./addTransaction.controller.js";
-export {searchStock, starter, getNews, calculatePortfolio, addTransaction};
+import { showWatchlist,removeFromWatchlist,addToWatchlist } from "./watchlist.controller.js";
+export {searchStock, starter, getNews, calculatePortfolio, addTransaction, showWatchlist,removeFromWatchlist,addToWatchlist};

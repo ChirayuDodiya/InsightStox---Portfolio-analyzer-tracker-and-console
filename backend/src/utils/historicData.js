@@ -1,4 +1,5 @@
-import yahooFinance from "yahoo-finance2";
+import YahooFinance from 'yahoo-finance2';
+const yahooFinance = new YahooFinance();
 export const getHistoricData = async (symbol, period1, period2, interval) => {
   try {
     const queryOptions = { period1, period2, interval };
