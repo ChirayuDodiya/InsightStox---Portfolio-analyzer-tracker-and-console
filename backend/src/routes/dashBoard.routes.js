@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { graphFormetData } from "../controllers/dashBoard/graphDataFromet.js";
-import { getNews,starter,searchStock, calculatePortfolio, addTransaction, showWatchlist, addToWatchlist, removeFromWatchlist } from "../controllers/dashBoard/dashBoard.controller.js";
+import { getNews,starter,searchStock, calculatePortfolio, addTransaction, showWatchlist, addToWatchlist, removeFromWatchlist, getStockAllocation } from "../controllers/dashBoard/dashBoard.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 
 const router = Router();
@@ -14,4 +14,5 @@ router.route("/addTransaction").post(verifyToken,addTransaction);
 router.route("/displayWatchlist").get(verifyToken,showWatchlist);
 router.route("/addToWatchlist").post(verifyToken,addToWatchlist);
 router.route("/removeFromWatchlist").post(verifyToken,removeFromWatchlist);
+router.route("/stockAllocation").get(verifyToken,getStockAllocation);
 export default router;

@@ -3,7 +3,7 @@ const yahooFinance = new YahooFinance();
 export const getPrice = async (symbols) => {
     try {
         const result = await yahooFinance.quoteSummary(symbols, {
-      modules: ["price", "summaryProfile"],
+      modules: ["price"],
     });
         //console.log(result);
 

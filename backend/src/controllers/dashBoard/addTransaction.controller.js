@@ -2,10 +2,13 @@ import { insertTransaction } from "../../db/insertTransaction.js";
 
 
 export const addTransaction = async (req, res) => {
-    const { symbol, type, quantity,transaction_type } = req.body;
+    const { symbol, quantity,transaction_type } = req.body;
     const email = req.user.email;
-    if (!email || !symbol || !type || !quantity || !transaction_type) {
+    if (!email || !symbol || !quantity || !transaction_type) {
         return res.status(401).json({ success: false, message: "All fields are required" });
+    }
+    if (quantity <= 0) {
+        return res.status(400).json({ success: false, message: "Quantity must be greater than zero" });
     }
     try {
         const now = new Date();
