@@ -9,7 +9,7 @@ export const getPrice = async (symbols) => {
 
         return {
             symbol: result.price.symbol ?? null,
-            MarketPrice: result.price.regularMarketPrice ?? null,
+            MarketPrice: result.price.regularMarketPrice ?? 0,
             currency: result.price.currency ?? null,
             close: result.price.regularMarketPreviousClose ?? null,
             percentageChange: result.price.regularMarketChangePercent ?? null,
