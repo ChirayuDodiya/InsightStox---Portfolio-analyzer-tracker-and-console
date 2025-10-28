@@ -1,4 +1,5 @@
-import yahooFinance from "yahoo-finance2";
+import YahooFinance from "yahoo-finance2";
+const yahooFinance = new YahooFinance()
 export const getPrice = async (symbols) => {
     try {
         const result = await yahooFinance.quoteSummary(symbols, {
@@ -8,9 +9,9 @@ export const getPrice = async (symbols) => {
 
         return {
             symbol: result.price.symbol ?? null,
-            MarketPrice: result.price.regularMarketPrice ?? null,
+            MarketPrice: result.price.regularMarketPrice ?? 0,
             currency: result.price.currency ?? null,
-            close: result.price.regularMarketPreviousClose ?? null,
+            close: result.price.regularMarketPreviousClose ?? 0,
         };
     } catch (error) {
         console.log('Error fetching quotes:', error);
