@@ -5,4 +5,5 @@ import { calculatePortfolio } from "./portfolioCalculation.controller.js";
 import { addTransaction } from "./addTransaction.controller.js";
 import { showWatchlist,removeFromWatchlist,addToWatchlist } from "./watchlist.controller.js";
 import { getStockAllocation } from "./stockAllocation.controller.js";
-export {searchStock, starter, getNews, calculatePortfolio, addTransaction, showWatchlist,removeFromWatchlist,addToWatchlist,getStockAllocation};
+import { getMarketGainers,getMarketactiveStocks,getMarketLosers } from "./marketMovers.controller.js";
+export {searchStock, starter, getNews, calculatePortfolio, addTransaction, showWatchlist,removeFromWatchlist,addToWatchlist,getStockAllocation,getMarketGainers,getMarketactiveStocks,getMarketLosers};
