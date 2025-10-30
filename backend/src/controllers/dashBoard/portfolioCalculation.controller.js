@@ -23,7 +23,7 @@ export const calculatePortfolio = async (req, res) => {
                 }
                 console.log(q);
                 priceData.add(row.symbol,{current: q.MarketPrice||0,
-                yesterdayClose: q.close,
+                yesterdayClose: q.close||0,
                 currency: q.currency,
                 expiresAt: Date.now()+60*1000});
             }

@@ -19,6 +19,7 @@ export const getStockAllocation = async (req, res) => {
                     continue;
                 }
                 priceData.add(stock.symbol,{current: q.MarketPrice||0,
+                yesterdayClose: q.close||0,
                 currency: q.currency,
                 expiresAt: Date.now()+60*1000});
             }
