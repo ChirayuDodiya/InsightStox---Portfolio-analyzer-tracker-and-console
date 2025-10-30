@@ -201,7 +201,7 @@ export const MyProfile = () => {
                                                     onChange={(e) => setCurrPass(e.target.value)}
                                                 />
                                                 <a className="password-toggle1" onClick={() => setShowPassword1(!showPassword1)}>
-                                                    <span className="eye-icon">
+                                                    <span className="eye-symbol">
                                                         <i className={`pi ${showPassword1 ? "pi-eye-slash" : "pi-eye"}`}></i>
                                                     </span>
                                                 </a>
