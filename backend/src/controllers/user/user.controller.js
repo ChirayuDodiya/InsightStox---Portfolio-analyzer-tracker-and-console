@@ -4,11 +4,21 @@ import { registerOtpGeneration } from "./registerOtpGeneration.controller.js";
 import { register } from "./verifyAndRegister.controller.js";
 import { loginWithGoogle } from "./loginWithGoogle.controller.js";
 import { updateProfileImageController } from "./updateProfileImage.controller.js";
-import { updateProfileInfoController } from "./updateProfileInfo.controller.js";
+import {
+    updateProfileNameController,
+    updateProfileInvestmentExperienceController,
+    updateProfileRiskProfileController,
+    updateProfileFinancialGoalsController,
+    updateProfileInvestmentHorizonController,
+} from "./updateProfileInfo.controller.js";
 import { getProfile } from "./getProfile.controller.js";
 import { dataAndPrivacy } from "./dataAndPrivacy.controller.js";
 import { toggleAiSuggestionController } from "./toggleAiSuggestion.controller.js";
-import { SendForgotPasswordOtp, VerifyOtp, setNewPassword} from "./forgotPassword.controller.js";
+import {
+    SendForgotPasswordOtp,
+    VerifyOtp,
+    setNewPassword,
+} from "./forgotPassword.controller.js";
 import { ResetPassword } from "./resetPassword.controller.js";
 import { registerWithGoogle } from "./registerWithGoogle.controller.js";
 import { createExcel } from "./downloadPortfolioData.controller.js";
@@ -24,7 +34,11 @@ export {
     register,
     loginWithGoogle,
     updateProfileImageController,
-    updateProfileInfoController,
+    updateProfileNameController,
+    updateProfileInvestmentExperienceController,
+    updateProfileRiskProfileController,
+    updateProfileFinancialGoalsController,
+    updateProfileInvestmentHorizonController,
     getProfile,
     dataAndPrivacy,
     toggleAiSuggestionController,

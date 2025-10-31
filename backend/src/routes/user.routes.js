@@ -6,7 +6,11 @@ import {
     register,
     registerOtpGeneration,
     updateProfileImageController,
-    updateProfileInfoController,
+    updateProfileNameController,
+    updateProfileInvestmentExperienceController,
+    updateProfileRiskProfileController,
+    updateProfileFinancialGoalsController,
+    updateProfileInvestmentHorizonController,
     getProfile,
     registerWithGoogle,
     SendForgotPasswordOtp,
@@ -24,14 +28,20 @@ import {
 } from "../controllers/user/user.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
+import { verifyUserLoginStatus } from "../middlewares/verifyUserLoginStatus.middleware.js";
+
 const router = Router();
 
-router.route("/login").post(loginUser);
+router.route("/login").post(verifyUserLoginStatus,loginUser);
 router.route("/logout").post(verifyToken, logoutUser);
-router.route("/registerOtpGeneration").post(registerOtpGeneration);
-router.route("/register").post(register);
-router.route("/googleLogin").post(loginWithGoogle);
-router.route("/updateProfileInfo").patch(verifyToken, updateProfileInfoController);
+router.route("/registerOtpGeneration").post(verifyUserLoginStatus,registerOtpGeneration);
+router.route("/register").post(verifyUserLoginStatus,register);
+router.route("/googleLogin").post(verifyUserLoginStatus,loginWithGoogle);
+router.route("/updateProfileName").patch(verifyToken, updateProfileNameController);
+router.route("/updateProfileInvestmentExperience").patch(verifyToken, updateProfileInvestmentExperienceController);
+router.route("/updateProfileRiskProfile").patch(verifyToken, updateProfileRiskProfileController);
+router.route("/updateProfileFinancialGoal").patch(verifyToken, updateProfileFinancialGoalsController)
+router.route("/updateProfileInvestmentHorizon").patch(verifyToken, updateProfileInvestmentHorizonController);
 router.route("/myProfile").get(verifyToken, getProfile);
 router.route("/registerWithGoogle").post(registerWithGoogle);
 router.route("/forgotPasswordOtpGeneration").post(SendForgotPasswordOtp);
