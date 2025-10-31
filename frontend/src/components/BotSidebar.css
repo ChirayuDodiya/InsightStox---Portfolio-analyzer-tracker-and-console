@@ -1,0 +1,63 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.bot-sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    min-width: 280px;
+    padding: 20px;
+    gap: 10px;
+    border-right: 2px solid #00C853;
+    backdrop-filter: blur(20px);
+    transition: all 0.5s;
+    position: relative;
+    background-color: #0b0b0b;
+    color: white;
+  overflow: hidden;
+}
+.bot-logo-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin : 10px 0;
+    padding: 10px;
+
+}
+.bot-sidebar-logo{
+    width: 100%;
+    max-width: 200px;
+}
+.bot-sidebar.close {
+  min-width: 50px;
+  overflow: hidden;
+  padding: 10px 5px;
+  align-items: center;
+}
+
+
+/* Toggle button */
+.bot-toggle-sidebar-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 2px;
+  /* background: #00c853; */
+  border: none;
+  /* color: white; */
+  /* padding: 2px 5px; */
+  cursor: pointer;
+  /* box-shadow: 0 2px 10px rgba(0, 200, 83, 0.4); */
+  transition: all 0.3s linear;
+  z-index: 10;
+}
+.bot-sidebar img {
+  height: 45px;
+}
+
+.bot-toggle-sidebar-btn:active {
+  transform: scale(0.95);
+}
