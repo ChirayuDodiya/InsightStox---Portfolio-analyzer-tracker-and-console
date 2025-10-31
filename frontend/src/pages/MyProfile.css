@@ -34,8 +34,7 @@ hr {
     min-width: 0;
 }
 
-.InfRow1 input,
-.InfRow2 input {
+.InfRow1 input {
     background-color: #000;
     border: 1px solid #fff;
     height: 3rem;
@@ -43,6 +42,18 @@ hr {
     color: #fff;
     border-radius: 6px;
     padding: 0.3rem 0.8rem;
+}
+
+.nameWrap{
+    position: relative;
+    min-width: 100%;
+}
+
+.name-error{
+    position: absolute;
+    top: 100%;
+    width: 90%;
+    font-size: 0.8rem;
 }
 
 .popup {
@@ -91,6 +102,12 @@ hr {
     justify-content: space-between;
 }
 
+.InfHeader{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
 .EditDetails,
 .SaveBtn,
 .CancelBtn {
@@ -103,6 +120,10 @@ hr {
     margin-right: 3rem;
     cursor: pointer;
     border-radius: 6px;
+}
+
+.EditDetails{
+    margin-top: 4rem;
 }
 
 .EditDetails:hover,
@@ -369,11 +390,13 @@ hr {
 
 .CurrPass, .NewPass, .ConfPass{
     display: flex;
+    position: relative;
     justify-content: space-between;
-    width: 32.8%;
+    flex-wrap: wrap;
+    width: 32%;
 }
 
-.eye-symbol {
+.eye-symbol{
     margin-left: -3rem;
 }
 
@@ -389,6 +412,13 @@ hr {
     background: none;
     box-shadow: none;
     color: #00a844;
+}
+
+.pass-error, .confirm-pass-error{
+    position: absolute;
+    top: 100%;
+    width: 90%;
+    font-size: 0.8rem;
 }
 
 .ChangePhoto {
@@ -452,21 +482,4 @@ hr {
 
 .ServiceName {
     font-weight: 600;
-}
-
-.Disconnect {
-    background: #C81B00;
-    color: #fff;
-    border: 1px solid #C81B00;
-    padding: 0.3rem 0.8rem;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: 0.3s;
-    flex-shrink: 0;
-}
-
-.Disconnect:hover {
-    color: #fff;
-    background-color: transparent;
 }

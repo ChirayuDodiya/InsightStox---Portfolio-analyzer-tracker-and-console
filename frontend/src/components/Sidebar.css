@@ -33,7 +33,9 @@
 
 .Avatar img {
     width: 80px;
+    height: 80px;
     padding-top: 0.14rem;
+    border-radius: 50%;
 }
 
 .Sidebar h2 {

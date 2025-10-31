@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import ButtonDiv from "./ButtonDiv.jsx";
 import web_logo_without_bg_darkmode from "../assets/web_logo_without_bg_darkmode.png";
 import web_logo_without_bg_lightmode from "../assets/web_logo_without_bg_lightmode.png";
@@ -7,15 +7,21 @@ import themetoggledark from "../assets/themetoggledark.svg";
 import profileicon from "../assets/profileicon.svg";
 import routeicon from "../assets/routeicon.svg";
 import exiticon from "../assets/exiticon.svg";
+import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 // import tailwind from "tailwindcss/tailwind.css";
 const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
+
+  const navigate = useNavigate();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
   const handleProfileClick = () => setIsProfileOpen(true);
   const handleProfileClose = () => setIsProfileOpen(false);
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen); 
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
 
   useEffect(() => {
   const handleResize = () => {
@@ -120,7 +126,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           </div>
           <div className="popupoptions">
             <ul>
-              <li>My Profile <img src={routeicon} alt="" /></li>
+              <li onClick={() => handleNavigation("/myprofile")}>My Profile <img src={routeicon} alt="" /></li>
               <li>Manage <img src={routeicon} alt="" /></li>
               <li>Help & Support <img src={routeicon} alt="" /></li>
               <li className="lastli">Log Out <img src={exiticon} alt="" /></li>
