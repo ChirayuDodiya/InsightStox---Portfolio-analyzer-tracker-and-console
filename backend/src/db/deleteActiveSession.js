@@ -10,4 +10,4 @@ const deleteActiveSessionByToken = async (token) => {
     }
 };
 
-export { deleteActiveSessionByEmail, deleteActiveSessionByToken };
+export { deleteActiveSessionByToken };

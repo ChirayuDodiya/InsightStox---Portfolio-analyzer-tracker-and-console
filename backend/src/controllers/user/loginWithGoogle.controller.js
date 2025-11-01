@@ -31,7 +31,7 @@ const loginWithGoogle = async (req, res) => {
         return res.status(401).json({ success: false, message: "User already exists with this email. Please login using email and password." });
     }
     const token = jwt.sign(
-      { user: user.id, email: user.email,version:user.tokenversion },
+      { user: user.id, email: user.email,tokenversion:user.tokenversion },
         process.env.JWT_SECRET,
       {
         expiresIn: process.env.JWT_EXPIRE,

@@ -31,7 +31,7 @@ export const register = async (req,res)=>{
             return res.status(500).json({success: false,message: 'Database error occurred during registration'})
         }
         otpStore.remove(email);
-        const token = jwt.sign({user:user[0].id,email:user[0].email,version:user[0].tokenversion}, process.env.JWT_SECRET,{expiresIn: process.env.JWT_EXPIRE})
+        const token = jwt.sign({user:user[0].id,email:user[0].email,tokenversion:user[0].tokenversion}, process.env.JWT_SECRET,{expiresIn: process.env.JWT_EXPIRE})
         let browser = (browserDetails?.name + " " + browserDetails?.version);
         if(!browser || browser === "undefined undefined") browser = "Unknown";
 
