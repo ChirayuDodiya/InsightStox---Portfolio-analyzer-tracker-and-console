@@ -1,5 +1,4 @@
 import React,{useEffect,useRef, useState} from "react";
-import { useAppContext } from "../context/AppContext";
 import "../components/ChatWindow.css";
 import axios from "axios";
 // Renders Markdown text (like **bold**, _italic_, code blocks) as proper HTML inside React.
@@ -9,6 +8,7 @@ import remarkGfm from 'remark-gfm';
 const ChatWindow = () => {
     const [messages,setMessages] = useState([]);
     const [input,setInput] = useState("");
+    const [chatStart,setChatStart] = useState(false);
     const chatEndRef = useRef(null);
 
     useEffect(()=>{
@@ -44,28 +44,28 @@ const ChatWindow = () => {
     }
 
   return (
-    <div className="chat-window">
-            <>
-            <div className="chat-header">
-                <h3>Your are chatting with our InsightStox Ai Bot</h3>
-            </div>
-            <div className="chat-messages">
+    <div className="chat-window">    
+    {!chatStart && (
+        <div className="chat-welcome-message">
+                    {/* here take name from backend */}
+                    <h2>Hello, <span className="user-name">Ayush!</span></h2>
+                    <h3>How can I help you Today?</h3>
+        </div>
+    )}
+        <div className="chat-messages">
                 {messages.map((msg) => (
                     <div className={`chat-bubble ${msg.sender}-bubble ${msg.typing ? "typing" : ""}`} key={msg.id}>
                         <div>{msg.text}</div>
                     </div>
                 ))}
                 <div ref={chatEndRef} />
-            </div>
+        </div>
 
-            <div className="chat-input-area">
-                <input type="text" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKeyDown} placeholder="Type a message..." className="chat-input"/>
+        <div className="chat-input-area">
+                <input type="text" value={input} onChange={(e) => {setInput(e.target.value),setChatStart(true)}} onKeyDown={handleKeyDown} placeholder="Type a message..." className="chat-input"/>
                 <button className="send-btn" onClick={handleSend}>Send</button>
-            </div>
-            </>
-
+        </div>
     </div>
-
   )
 }
 

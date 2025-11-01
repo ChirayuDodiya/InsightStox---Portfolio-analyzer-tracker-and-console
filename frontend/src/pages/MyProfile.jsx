@@ -8,7 +8,7 @@ import GoToArrow from "../assets/routeicon.svg";
 import GoogleLogo from "../assets/google_logo.svg";
 import Footer from '../components/Footer.jsx';
 import { Sidebar } from "../components/Sidebar.jsx";
-
+import { useAppContext } from "../context/AppContext";
 export const MyProfile = () => {
 
     const [userInfo, setUserInfo] = useState({
@@ -16,7 +16,7 @@ export const MyProfile = () => {
         email: "managethisstuff@gmail.com",
         password: "AaVvBb126#$*"
     });
-    const [darkMode, setDarkMode] = useState(true);
+    const { darkMode, setDarkMode } = useAppContext();
     const [investmentExp, setInvestmentExp] = useState("");
     const [riskProfile, setRiskProfile] = useState("");
     const [InvHorizon, setInvHorizon] = useState("");

@@ -7,9 +7,10 @@ import DashboardHeader from '../components/Dashboard-Header.jsx';
 import MarketMovers from '../components/MarketMovers/MarketMovers'
 import WelcomeInvestor from '../components/WelcomeInvestor/WelcomeInvestor'
 import Navbar from '../components/Navbar.jsx';
+import { useAppContext } from "../context/AppContext";
 export const Dashboard = () => {
-  const [darkMode, setDarkMode] = useState(true);
- 
+  const { darkMode, setDarkMode } = useAppContext();
+
   return (
     <>
     <div className="dashboard-container">
