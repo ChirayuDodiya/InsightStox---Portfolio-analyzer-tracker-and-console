@@ -1,37 +1,82 @@
-import { updatePreferencesAndPersonalisation } from "../../db/updatePreferencesAndPersonalisation.js";
+import { updateTheme } from "../../db/updatePreferencesAndPersonalisation.js";
+import { updateDashboardLayout } from "../../db/updatePreferencesAndPersonalisation.js";
 
-const updatePreferencesAndPersonalisationController = async (req, res) => {
+const updateThemeController = async (req, res) => {
     try {
-        const { theme, dashboardlayout } = req.body;
-        if (!theme || !dashboardlayout) {
-            return res.status(400).json({
-                success: false,
-                message: "theme and dashboardlayout are required"
-            })
+        const { theme } = req.body;
+        if (!theme) {
+            return res
+                .status(400)
+                .json({ success: false, message: "theme is required" });
         }
 
         const email = req.user.email;
-        const PrevTheme = req.user.theme;
-        const PrevDashboardLayout = req.user.dashboardlayout;
+        const prevTheme = req.user.theme;
 
-        if (theme === PrevTheme && dashboardlayout === PrevDashboardLayout) {
-            return res.status(200).json({ success: false, message: "Nothing to update" });
+        if (theme === prevTheme) {
+            return res
+                .status(200)
+                .json({ success: false, message: "Nothing to update" });
         }
 
-        const result = await updatePreferencesAndPersonalisation(email, theme, dashboardlayout);
+        const result = await updateTheme(email, theme);
+
         if (!result || result.length === 0) {
-            return res.status(500).json({ success: false, message: "Database error while updating preferences and personalisation" });
+            return res.status(500).json({
+                success: false,
+                message: "Database error while updating theme",
+            });
         }
 
         req.user.theme = theme;
-        req.user.dashboardlayout = dashboardlayout;
 
-        return res.status(200).json({ success: true, message: "Preferences and personalisation updated successfully" });
-
+        return res
+            .status(200)
+            .json({ success: true, message: "Theme updated successfully" });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ success: false, message: error.message });
     }
-}
+};
 
-export { updatePreferencesAndPersonalisationController };
+const updateDashboardLayoutController = async (req, res) => {
+    try {
+        const { dashboardlayout } = req.body;
+        if (!dashboardlayout) {
+            return res.status(400).json({
+                success: false,
+                message: "dashboardlayout is required",
+            });
+        }
+
+        const email = req.user.email;
+        const prevDashboardLayout = req.user.dashboardlayout;
+
+        if (dashboardlayout === prevDashboardLayout) {
+            return res
+                .status(200)
+                .json({ success: false, message: "Nothing to update" });
+        }
+
+        const result = await updateDashboardLayout(email, dashboardlayout);
+
+        if (!result || result.length === 0) {
+            return res.status(500).json({
+                success: false,
+                message: "Database error while updating dashboard layout",
+            });
+        }
+
+        req.user.dashboardlayout = dashboardlayout;
+
+        return res.status(200).json({
+            success: true,
+            message: "Dashboard layout updated successfully",
+        });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+export { updateThemeController, updateDashboardLayoutController };

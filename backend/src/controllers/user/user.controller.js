@@ -24,7 +24,8 @@ import { registerWithGoogle } from "./registerWithGoogle.controller.js";
 import { createExcel } from "./downloadPortfolioData.controller.js";
 import { deleteAccount } from "./deleteAccount.controller.js";
 import { getPreferencesAndPersonalisation } from "./getPreferencesAndPersonalisation.controller.js";
-import { updatePreferencesAndPersonalisationController } from "./updatePreferencesAndPersonalisation.controller.js";
+import { updateThemeController } from "./updatePreferencesAndPersonalisation.controller.js";
+import { updateDashboardLayoutController } from "./updatePreferencesAndPersonalisation.controller.js";
 import { sendUserQuery } from "./sendUserQuery.controller.js";
 import { sendUserSuggestion } from "./sendUserSuggestion.controller.js";
 export {
@@ -50,7 +51,8 @@ export {
     createExcel,
     deleteAccount,
     getPreferencesAndPersonalisation,
-    updatePreferencesAndPersonalisationController,
+    updateThemeController,
+    updateDashboardLayoutController,
     sendUserQuery,
     sendUserSuggestion,
 };

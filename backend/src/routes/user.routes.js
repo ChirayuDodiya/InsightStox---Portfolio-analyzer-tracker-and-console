@@ -22,7 +22,8 @@ import {
     createExcel,
     deleteAccount,
     getPreferencesAndPersonalisation,
-    updatePreferencesAndPersonalisationController,
+    updateThemeController,
+    updateDashboardLayoutController,
     sendUserQuery,
     sendUserSuggestion,
 } from "../controllers/user/user.controller.js";
@@ -71,7 +72,8 @@ router.route("/toggleAiSuggestion").post(verifyToken, toggleAiSuggestionControll
 router.route("/downloadPortfolioData").get(verifyToken, createExcel);
 router.route("/deleteAccount").get(verifyToken, deleteAccount, logoutUser);
 router.route("/getPreferencesAndPersonalisation").get(verifyToken, getPreferencesAndPersonalisation);
-router.route("/updatePreferencesAndPersonalisation").patch(verifyToken, updatePreferencesAndPersonalisationController);
+router.route("/updateTheme").patch(verifyToken, updateThemeController);
+router.route("/updateDashboardLayout").patch(verifyToken, updateDashboardLayoutController);
 router.route("/sendUserQuery").post(verifyToken, sendUserQuery);
 router.route("/sendUserSuggestion").post(verifyToken, sendUserSuggestion);
 

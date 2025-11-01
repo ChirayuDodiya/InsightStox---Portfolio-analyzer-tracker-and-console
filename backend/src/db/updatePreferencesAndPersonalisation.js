@@ -1,14 +1,25 @@
 import { sql } from "./dbConnection.js";
 
-const updatePreferencesAndPersonalisation = async (email,theme,dashboardlayout) => {
+const updateTheme = async (email, theme) => {
     try {
         const result =
-        await sql`UPDATE "user" SET theme=${theme},dashboardlayout=${dashboardlayout} WHERE email=${email} RETURNING id`;
+            await sql`UPDATE "user" SET theme=${theme} WHERE email=${email} RETURNING id`;
         return result;
     } catch (error) {
-        console.log("Error updating profile image:", error);
+        console.log("Error updating theme:", error);
         return null;
     }
 };
 
-export { updatePreferencesAndPersonalisation };
+const updateDashboardLayout = async (email, dashboardlayout) => {
+    try {
+        const result =
+            await sql`UPDATE "user" SET dashboardlayout=${dashboardlayout} WHERE email=${email} RETURNING id`;
+        return result;
+    } catch (error) {
+        console.log("Error updating dashboard layout:", error);
+        return null;
+    }
+};
+
+export { updateTheme, updateDashboardLayout };
