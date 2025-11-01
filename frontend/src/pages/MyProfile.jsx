@@ -9,12 +9,10 @@ import GoToArrow from "../assets/routeicon.svg";
 import GoogleLogo from "../assets/google_logo.svg";
 import Footer from '../components/Footer.jsx';
 import { Sidebar } from "../components/Sidebar.jsx";
-import { useAppContext } from "../context/AppContext";
-import { useNavigate } from "react-router-dom";
+
 
 export const MyProfile = () => {
 
-    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
         name: "",
         email: "",
@@ -24,12 +22,7 @@ export const MyProfile = () => {
         InvHorizon: "",
         FinGoal: ""
     });
-    const { darkMode, setDarkMode } = useAppContext();
-    const [investmentExp, setInvestmentExp] = useState("");
-    const [riskProfile, setRiskProfile] = useState("");
-    const [InvHorizon, setInvHorizon] = useState("");
-    const [FinGoal, setFinGoal] = useState("");
-   
+    const [darkMode, setDarkMode] = useState(true);
     const fileInputRef = useRef(null);
     const [isEditingInfo, setIsEditingInfo] = useState(false);
     const [isEditingPass, setIsEditingPass] = useState(false);
@@ -173,7 +166,7 @@ export const MyProfile = () => {
     }
 
     return (
-        <div className="Page">
+        <div className="myPage">
             <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="myprofile"
                 profileData={{ name: userInfo.name, email: userInfo.email, profileImage: userInfo.profimg }} />
 

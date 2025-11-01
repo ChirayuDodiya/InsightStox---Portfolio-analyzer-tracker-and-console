@@ -30,7 +30,7 @@ const BusinessGroupCard = ({ logo, name, stockCount }) => (
 );
 
 
-const MarketNewsItem = ({ headline, time }) => (
+export const MarketNewsItem = ({ headline, time }) => (
   <div className="news-item">
     <p className="news-headline">{headline}</p>
     <p className="news-time">{time}</p>

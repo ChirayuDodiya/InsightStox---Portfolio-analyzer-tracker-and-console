@@ -159,11 +159,11 @@ body {
 }
 
 .news-headline {
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .news-time {
   font-size: 0.875rem;
-  color: #9ca3af;
+  opacity: 0.8;;
   margin-top: 4px;
 }
