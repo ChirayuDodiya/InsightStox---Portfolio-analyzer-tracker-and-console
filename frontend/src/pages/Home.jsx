@@ -18,10 +18,11 @@ import featurelogo3 from "../assets/featuredivlogo3.png"
 import featurelogo4 from "../assets/featuredivlogo4.png"
 import {Link} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
+import { useAppContext } from "../context/AppContext";
 
 export const Home = () => {
   const [openIndex, setOpenIndex] = useState(0);
-  const [darkMode ,setDarkMode] = useState(true);
+  const { darkMode, setDarkMode } = useAppContext();
   const [expandedCard, setExpandedCard] = useState(null);
   function toggleArrow(index) { 
     setOpenIndex(openIndex === index ? 0 : index)

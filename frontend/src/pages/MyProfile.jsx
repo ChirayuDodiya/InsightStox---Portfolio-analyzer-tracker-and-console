@@ -9,6 +9,7 @@ import GoToArrow from "../assets/routeicon.svg";
 import GoogleLogo from "../assets/google_logo.svg";
 import Footer from '../components/Footer.jsx';
 import { Sidebar } from "../components/Sidebar.jsx";
+import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
 export const MyProfile = () => {
@@ -23,7 +24,12 @@ export const MyProfile = () => {
         InvHorizon: "",
         FinGoal: ""
     });
-    const [darkMode, setDarkMode] = useState(true);
+    const { darkMode, setDarkMode } = useAppContext();
+    const [investmentExp, setInvestmentExp] = useState("");
+    const [riskProfile, setRiskProfile] = useState("");
+    const [InvHorizon, setInvHorizon] = useState("");
+    const [FinGoal, setFinGoal] = useState("");
+   
     const fileInputRef = useRef(null);
     const [isEditingInfo, setIsEditingInfo] = useState(false);
     const [isEditingPass, setIsEditingPass] = useState(false);
