@@ -8,19 +8,22 @@ import bcrypt from "bcrypt";
 import { getOtpEmailTemplate } from "../../utils/mailOtpTemplate.js";
 
 const SendResetPasswordOtp = async (req, res) => {
-    const { password } = req.body;
+    const { password , newPassword } = req.body;
     const email = req.user.email
     if (!password) {
         return res.status(401).json({success: false,message: "password is required."});
     }
-
+    
+    if (!checkPasswordSyntax(newPassword)) {
+        return res.status(401).json({success: false,message: "New password must be at least according to the our conditoins characters long."});
+    }
     try {
         const userResult = await searchUserByEmail(email);
 
         if (!userResult || userResult.length === 0) {
             return res.status(401).json({success: false,message: "User not found with this email address."});
         }
-        if(await bcrypt.compare(hashedPassword,userResult.password)){
+        if(!(await bcrypt.compare(hashedPassword,userResult.password))){
             return res.status(401).json({success: false,message: "password doesn't match."});
         }
         
@@ -88,9 +91,6 @@ const setNewPassword = async (req, res) => {
         return res.status(401).json({success: false,message: "Email and new password are required."});
     }
     console.log(newPassword);
-    if (!checkPasswordSyntax(newPassword)) {
-        return res.status(401).json({success: false,message: "New password must be at least according to the our conditoins characters long."});
-    }
     try {
         const userResult = await searchUserByEmail(email)
 
