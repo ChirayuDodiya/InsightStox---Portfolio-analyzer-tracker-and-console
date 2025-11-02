@@ -63,7 +63,7 @@ router.route("/downloadPortfolioData").get(verifyToken, createExcel);
 router.route("/deleteAccount").get(verifyToken, deleteAccount, logoutUser);
 router.route("/getPreferencesAndPersonalisation").get(verifyToken, getPreferencesAndPersonalisation);
 router.route("/updatePreferencesAndPersonalisation").patch(verifyToken, updatePreferencesAndPersonalisationController);
-router.route("/sendUserQuery").post(verifyToken, sendUserQuery);
-router.route("/sendUserSuggestion").post(verifyToken, sendUserSuggestion);
+router.route("/sendUserQuery").post(verifyToken, sendUserQuery);//user message
+router.route("/sendUserSuggestion").post(verifyToken, sendUserSuggestion);//user suggestions
 router.route("/checkToken").get(checkToken);
 export default router;

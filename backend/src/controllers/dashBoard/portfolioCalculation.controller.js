@@ -21,11 +21,8 @@ export const calculatePortfolio = async (req, res) => {
                 if (!q) {
                     return res.status(500).json({ success: false, message: "Failed to fetch stock prices." });
                 }
-                console.log(q);
-                priceData.add(row.symbol,{current: q.MarketPrice||0,
-                yesterdayClose: q.close||0,
-                currency: q.currency,
-                expiresAt: Date.now()+60*1000});
+                // console.log(q);
+                priceData.add(row.symbol,{...q,expiresAt: Date.now()+60*1000});
             }
             const data = priceData.get(row.symbol);
             if (!data) continue;
@@ -33,19 +30,28 @@ export const calculatePortfolio = async (req, res) => {
             const yesterdayValue = yestarday_holding * data.yesterdayClose;
             const overallProfit = currentValue - spended_amount;
             const todayProfit = currentValue - yesterdayValue;
-            console.log(data.yesterdayClose);
             totalspending += spended_amount;
             totalValuation += currentValue;
             overallPL += overallProfit;
             todayPL += todayProfit;
         }
+        await UserPortfolioValuationdaily.updateOne(
+            { email, date: today },
+            { $set: { portfolioValuation: totalValuation.toFixed(2) } },
+            { upsert: true }
+        );
+        await UserPortfolioValuationHourly.updateOne(
+            { email, date: hour },
+            { $set: { portfolioValuation: totalValuation.toFixed(2) } },
+            { upsert: true }
+        );
         //console.log({totalValuation, overallPL, todayPL, totalspending});
         return res.status(200).json({
             success: true,
             totalValuation: totalValuation.toFixed(2),
             overallProfitLoss: overallPL.toFixed(2),
             todayProfitLoss: todayPL.toFixed(2),
-            ttodayProfitLosspercentage: ((todayPL / totalValuation) * 100).toFixed(2),
+            todayProfitLosspercentage: ((todayPL / totalValuation) * 100).toFixed(2),
             overallProfitLosspercentage: ((overallPL / totalspending) * 100).toFixed(2)
         });
     } catch (error) {

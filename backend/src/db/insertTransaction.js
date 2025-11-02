@@ -4,10 +4,14 @@ import YahooFinance from 'yahoo-finance2';
 const yahooFinance = new YahooFinance();
     export const insertTransaction = async (email, symbol, quantity, transaction_type, time) => {
         try {
+            let price = undefined
             const holding_check = await sql`SELECT spended_amount,current_holding FROM "stock_summary" WHERE email=${email} AND symbol=${symbol}`;
+            if(holding_check.length===0){
+                holding_check[0]={current_holding:0,spended_amount:0};
+            }
             let old_holding = 0, old_spended_amount = 0;
             if(transaction_type==='SELL'){                    
-                if(holding_check.length===0 || holding_check[0].current_holding<quantity){  
+                if(holding_check[0].current_holding<quantity){  
                     return {success:false,message:"Insufficient holdings to sell."};
                 } 
             }
@@ -17,9 +21,9 @@ const yahooFinance = new YahooFinance();
                 const check = await sql`SELECT * FROM "stocks" WHERE symbol=${symbol}`;
                 if(check.length===0){
                     const quoteSummary = await yahooFinance.quoteSummary(symbol, { modules: ['assetProfile', 'price'] });
-                    console.log(quoteSummary)
+                    //console.log(quoteSummary)
                     if(!quoteSummary.price){
-                        console.log('No data found for symbol:', symbol);   
+                        //console.log('No data found for symbol:', symbol);   
                         return {success:false,message:"Unable to fetch stock details."};
                     }
                     const {
@@ -31,11 +35,12 @@ const yahooFinance = new YahooFinance();
                     market: country,
                     } = quoteSummary.price;
                     const { sector } = quoteSummary.assetProfile||"N/A";
+                    price = {current: quoteSummary.regularMarketPrice};
                     await sql`INSERT INTO "stocks" (symbol,short_name,long_name,sector,currency,type,country,exchange,created_at) VALUES (${symbol},${shortName},${longName},${sector},${currency},${type},${country},${exchange},${time}) RETURNING *;`;
                 }
             }
-            let price = await getPrice(symbol);
-            price = price.MarketPrice;
+            if(!price) price = await getPrice(symbol);
+            price = price.current;
             let multiplier = 1;
             if(transaction_type==='SELL'){
                 quantity = -quantity;

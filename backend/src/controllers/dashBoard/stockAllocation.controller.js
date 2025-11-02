@@ -18,10 +18,7 @@ export const getStockAllocation = async (req, res) => {
                 if (!q) {
                     continue;
                 }
-                priceData.add(stock.symbol,{current: q.MarketPrice||0,
-                yesterdayClose: q.close||0,
-                currency: q.currency,
-                expiresAt: Date.now()+60*1000});
+                priceData.add(stock.symbol,{...q,expiresAt: Date.now()+60*1000});
             }
             const data = priceData.get(stock.symbol);
             if (!data) continue;
@@ -34,7 +31,7 @@ export const getStockAllocation = async (req, res) => {
             }
         }
         const labels = Object.keys(sectorAllocation);
-        const values = labels.map(label => (sectorAllocation[label] / totalPortfolioValue) * 100);
+        const values = labels.map(label => ((sectorAllocation[label] / totalPortfolioValue) * 100).toFixed(2));
 
         return res.status(200).json({ success: true, labels: labels, values: values });
     } catch (error) {

@@ -12,12 +12,7 @@ export const userStockSummary = async (req, res) => {
     stockSummary.map(async ({ symbol, current_holding, avg_price }) => {
         if (!stockPriceStore.get(symbol)) {
             const q = await getPrice(symbol);
-            stockPriceStore.add(symbol, {
-                current: q.MarketPrice || 0,
-                yesterdayClose: q.close || 0,
-                currency: q.currency,
-                expiresAt: Date.now() + 60 * 1000
-            });
+            stockPriceStore.add(symbol, {...q,expiresAt: Date.now() + 60 * 1000});
         }
         avg_price = Number(avg_price);
         current_holding = Number(current_holding);
