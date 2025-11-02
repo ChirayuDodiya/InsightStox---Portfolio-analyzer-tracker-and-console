@@ -46,7 +46,7 @@ const loginWithGoogle = async (req, res) => {
 
     const addActiveSessionStatus = await insertActiveSession({
         token: token,
-        email: user[0].email,
+        email: user.email,
         browser_type: browser,
         os_type: os,
     });
