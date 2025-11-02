@@ -6,8 +6,8 @@ import { otpStore } from '../../utils/registrationOtpStore.js';
 export const register = async (req,res)=>{
     const userAgentString = req.headers['user-agent'];
     const parser = new UAParser(userAgentString);
-    const { browserDetails } = parser.getBrowser();
-    const { osDetails } = parser.getOS();
+    const browserDetails = parser.getBrowser();
+    const osDetails = parser.getOS();
 
     let {email,otp} = req.body;
     if(!email||!otp){

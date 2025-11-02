@@ -10,8 +10,8 @@ const registerWithGoogle = async (req, res) => {
     try {
         const userAgentString = req.headers['user-agent'];
         const parser = new UAParser(userAgentString);
-        const { browserDetails } = parser.getBrowser();
-        const { osDetails } = parser.getOS();
+        const browserDetails = parser.getBrowser();
+        const osDetails = parser.getOS();
 
         const { access_token } = req.body;
         if (!access_token) {

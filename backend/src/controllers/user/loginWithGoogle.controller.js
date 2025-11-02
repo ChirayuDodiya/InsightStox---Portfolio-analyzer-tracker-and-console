@@ -9,8 +9,8 @@ const loginWithGoogle = async (req, res) => {
   try {
     const userAgentString = req.headers['user-agent'];
     const parser = new UAParser(userAgentString);
-    const { browserDetails } = parser.getBrowser();
-    const { osDetails } = parser.getOS();
+    const browserDetails = parser.getBrowser();
+    const osDetails = parser.getOS();
 
     const { access_token } = req.body; //The access token for user profile
 

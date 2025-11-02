@@ -9,8 +9,8 @@ const loginUser = async (req, res) => {
     try {
         const userAgentString = req.headers['user-agent'];
         const parser = new UAParser(userAgentString);
-        const { browserDetails } = parser.getBrowser();
-        const { osDetails } = parser.getOS();
+        const browserDetails = parser.getBrowser();
+        const osDetails = parser.getOS();
 
         let { email, password } = req.body;
         email = email?.toLowerCase();
