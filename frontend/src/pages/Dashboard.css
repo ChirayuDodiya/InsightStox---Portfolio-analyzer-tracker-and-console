@@ -20,6 +20,19 @@
   width: 100%;
   margin-top: 145px;
 }
+.sectorai {
+  display: flex;
+  width: 100%;
+}
+
+.sectorai > :first-child {
+  flex: 0 0 40%;
+}
+
+.sectorai > :last-child {
+  flex: 0 0 60%;
+}
+
 
 
 .dashboard-content {

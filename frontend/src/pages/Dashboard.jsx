@@ -6,6 +6,9 @@ import 'primeicons/primeicons.css';
 import DashboardHeader from '../components/Dashboard-Header.jsx';
 import MarketMovers from '../components/MarketMovers/MarketMovers'
 import WelcomeInvestor from '../components/WelcomeInvestor/WelcomeInvestor'
+import SectorAllocation from '../components/SectorAllocation/SectorAllocation'
+import AiInsights from '../components/AiInsights/AiInsights'
+import MyHoldings from '../components/MyHoldings/MyHoldings'
 import Navbar from '../components/Navbar.jsx';
 export const Dashboard = () => {
   const [darkMode, setDarkMode] = useState(true);
@@ -22,6 +25,11 @@ export const Dashboard = () => {
       <div className="section-wrapper">
         <WelcomeInvestor />
         <MarketMovers />
+        <div className="sectorai">
+        <SectorAllocation/>
+        <AiInsights/>
+        </div>
+        <MyHoldings/>
       </div>
       <div className="footer-div">
         <Footer darkMode={darkMode}  
