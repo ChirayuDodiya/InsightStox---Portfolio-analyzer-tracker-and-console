@@ -80,7 +80,6 @@ const DashboardHeader = () => {
             <i className="pi pi-search popup-search-icon"></i>
             <input type="text"className="popup-search-input"placeholder="Search for a Stock (e.g., RELIANCE.NS, TATA MOTORS)"autoFocus/>
           </div>
-          <hr />
           <div className="search-results">
             <ul>
               <li><img src={historyicon}></img>Tata Investment Corporation Ltd.</li>

@@ -210,7 +210,7 @@
 }
 @media (max-width: 1495px) {
   .popup-search-input::placeholder{
-    max-width: 140px;
+    max-width: 145px;
   }
 }
 @media (max-width: 1335px) {
@@ -240,12 +240,12 @@
 }
 @media (max-width: 610px) {
   .search-input{
-    width: 200px;
+    width: 204px;
     text-overflow:clip;
   }
 }
 @media (max-width: 530px) {
   .search-input{
-    width: 125px;
+    width: 127px;
   }
 }
