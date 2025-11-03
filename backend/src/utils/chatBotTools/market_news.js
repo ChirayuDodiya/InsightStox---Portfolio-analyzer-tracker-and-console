@@ -1,0 +1,1 @@
+export default Market_news_tool;
