@@ -4,15 +4,10 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, Title } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import './SectorAllocation.css';
 
+//Chart.js setup
 ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
-const sampleDataSets = [
-  {
-    labels: ['IT & Tech', 'Banking & Finance', 'Energy', 'FMCG (ITC)', 'Startups (Zomato)'],
-    dataPoints: [33.2, 36.7, 20.1, 7.1, 2.9],
-  },
-];
-
+// Chart.js display options
 const options = {
   responsive: true,
   maintainAspectRatio: false,
@@ -48,10 +43,10 @@ const options = {
       padding: 10,
       cornerRadius: 4,
       callbacks: {
-        label: function (context) {
+        label: (context) => {
           let label = context.label || '';
           if (label) label += ': ';
-          if (context.parsed !== null) label += context.parsed + '%';
+          if (context.parsed !== null) label += `${context.parsed}%`;
           return label;
         },
       },
@@ -63,11 +58,13 @@ const options = {
   },
 };
 
+// Color palette generator
 const generateDynamicColors = (numColors) => {
   const colors = ['#22C55E', '#16A34A', '#15803D', '#4ADE80', '#86EFAC', '#14532D', '#166534'];
   return Array.from({ length: numColors }, (_, i) => colors[i % colors.length]);
 };
 
+// Format backend data for Chart.js
 const formatDataForChart = (dataSet) => ({
   labels: dataSet.labels,
   datasets: [
@@ -88,33 +85,35 @@ export default function SectorAllocationChart() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
+  // Always send cookies for authenticated users
+  axios.defaults.withCredentials = true;
+
+  // Dynamic backend URL
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_LINK ;
+  const ALLOCATION_API = `${BACKEND_URL}/api/v1/dashboard/stockAllocation`;
+
+  // Fetch sector allocation from backend
   const fetchAllocationData = async () => {
     setLoading(true);
     setError('');
 
     try {
-      // ✅ Fetch with Axios, including cookies for authentication
-      const response = await axios.get('http://localhost:8000/api/v1/dashboard/stockAllocation', {
-        withCredentials: true, // ensures cookies are sent (for login session)
-      });
-
+      const response = await axios.get(ALLOCATION_API);
       const apiData = response.data;
 
       if (!apiData.labels || !apiData.values) {
-        throw new Error('Invalid data format from backend');
+        throw new Error('Invalid data format received from backend');
       }
 
       setChartData(formatDataForChart(apiData));
     } catch (err) {
       console.error('Error fetching allocation data:', err);
 
-      if (err.response && err.response.status === 401) {
-        setError('You must be logged in to view this data.');
+      if (err.response?.status === 401) {
+        setError('Session expired. Please log in again.');
       } else {
-        setError('Failed to fetch allocation data. Showing sample.');
+        setError('Failed to fetch allocation data from backend.');
       }
-
-      setChartData(formatDataForChart(sampleDataSets[0])); // fallback to sample
     } finally {
       setLoading(false);
     }
@@ -124,13 +123,17 @@ export default function SectorAllocationChart() {
     fetchAllocationData();
   }, []);
 
-  if (loading) {
-    return <div className="loading-container">Loading Allocation Data...</div>;
-  }
+  if (loading) return <div className="loading-container">Loading Allocation Data...</div>;
+
+  if (error)
+    return (
+      <div className="sector-allocation-container">
+        <p className="error-text">{error}</p>
+      </div>
+    );
 
   return (
     <div className="sector-allocation-container">
-      {error && <p className="error-text">{error}</p>}
       <div className="chart-wrapper">
         <Pie data={chartData} options={options} />
       </div>
