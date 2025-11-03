@@ -6,6 +6,7 @@ import 'primeicons/primeicons.css';
 import DashboardHeader from '../components/Dashboard-Header.jsx';
 import MarketMovers from '../components/MarketMovers/MarketMovers'
 import WelcomeInvestor from '../components/WelcomeInvestor/WelcomeInvestor'
+import PortfolioChart from '../components/PortfolioChart/PortfolioChart'
 import SectorAllocation from '../components/SectorAllocation/SectorAllocation'
 import AiInsights from '../components/AiInsights/AiInsights'
 import MyHoldings from '../components/MyHoldings/MyHoldings'
@@ -25,6 +26,7 @@ export const Dashboard = () => {
       
       <div className="section-wrapper">
         <WelcomeInvestor />
+        <PortfolioChart/>
         <MarketMovers />
         <div className="sectorai">
         <SectorAllocation/>

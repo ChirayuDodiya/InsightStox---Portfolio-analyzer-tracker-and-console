@@ -1,15 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./MyHoldings.css";
 
-const holdings = [
-  { stock: "TCS", quantity: 5, avgPrice: 3200, currentPrice: 3450, value: 17250 },
-  { stock: "Reliance", quantity: 10, avgPrice: 2300, currentPrice: 2250, value: 22500 },
-  { stock: "HDFC Bank", quantity: 15, avgPrice: 1550, currentPrice: 1620, value: 24300 },
-  { stock: "Infosys", quantity: 8, avgPrice: 1400, currentPrice: 1320, value: 10560 },
-  { stock: "ITC", quantity: 20, avgPrice: 450, currentPrice: 480, value: 9600 },
-];
+//Base backend URL
+const BACKEND_URL = import.meta.env.VITE_BACKEND_LINK;
+const HOLDINGS_API = `${BACKEND_URL}/api/v1/dashboard/stockSummary`;
 
 const MyHoldings = () => {
+  const [holdings, setHoldings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchHoldings = async () => {
+      try {
+        setLoading(true);
+
+        // Automatically include cookies for authentication
+        const response = await axios.get(HOLDINGS_API, { withCredentials: true });
+
+        if (!response.data || !Array.isArray(response.data.data)) {
+          throw new Error("Invalid response format from server");
+        }
+
+        // Store the holdings data
+        setHoldings(response.data.data);
+      } catch (err) {
+        console.error("Error fetching holdings:", err);
+        setError("Failed to load holdings. Please ensure you are logged in.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHoldings();
+  }, []);
+
+  // Loading State
+  if (loading) {
+    return (
+      <div className="card holdings-card">
+        <h2>My Holdings</h2>
+        <p>Loading holdings...</p>
+      </div>
+    );
+  }
+
+  // Error State
+  if (error) {
+    return (
+      <div className="card holdings-card">
+        <h2>My Holdings</h2>
+        <p className="error-message">{error}</p>
+      </div>
+    );
+  }
+
+  // Normal Render
   return (
     <div>
       <div className="card holdings-card">
@@ -21,7 +68,7 @@ const MyHoldings = () => {
               <th>Quantity</th>
               <th>Avg. Price</th>
               <th>Current Price</th>
-              <th>Value(₹)</th>
+              <th>Value (₹)</th>
             </tr>
           </thead>
           <tbody>
@@ -29,9 +76,9 @@ const MyHoldings = () => {
               <tr key={index}>
                 <td>{item.stock}</td>
                 <td>{item.quantity}</td>
-                <td>{item.avgPrice.toLocaleString()}</td>
-                <td>{item.currentPrice.toLocaleString()}</td>
-                <td>{item.value.toLocaleString()}</td>
+                <td>{Number(item.avg_price).toLocaleString()}</td>
+                <td>{Number(item.current_price).toLocaleString()}</td>
+                <td>{Number(item.value).toLocaleString()}</td>
               </tr>
             ))}
           </tbody>
