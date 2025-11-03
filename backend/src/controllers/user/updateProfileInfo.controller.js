@@ -8,6 +8,7 @@ import { updateProfileInvestmentHorizon } from "../../db/updateProfileInfo.js";
 const updateProfileNameController = async (req, res) => {
     try {
         const { name } = req.body;
+        
         if (!name) {
             return res.status(400).json({
                 success: false,

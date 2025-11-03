@@ -19,7 +19,7 @@ import {
     VerifyOtp,
     setNewPassword,
 } from "./forgotPassword.controller.js";
-import { ResetPassword } from "./resetPassword.controller.js";
+import { SendResetPasswordOtp, setNewPassword as setNewPasswordForProfile, VerifyOtp as VerifyOtpForProfile } from "./resetPassword.controller.js";
 import { registerWithGoogle } from "./registerWithGoogle.controller.js";
 import { createExcel } from "./downloadPortfolioData.controller.js";
 import { deleteAccount } from "./deleteAccount.controller.js";
@@ -47,7 +47,9 @@ export {
     SendForgotPasswordOtp,
     VerifyOtp,
     setNewPassword,
-    ResetPassword,
+    SendResetPasswordOtp,
+    VerifyOtpForProfile,
+    setNewPasswordForProfile,
     registerWithGoogle,
     createExcel,
     deleteAccount,

@@ -16,7 +16,9 @@ import {
     SendForgotPasswordOtp,
     VerifyOtp,
     setNewPassword,
-    ResetPassword,
+    setNewPasswordForProfile,
+    SendResetPasswordOtp,
+    VerifyOtpForProfile,
     dataAndPrivacy,
     toggleAiSuggestionController,
     createExcel,
@@ -48,8 +50,10 @@ router.route("/myProfile").get(verifyToken, getProfile);
 router.route("/registerWithGoogle").post(registerWithGoogle);
 router.route("/forgotPasswordOtpGeneration").post(SendForgotPasswordOtp);
 router.route("/verifyOtp").post(VerifyOtp);
-router.route("/setNewPassword").post(setNewPassword);
-router.route("/resetpassword").post(verifyToken, ResetPassword);
+router.route("/verifyOtpForProfile").post(verifyToken, VerifyOtpForProfile);
+router.route("/setNewPassword").patch(setNewPassword);
+router.route("/resetPassword").patch(verifyToken, SendResetPasswordOtp); 
+router.route("/setNewPasswordForProfile").patch(verifyToken, setNewPasswordForProfile);
 router.route("/getDataAndPrivacy").get(verifyToken, dataAndPrivacy);
 router.route("/getEmailForgotPassword").post(SendForgotPasswordOtp);
 router.route("/updateProfileImage").patch(verifyToken, 
