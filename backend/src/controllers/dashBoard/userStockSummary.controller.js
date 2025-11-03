@@ -20,7 +20,8 @@ export const userStockSummary = async (req, res) => {
         const currentPrice = priceData ? priceData.current : 0;
         const value = current_holding * currentPrice;
         return {
-            stock: symbol,
+            symbol: symbol,
+            shortName: priceData.shortName,
             quantity: current_holding,
             avg_price: avg_price.toFixed(2),
             current_price: currentPrice.toFixed(2),
