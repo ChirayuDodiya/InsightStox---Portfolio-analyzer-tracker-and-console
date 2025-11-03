@@ -22,6 +22,7 @@ const SignupForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     const [titleError, setTitleError] = useState("");
     const [areAllFieldsValid, setAreAllFieldsValid] = useState(false);
     const [timer, setTimer] = useState(30);
+    axios.defaults.withCredentials = true;
 
 /*----------------------------------- Functions--------------------------------------------------------------- */
 // Function to reset all form states
@@ -46,7 +47,7 @@ const handleOtpGeneration = async () => {
     setIsLoading(true);
     setAreAllFieldsValid(false);
     try {
-        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password}, {withCredentials: true});
         console.log("✅ OTP generation successful:", res.data);
         setAreAllFieldsValid(true);
         setIsOtpSent((prev)=>!prev);
@@ -64,7 +65,7 @@ const handleOtpGeneration = async () => {
   const handleResendOtpGeneration = async () => {
     setIsLoading(true);
     try {
-        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password}, {withCredentials: true});
          console.log("✅ OTP resend successful:", res.data);
         setTimer(30);
     } catch (err) {
@@ -79,7 +80,7 @@ const handleOtpGeneration = async () => {
 const handleRegister = async () => {
     setIsLoading(true);
    try {
-    const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/register", {email : email, otp: otp});
+    const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/register", {email : email, otp: otp}, {withCredentials: true});
     console.log("✅ Registered successfully:", res.data);
     setIsOtpSent((prev)=>!prev);
     navigate("/Dashboard");

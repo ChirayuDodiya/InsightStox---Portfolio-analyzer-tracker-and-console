@@ -30,7 +30,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     const [newPasswordError, setNewPasswordError] = useState(false);
     const [resetPassword, setResetPassword] = useState(false);
     const [googleLoginLoading, setGoogleLoginLoading] = useState(false);
-
+    axios.defaults.withCredentials = true;
 /*----------------------------------- Functions----------------------------------------------------------------- */
     // Function to toggle forgot password state and update sessionStorage
     const toggleForgotPassword = () => {
@@ -66,7 +66,8 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
       const handleGoogleLogin = async (tokenResponse) => {
         try{
           const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/googleLogin", {
-            access_token: tokenResponse.access_token,
+            access_token: tokenResponse.access_token},
+            {withCredentials: true
           });
           navigate("/Dashboard");
         }catch(err){  
@@ -89,7 +90,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     const handleLogin = async () => {
         setIsLoading(true);
         try {
-            const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/login", {email : email, password : password});
+            const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/login", {email : email, password : password}, {withCredentials: true});
             console.log("✅ Logged in successfully:", res.data);
             navigate("/Dashboard");
         } catch (err) {
@@ -106,7 +107,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
 const handleSendOtpForForgotPassword = async () => {
     setIsLoading(true);
   try{
-    const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/forgotPasswordOtpGeneration", {email : email});
+    const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/forgotPasswordOtpGeneration", {email : email}, {withCredentials: true});
     console.log("✅ OTP sent successfully:", res.data);
     setForgotUserExists(true);
     setTimer(30);
@@ -123,7 +124,7 @@ const handleSendOtpForForgotPassword = async () => {
 const handleOtpverificationForForgotPassword = async () => {
     setIsLoading(true);
 try{
-  const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/verifyOtp", {email : email, otp: otp});
+  const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/verifyOtp", {email : email, otp: otp}, {withCredentials: true});
    console.log("✅ OTP verified successfully:", res.data.message);
   setForgotOtpvarified(true);
   setResetPassword(true);
@@ -139,7 +140,7 @@ try{
 const handleResetPassword = async () => {
     setIsLoading(true);
     try{
-        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/setNewPassword", {email : email, newPassword : newPassword});
+        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/setNewPassword", {email : email, newPassword : newPassword}, {withCredentials: true});
         console.log("✅ Password reset successful:", res.data);
         navigate("/Dashboard");
     } catch (err) {

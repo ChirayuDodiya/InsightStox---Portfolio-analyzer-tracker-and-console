@@ -25,7 +25,7 @@ export const Sidebar = ({ primaryData = {} }) => {
         <aside className="Sidebar">
             <div className="ProfileSection">
                 <div className="Avatar">
-                    <img src={profileImg} alt="Profile Pic" />
+                    <img src={primaryData.profileImage ? primaryData.profileImage : profileImg} alt="Profile Pic" />
                 </div>
                 <h2>{primaryData.name}</h2>
                 <p className="Email">{primaryData.email}</p>

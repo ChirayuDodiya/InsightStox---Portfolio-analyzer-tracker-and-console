@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import axios from "axios";
 import "../pages/MyProfile.css";
 import "primeicons/primeicons.css";
-import { checkPasswordStrength } from "../utils/validation.js";
+import { checkPasswordStrength, validateNameStrength } from "../utils/validation.js";
 import Navbar from "../components/Navbar.jsx";
 import profileImg from "../assets/profileicon.svg";
 import GoToArrow from "../assets/routeicon.svg";
@@ -9,27 +10,115 @@ import GoogleLogo from "../assets/google_logo.svg";
 import Footer from '../components/Footer.jsx';
 import { Sidebar } from "../components/Sidebar.jsx";
 import { useAppContext } from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
+
 export const MyProfile = () => {
 
+    const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
-        name: "Ayush Dhamecha",
-        email: "managethisstuff@gmail.com",
-        password: "AaVvBb126#$*"
+        name: "",
+        email: "",
+        profimg: "",
+        investmentExp: "",
+        riskProfile: "",
+        InvHorizon: "",
+        FinGoal: ""
     });
     const { darkMode, setDarkMode } = useAppContext();
     const [investmentExp, setInvestmentExp] = useState("");
     const [riskProfile, setRiskProfile] = useState("");
     const [InvHorizon, setInvHorizon] = useState("");
     const [FinGoal, setFinGoal] = useState("");
+   
+    const fileInputRef = useRef(null);
     const [isEditingInfo, setIsEditingInfo] = useState(false);
     const [isEditingPass, setIsEditingPass] = useState(false);
-    const [editedName, setEditedName] = useState(userInfo.name);
+    const [editedName, setEditedName] = useState("");
     const [currPass, setCurrPass] = useState("");
     const [newPass, setNewPass] = useState("");
     const [confirmPass, setConfirmPass] = useState("");
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
     const [showPassword3, setShowPassword3] = useState(false);
+    const [nameError, setNameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
+    const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    axios.defaults.withCredentials = true;
+
+    useEffect(() => {
+        const getUserInfo = async () => {
+            try {
+                const res = await axios.get(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/myProfile",
+                    {
+                        withCredentials: true,
+                    }
+                );
+                console.log("Fetched successfully:", res.data);
+
+                const user = res.data?.data;
+
+                if (user) {
+                    setUserInfo({
+                        name: user.name,
+                        email: user.email,
+                        profimg: user.profileImage,
+                        investmentExp: user.investmentExperience,
+                        riskProfile: user.riskProfile,
+                        InvHorizon: user.investmentHorizon,
+                        FinGoal: user.financialGoals
+                    });
+                } else {
+                    console.warn("User data not found in response:", res.data);
+                }
+            } catch (err) {
+                console.error("Error fetching user info:", err.response?.data?.message || err.message);
+            }
+        };
+        getUserInfo();
+    }, []);
+
+
+    const handlePicChange = (event) => {
+        const filePath = event.target.files[0];
+        if (filePath && filePath.type.startsWith("image/")) {
+            setUserInfo((prev) => ({
+                ...prev,
+                profimg: URL.createObjectURL(filePath)
+            }));
+        }
+        else {
+            alert("Invalid file, Please select a valid file!")
+        }
+    };
+
+    useEffect(() => {
+        const trimmedName = editedName.trim();
+        if (trimmedName && !validateNameStrength(trimmedName)) {
+            setNameError("Name should not contain numbers or special characters");
+        } else {
+            setNameError("");
+        }
+    }, [editedName]);
+
+    useEffect(() => {
+        const trimmedPassword = newPass.trim();
+        if (!trimmedPassword) {
+            setPasswordError("");
+        } else {
+            setPasswordError(checkPasswordStrength(trimmedPassword));
+        }
+    }, [newPass]);
+
+    useEffect(() => {
+        if (newPass && confirmPass && newPass !== confirmPass) {
+            setConfirmPasswordError("Passwords do not match");
+        } else {
+            setConfirmPasswordError("");
+        }
+    }, [confirmPass, newPass]);
+
+
+    const handleButtonClick = () => fileInputRef.current.click();
 
     const handleEditInfo = () => {
         setEditedName(userInfo.name);
@@ -63,112 +152,76 @@ export const MyProfile = () => {
 
     };
 
-    const handleSavePass = () => {
-        if (!verifyCurrPass(currPass)) {
-            alert("Current password incorrect");
-            setCurrPass("");
-            setNewPass("");
-            setConfirmPass("");
-            return;
-        }
-        {/* pass criteria checks */ }
-        const passStrength = checkPasswordStrength(newPass);
-
-        if (passStrength) {
-            alert(passStrength);
-            setNewPass("");
-            setConfirmPass("");
-            return;
+    const handleSavePass = async () => {
+        if (confirmPass !== newPass) {
+            console.log("new password and confirm password does not match!")
         }
 
-        if (newPass !== confirmPass) {
-            alert("New password and confirm password do not match");
-            setNewPass("");
-            setConfirmPass("");
-            return;
-        }
-
-        console.log("Password changed succesfully!");
-        setIsEditingPass(false);
-        setCurrPass("");
-        setNewPass("");
-        setConfirmPass("");
-    }
-
-    function verifyCurrPass(password) {
-
-        if (password !== userInfo.password) {
-            return false;
-        }
         else {
-            return true;
+            try {
+                const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/resetpassword", { email: userInfo.email, password: currPass, newPassword: newPass }, { withCredentials: true });
+                console.log("Password changed succesfully!");
+                setIsEditingPass(false);
+                setCurrPass("");
+                setNewPass("");
+                setConfirmPass("");
+            } catch (err) {
+                if (err.response.data.message)
+                    console.error("Error:", err.response.data.message);
+            }
         }
-        {/*
-        try {
-            const response = await fetch("/api/verify-password", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ password })
-            });
-
-            const result = await response.json();
-            return result.valid; // true if correct, false if not
-        } catch (error) {
-            console.error("Error verifying password:", error);
-            return false;
-        }
-        */}
-    }
-
-    function validateNameStrength(name) {
-        const nameRegex = /^[a-zA-Z\s]*$/;
-        return nameRegex.test(name);
     }
 
     return (
         <div className="Page">
             <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="myprofile"
-                profileData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com" }} />
+                profileData={{ name: userInfo.name, email: userInfo.email, profileImage: userInfo.profimg }} />
 
             <div className="Container">
 
-                <Sidebar primaryData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com" }} />
+                <Sidebar primaryData={{ name: userInfo.name, email: userInfo.email, profileImage: userInfo.profimg }} />
 
                 <main className="MainContent">
                     <h2 className="PersProfile"> Your personal profile </h2>
                     <div className="ProfilePic">
                         <label>Profile photo</label>
                         <div className="PicSection">
-                            <img className="PicPlaceholder" src={profileImg} alt="Profile Pic" />
-                            <button className="ChangePhoto" val="Change Photo" >Change Photo</button>
+                            <img className="PicPlaceholder" src={userInfo.profimg ? userInfo.profimg : profileImg} alt="Profile Pic" />
+                            <input type="file" ref={fileInputRef} accept="image/*" style={{ display: "none" }} onChange={handlePicChange} />
+                            <button className="ChangePhoto" value="Change Photo" onClick={handleButtonClick}>Change Photo</button>
                         </div>
                     </div>
 
                     <div className="Information">
                         {/* to be changed via checking the condition */}
                         <div className="InfRow1">
-                            <label>
-                                Name
-                                {!isEditingInfo && <button className="EditDetails" val="Edit" onClick={handleEditInfo}>Edit</button>}
-                            </label>
+                            <div className="InfHeader">
+                                <label>
+                                    Name
+                                </label>
+                                {!isEditingInfo && <button className="EditDetails" value="Edit" onClick={handleEditInfo}>Edit</button>}
+                            </div>
 
                             <div className="InfValue">
                                 {isEditingInfo ? (
-                                    <input
-                                        type="text"
-                                        value={editedName}
-                                        onChange={(e) => setEditedName(e.target.value)}
-                                    />
+                                    <div className="nameWrap">
+                                        <input
+                                            type="text"
+                                            value={editedName}
+                                            onChange={(e) => setEditedName(e.target.value)}
+                                        />
+                                        <p style={{ display: editedName ? 'block' : 'none' }} className="name-error error">{nameError}</p>
+                                    </div>
                                 ) : (
-                                    <span>{editedName}</span>
+                                    <span>{userInfo.name}</span>
                                 )}
                             </div>
                         </div>
 
                         {isEditingInfo && (
                             <div className="SaveCancelBtns">
-                                <button className="SaveBtn" val="Save Changes" onClick={handleSaveInfo}>Save changes</button>
-                                <button className="CancelBtn" val="Cancel" onClick={handleCancelInfo}>Cancel</button>
+                                <button className="SaveBtn" value="Save Changes" onClick={handleSaveInfo}>Save changes</button>
+                                <button className="CancelBtn" value="Cancel" onClick={handleCancelInfo}>Cancel</button>
                             </div>
                         )}
                         <hr />
@@ -176,7 +229,7 @@ export const MyProfile = () => {
                         <div className="InfRow2">
                             <label>Email address</label>
                             <div className="InfValue">
-                                <span>managethisstuff@gmail.com</span>
+                                <span>{userInfo.email}</span>
                             </div>
                         </div>
                         <hr />
@@ -184,10 +237,12 @@ export const MyProfile = () => {
                         {/* to be changed via checking the condition */}
 
                         <div className="InfRow5">
-                            <label>
-                                Password
-                                {!isEditingPass && <button className="EditDetails" val="Edit" onClick={handleEditPass}> Edit </button>}
-                            </label>
+                            <div className="InfHeader">
+                                <label>
+                                    Password
+                                </label>
+                                {!isEditingPass && <button className="EditDetails" value="Edit" onClick={handleEditPass}> Edit </button>}
+                            </div>
 
                             <div className="InfValue">
                                 {isEditingPass ? (
@@ -214,10 +269,11 @@ export const MyProfile = () => {
                                                     onChange={(e) => setNewPass(e.target.value)}
                                                 />
                                                 <a className="password-toggle2" onClick={() => setShowPassword2(!showPassword2)}>
-                                                    <span className="eye-icon">
+                                                    <span className="eye-symbol">
                                                         <i className={`pi ${showPassword2 ? "pi-eye-slash" : "pi-eye"}`}></i>
                                                     </span>
                                                 </a>
+                                                <p style={{ display: newPass ? 'block' : 'none' }} className="pass-error error">{passwordError}</p>
                                             </div>
                                             <div className="ConfPass">
                                                 <input
@@ -227,10 +283,11 @@ export const MyProfile = () => {
                                                     onChange={(e) => setConfirmPass(e.target.value)}
                                                 />
                                                 <a className="password-toggle3" onClick={() => setShowPassword3(!showPassword3)}>
-                                                    <span className="eye-icon">
+                                                    <span className="eye-symbol">
                                                         <i className={`pi ${showPassword3 ? "pi-eye-slash" : "pi-eye"}`}></i>
                                                     </span>
                                                 </a>
+                                                <p style={{ display: confirmPass ? 'block' : 'none' }} className="confirm-pass-error error">{confirmPasswordError}</p>
                                             </div>
                                         </div>
                                         <div className="SaveCancelBtns">
@@ -263,7 +320,6 @@ export const MyProfile = () => {
                                     <span className="ServiceName">Google</span>
                                     <span className="AccName">Ayush Dhamecha</span>
                                 </div>
-                                <button className="Disconnect" val="Disconnect"> Disconnect </button>
                             </div>
                         </div>
                         <hr />
@@ -274,7 +330,10 @@ export const MyProfile = () => {
                             <div className="InvExp">
                                 <label>Investment Experience</label>
                                 <div className="InfValueDropDown1">
-                                    <select className="InvExpList" value={investmentExp} onChange={(e) => setInvestmentExp(e.target.value)}>
+                                    <select className="InvExpList" value={userInfo.investmentExp} onChange={(e) => setUserInfo((prev) => ({
+                                        ...prev,
+                                        investmentExp: e.target.value
+                                    }))}>
                                         <option value="" disabled>Select an option</option>
                                         <option value="Beginner">Beginner</option>
                                         <option value="Intermediate">Intermediate</option>
@@ -287,7 +346,10 @@ export const MyProfile = () => {
                             <div className="RiskProfile">
                                 <label>Risk Profile</label>
                                 <div className="InfValueDropDown2">
-                                    <select className="RiskProfList" value={riskProfile} onChange={(e) => setRiskProfile(e.target.value)}>
+                                    <select className="RiskProfList" value={userInfo.riskProfile} onChange={(e) => setUserInfo((prev) => ({
+                                        ...prev,
+                                        riskProfile: e.target.value
+                                    }))}>
                                         <option value="" disabled>Select an option</option>
                                         <option value="Low - Conservative">Low - Conservative</option>
                                         <option value="Medium - Moderate">Medium - Moderate</option>
@@ -302,7 +364,10 @@ export const MyProfile = () => {
                             <div className="FinGoals">
                                 <label>Financial Goals</label>
                                 <div className="InfValueDropDown3">
-                                    <select className="FinGoalList" value={FinGoal} onChange={(e) => setFinGoal(e.target.value)}>
+                                    <select className="FinGoalList" value={userInfo.FinGoal} onChange={(e) => setUserInfo((prev) => ({
+                                        ...prev,
+                                        FinGoal: e.target.value
+                                    }))}>
                                         <option value="" disabled>Select an option</option>
                                         <option value="Primary growth">Primary growth</option>
                                         <option value="Income generation">Income generation</option>
@@ -315,7 +380,10 @@ export const MyProfile = () => {
                             <div className="InvHorizon">
                                 <label>Investment Horizon</label>
                                 <div className="InfValueDropDown4">
-                                    <select className="InvHorizonList" value={InvHorizon} onChange={(e) => setInvHorizon(e.target.value)}>
+                                    <select className="InvHorizonList" value={userInfo.InvHorizon} onChange={(e) => setUserInfo((prev) => ({
+                                        ...prev,
+                                        InvHorizon: e.target.value
+                                    }))}>
                                         <option value="" disabled>Select an option</option>
                                         <option value="Short-term (1-3 years)">Short-term (1-3 years)</option>
                                         <option value="Medium-term (3-10 years)">Medium-term (3-10 years)</option>
@@ -328,7 +396,7 @@ export const MyProfile = () => {
                         </div>
                     </div>
                 </main>
-            </div>
+            </div >
             <div className="footer-div">
                 <Footer darkMode={darkMode}
                     navigationLinks={[
@@ -344,7 +412,7 @@ export const MyProfile = () => {
                         { text: "Contact Us", href: "#contact" },
                     ]} />
             </div>
-        </div>
+        </div >
     );
 };
 
