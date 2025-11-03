@@ -37,13 +37,7 @@ export const calculatePortfolio = async (req, res) => {
                 
                 console.log(q);
                 
-                const newPriceData = {
-                    current: q.MarketPrice || 0,
-                    yesterdayClose: q.close || 0,
-                    currency: q.currency,
-                    expiresAt: Date.now() + 60 * 1000
-                };
-                
+                const newPriceData = {...q,expiresAt: Date.now() + 60 * 1000};
                 priceData.add(symbol, newPriceData);
                 data = newPriceData; 
             }
@@ -62,6 +56,16 @@ export const calculatePortfolio = async (req, res) => {
             overallPL += overallProfit;
             todayPL += todayProfit;
         }
+        await UserPortfolioValuationdaily.updateOne(
+            { email, date: today },
+            { $set: { portfolioValuation: totalValuation.toFixed(2) } },
+            { upsert: true }
+        );
+        await UserPortfolioValuationHourly.updateOne(
+            { email, date: hour },
+            { $set: { portfolioValuation: totalValuation.toFixed(2) } },
+            { upsert: true }
+        );
         
         console.log({totalValuation, overallPL, todayPL, totalspending});
         
@@ -73,7 +77,7 @@ export const calculatePortfolio = async (req, res) => {
             totalValuation: totalValuation.toFixed(2), 
             overallProfitLoss: overallPL.toFixed(2),
             todayProfitLoss: todayPL.toFixed(2), 
-            ttodayProfitLosspercentage: todayPLPercentage,
+            todayProfitLosspercentage: todayPLPercentage,
             overallProfitLosspercentage: overallPLPercentage
         });
 
