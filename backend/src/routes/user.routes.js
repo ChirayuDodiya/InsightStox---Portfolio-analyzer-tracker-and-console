@@ -27,6 +27,9 @@ import {
     sendUserQuery,
     sendUserSuggestion,
     checkToken,
+    activityAndSessionHistory,
+    getAllActivityHistoryController,
+    getAllSecurityAlertsController,
 } from "../controllers/user/user.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -78,4 +81,7 @@ router.route("/updateDashboardLayout").patch(verifyToken, updateDashboardLayoutC
 router.route("/sendUserQuery").post(verifyToken, sendUserQuery);
 router.route("/sendUserSuggestion").post(verifyToken, sendUserSuggestion);
 router.route("/checkToken").get(checkToken);
+router.route("/activityAndSessionHistory").get(verifyToken, activityAndSessionHistory);
+router.route("/getAllActivityHistory").get(verifyToken, getAllActivityHistoryController);
+router.route("/getAllSecurityAlerts").get(verifyToken, getAllSecurityAlertsController);
 export default router;

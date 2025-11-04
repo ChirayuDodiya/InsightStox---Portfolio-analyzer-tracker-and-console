@@ -29,6 +29,9 @@ import { updateDashboardLayoutController } from "./updatePreferencesAndPersonali
 import { sendUserQuery } from "./sendUserQuery.controller.js";
 import { sendUserSuggestion } from "./sendUserSuggestion.controller.js";
 import { checkToken } from "./checkToken.controller.js";
+import { activityAndSessionHistory } from "./activityAndSessionHistory.controller.js";
+import { getAllActivityHistoryController } from "./getAllActivityHistory.controller.js";
+import { getAllSecurityAlertsController } from "./getAllSecurityAlerts.controller.js";
 export {
     loginUser,
     logoutUser,
@@ -57,4 +60,7 @@ export {
     sendUserQuery,
     sendUserSuggestion,
     checkToken,
+    activityAndSessionHistory,
+    getAllActivityHistoryController,
+    getAllSecurityAlertsController,
 };
