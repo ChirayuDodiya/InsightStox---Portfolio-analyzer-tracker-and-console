@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 export const MyProfile = () => {
 
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
         name: "",
         email: "",
@@ -25,11 +25,6 @@ export const MyProfile = () => {
         FinGoal: ""
     });
     const { darkMode, setDarkMode } = useAppContext();
-    const [investmentExp, setInvestmentExp] = useState("");
-    const [riskProfile, setRiskProfile] = useState("");
-    const [InvHorizon, setInvHorizon] = useState("");
-    const [FinGoal, setFinGoal] = useState("");
-
     const fileInputRef = useRef(null);
     const [isEditingInfo, setIsEditingInfo] = useState(false);
     const [isEditingPass, setIsEditingPass] = useState(false);
@@ -87,17 +82,23 @@ export const MyProfile = () => {
     const handlePicChange = async (event) => {
         const filePath = event.target.files[0];
         if (filePath && filePath.type.startsWith("image/")) {
+
+            const profilePicURL = URL.createObjectURL(filePath);
+            const picData = new FormData();
+            picData.append("profileImage", filePath);
+
             try {
-                await axios.patch(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/updateProfileName", { name: editedName }, { withCredentials: true });
+                await axios.patch( import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/updateProfileImage", picData, 
+                    { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }, });
                 setUserInfo((prev) => ({
                     ...prev,
-                    profimg: URL.createObjectURL(filePath)
+                    profimg: profilePicURL
                 }));
                 setIsEditingInfo(false);
 
             } catch (err) {
-                console.error("Error updating name:", err.response?.data?.message || err.message);
-                alert(err.response?.data?.message || "Failed to update name. Try again later.");
+                console.error("Error updating profile image:", err.response?.data?.message || err.message);
+                alert(err.response?.data?.message || "Failed to update profile image. Try again later.");
                 return;
             }
         }
