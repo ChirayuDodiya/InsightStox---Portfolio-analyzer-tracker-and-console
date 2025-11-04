@@ -1,5 +1,6 @@
 import { searchUserByEmail } from "../db/findUser.js";
 import jwt from "jsonwebtoken";
+import { getActiveSessionByToken } from "../db/getActiveSession.js";
 
 const verifyToken = async (req, res, next) => {
     try {
@@ -10,6 +11,21 @@ const verifyToken = async (req, res, next) => {
             return res
                 .status(401)
                 .json({ success: false, message: "Unauthorized request" });
+        }
+       
+        const activeSession = await getActiveSessionByToken(token);
+
+        if(!activeSession){
+            return res
+                .status(500)
+                .json({ success: false, message: "Database error while verifying token" });
+        }
+
+        if(activeSession.length == 0){
+            return res
+                .clearCookie("token")
+                .status(400)
+                .json({ success: false, message: "unauthorized request" });
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
@@ -22,13 +38,13 @@ const verifyToken = async (req, res, next) => {
             .json({ success: false, message: "Database error while verifying token" });
         }
         
-        if (user.length == 0 || user[0].tokenversion!==decodedToken.tokenversion) {
+        if (user.length == 0) {
             return res
                 .clearCookie("token")
-                .status(401)
+                .status(400)
                 .json({ success: false, message: "invalid token" });
         }
-       
+
         req.user = {
             id:user[0].id,
             name:user[0].name,
@@ -42,12 +58,21 @@ const verifyToken = async (req, res, next) => {
             financialgoals:user[0].financialgoals,
             investmenthorizon:user[0].investmenthorizon,
             dashboardlayout:user[0].dashboardlayout,
-            tokenversion:user[0].tokenversion
         }
+            
+        req.activeSession ={
+            BrowserType:activeSession[0].browser_type,
+            OsType:activeSession[0].os_type
+        }
+
         next();
     }
     catch (error) 
     {
+        if (error.name === "TokenExpiredError") 
+        {
+            return res.status(401).json({ success: false, message: "Token expired" });
+        }
         return res.status(401).json({ success: false, message: error.message });
     }
 };

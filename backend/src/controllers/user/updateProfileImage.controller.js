@@ -54,7 +54,7 @@ const updateProfileImageController = async (req, res) => {
             }
         }
 
-        req.user.profileimage = profileImage.url;
+        req.user.profileimage = profileImage.secure_url;
 
         return res.status(200).json({
             success: true,

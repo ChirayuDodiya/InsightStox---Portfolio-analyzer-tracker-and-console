@@ -12,7 +12,7 @@ const getAllActiveSessionOfUser = async (email) => {
 
 const getActiveSessionByToken = async (token) => {
     try {
-        const result = await sql`SELECT email FROM "active_session" WHERE token = ${token}`;
+        const result = await sql`SELECT email,browser_type,os_type,last_active_time FROM "active_session" WHERE token = ${token}`;
         return result;
     } catch (error) {
         console.log('Database Error - getActiveSessionByToken');
