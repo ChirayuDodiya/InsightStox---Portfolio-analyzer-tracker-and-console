@@ -1,5 +1,13 @@
-const logoutUser = (req, res) => {
+import { deleteActiveSessionByToken } from "../../db/deleteActiveSession.js";
+
+const logoutUser = async(req, res) => {
     try {
+        const deleteActiveSessionStatus = await deleteActiveSessionByToken(req.cookies.token);
+
+        if (!deleteActiveSessionStatus) {
+            return res.status(500).json({ success: false, message: "Database error while logging out user" });
+        }
+
         return res
             .clearCookie("token")
             .status(200)
