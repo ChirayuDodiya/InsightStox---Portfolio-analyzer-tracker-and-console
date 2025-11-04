@@ -3,10 +3,8 @@ const yahooFinance = new YahooFinance()
 
 const formatValue = (value, unit = '') => {
     if (typeof value === 'number') {
-        // Simple conversion to fixed-point for cleaner display
         return `${value.toFixed(2)}${unit}`;
     }
-    // Return original value if it's not a number (e.g., null, undefined, or string)
     return value; 
 };
 
@@ -88,8 +86,6 @@ export const getFinancialDetails = async (req, res) => {
             }
         };
 
-        // --- 3. Format Percentages (This section is now prone to errors if the value is null) ---
-        // You MUST check for existence before multiplying, even with direct access!
         
         // // ROE
         if (stockData.fundamentals.roeTTM !== undefined && stockData.fundamentals.roeTTM !== null) {
@@ -108,13 +104,11 @@ export const getFinancialDetails = async (req, res) => {
             stockData.financials.operatingMargins = formatValue(stockData.financials.operatingMargin * 100, '%');
         }
 
-        // Send the clean, formatted data to the frontend
         console.log(stockData)
         return res.status(200).json({ success: true, data: stockData });
 
     } catch (error) {
         console.error(`Error fetching or processing data for ${ticker}:`, error.message);
-        // This catch block handles both API failure AND the TypeError from direct access
         return res.status(500).json({ 
             success: false, 
             message: 'Failed to fetch or process stock details. Data may be missing or the ticker is invalid.', 
