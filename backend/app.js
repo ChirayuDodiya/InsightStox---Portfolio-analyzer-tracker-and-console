@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import multer from "multer";
 import cors from "cors";
 import { removePortfolioExcelSheet } from "./src/utils/removePortfolioExcelSheets.js";
+import { removeActivityHistoryPdf } from "./src/utils/removeActivityHistoryPdf.js";
 
 const allowedOrigins = [
     process.env.FRONTEND_LINK

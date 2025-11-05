@@ -4,8 +4,8 @@ import path from "path";
 import { randomBytes } from "crypto";
 import { getPortfolioStockSummary } from "../../db/stockSummary.js";
 import { getPortfolioTransactions } from "../../db/userTransactions.js";
-import { transporter } from "../../utils/nodemailer.js";
-import { getPortfolioDownloadEmailTemplate } from "../../utils/mailPortfolioDataDownloadTamplate.js";
+import { sendMail } from "../../utils/nodemailer.js";
+import { getPortfolioDownloadEmailTemplate } from "../../utils/mailPortfolioDataDownloadTemplate.js";
 import { addActivityHistory } from "../../mongoModels/user.model.js";
 
 const createExcel = async (req, res) => {
@@ -106,9 +106,9 @@ const createExcel = async (req, res) => {
                 });
             });
         }
-
+        const fileName = `${userName}_portfolio_data.xlsx`;
         const saveDir = path.join("./public/portfolioData");
-        filePath = path.join(saveDir, `${userName}.xlsx`);
+        const filePath = path.join(saveDir, fileName);
         const buffer = await workbook.outputAsync({ password });
         fs.writeFileSync(filePath, buffer);
 
@@ -137,12 +137,13 @@ const createExcel = async (req, res) => {
             ),
             attachments: [
                 {
-                    filename: userName + ".xlsx",
-                    path: "./public/portfolioData/" + userName + ".xlsx",
+                    filename: fileName,
+                    path: filePath,
                 },
             ],
         };
-        await transporter.sendMail(mailOptions);
+
+        await sendMail(mailOptions);
 
         const newActivity = {
             os_type: req.activeSession.osType,

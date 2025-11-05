@@ -76,3 +76,29 @@ export async function getAllActivityHistory(email) {
     const user = await User.findOne({ email }, { activityHistory: 1, _id: 0 });
     return user?.activityHistory || [];
 }
+
+export async function getSecurityAlertsByToken(token) {
+    const result = await User.aggregate([
+        { $unwind: "$securityAlerts" },
+        { $match: { "securityAlerts.token": token } },
+        { $replaceRoot: { newRoot: "$securityAlerts" } }
+    ]);
+    return result;
+}
+
+export async function getActivityHistoryByToken(token) {
+    const result = await User.aggregate([
+        { $unwind: "$activityHistory" },
+        { $match: { "activityHistory.token": token } },
+        { $replaceRoot: { newRoot: "$activityHistory" } }
+    ]);
+    return result;
+}
+
+export async function deleteSecurityAlertsByEmail(email) {
+    return await User.updateOne({ email }, { $set: { securityAlerts: [] } });
+}
+
+export async function deleteActivityHistoryByEmail(email) {
+    return await User.updateOne({ email }, { $set: { activityHistory: [] } });
+}

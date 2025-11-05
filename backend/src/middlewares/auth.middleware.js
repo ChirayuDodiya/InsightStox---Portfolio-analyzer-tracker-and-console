@@ -1,6 +1,7 @@
 import { searchUserByEmail } from "../db/findUser.js";
 import jwt from "jsonwebtoken";
 import { getActiveSessionByToken } from "../db/getActiveSession.js";
+import { updateActiveTime } from "../db/updateActiveTime.js";
 
 const verifyToken = async (req, res, next) => {
     try {
@@ -49,6 +50,8 @@ const verifyToken = async (req, res, next) => {
                 .status(400)
                 .json({ success: false, message: "invalid token" });
         }
+
+        await updateActiveTime(token);
 
         req.user = {
             id: user[0].id,

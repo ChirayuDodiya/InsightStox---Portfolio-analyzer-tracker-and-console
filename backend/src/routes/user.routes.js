@@ -3,6 +3,8 @@ import {
     loginUser,
     loginWithGoogle,
     logoutUser,
+    logoutUserSession,
+    logoutAllUserSessions,
     register,
     registerOtpGeneration,
     updateProfileImageController,
@@ -30,6 +32,9 @@ import {
     activityAndSessionHistory,
     getAllActivityHistoryController,
     getAllSecurityAlertsController,
+    getActivityAndSessionByToken,
+    downloadActivityHistoryReport,
+    clearActivityHistory,
 } from "../controllers/user/user.controller.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -39,6 +44,8 @@ const router = Router();
 
 router.route("/login").post(verifyUserLoginStatus,loginUser);
 router.route("/logout").post(verifyToken, logoutUser);
+router.route("/logoutSession").post(verifyToken, logoutUserSession);
+router.route("/logoutAllSessions").post(verifyToken, logoutAllUserSessions);
 router.route("/registerOtpGeneration").post(verifyUserLoginStatus,registerOtpGeneration);
 router.route("/register").post(verifyUserLoginStatus,register);
 router.route("/googleLogin").post(verifyUserLoginStatus,loginWithGoogle);
@@ -72,9 +79,9 @@ router.route("/updateProfileImage").patch(verifyToken,
         updateProfileImageController(req, res);
     });
 });
-router.route("/toggleAiSuggestion").post(verifyToken, toggleAiSuggestionController);
+router.route("/toggleAiSuggestion").patch(verifyToken, toggleAiSuggestionController);
 router.route("/downloadPortfolioData").get(verifyToken, createExcel);
-router.route("/deleteAccount").get(verifyToken, deleteAccount, logoutUser);
+router.route("/deleteAccount").delete(verifyToken, deleteAccount, logoutUser);
 router.route("/getPreferencesAndPersonalisation").get(verifyToken, getPreferencesAndPersonalisation);
 router.route("/updateTheme").patch(verifyToken, updateThemeController);
 router.route("/updateDashboardLayout").patch(verifyToken, updateDashboardLayoutController);
@@ -84,4 +91,7 @@ router.route("/checkToken").get(checkToken);
 router.route("/activityAndSessionHistory").get(verifyToken, activityAndSessionHistory);
 router.route("/getAllActivityHistory").get(verifyToken, getAllActivityHistoryController);
 router.route("/getAllSecurityAlerts").get(verifyToken, getAllSecurityAlertsController);
+router.route("/getActivityAndSessionByToken").get(verifyToken, getActivityAndSessionByToken);
+router.route("/downloadActivityHistoryReport").get(verifyToken, downloadActivityHistoryReport);
+router.route("/clearActivityHistory").delete(verifyToken,clearActivityHistory);
 export default router;
