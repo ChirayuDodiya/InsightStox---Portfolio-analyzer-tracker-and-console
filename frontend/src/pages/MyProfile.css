@@ -6,7 +6,7 @@
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
 }
-
+label
 .Page {
     height: 100%;
     width: 100%;
@@ -397,13 +397,13 @@ hr {
 }
 
 .eye-symbol{
-    margin-left: -3rem;
+    margin-left: -5rem;
 }
 
 .password-toggle1, .password-toggle2, .password-toggle3 {
     cursor: pointer;
     width: auto;
-    margin-top: 0.8rem;
+    margin-top: 0.3rem;
     color: #00C853;
     background: none;
 }

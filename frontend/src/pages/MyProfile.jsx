@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import "../pages/MyProfile.css";
 import "primeicons/primeicons.css";
-import { checkPasswordStrength, validateNameStrength } from "../utils/validation.js";
+import { MyProfileHandlers } from "../utils/MyProfileHandlers.jsx";
+import { validateNameStrength, checkPasswordStrength } from "../utils/validation.js";
 import Navbar from "../components/Navbar.jsx";
 import profileImg from "../assets/profileicon.svg";
 import GoToArrow from "../assets/routeicon.svg";
@@ -10,11 +11,8 @@ import GoogleLogo from "../assets/google_logo.svg";
 import Footer from '../components/Footer.jsx';
 import { Sidebar } from "../components/Sidebar.jsx";
 import { useAppContext } from "../context/AppContext";
-import { useNavigate } from "react-router-dom";
 
 export const MyProfile = () => {
-
-    //const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
         name: "",
         email: "",
@@ -44,6 +42,13 @@ export const MyProfile = () => {
     const [isSendingOtp, setIsSendingOtp] = useState(false);
     const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
     const [resendCountdown, setResendCountdown] = useState(0);
+
+    const { handlePicChange, handleSaveName, handleSavePass, resendOtp,
+         verifyOtpAndReset, handleFinGoals, handleInvExp, handleInvHorizon, handleRiskProf } = MyProfileHandlers(
+            { setUserInfo, setIsEditingInfo, editedName, resendCountdown,
+              currPass, newPass, confirmPass, setIsSendingOtp, setOtp, setOtpError, setResendCountdown,
+              setIsVerifyingOtp, setConfirmPass, setCurrPass, setNewPass, setShowOtpModal, otp, setIsEditingPass});
+
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
@@ -78,35 +83,6 @@ export const MyProfile = () => {
         getUserInfo();
     }, []);
 
-
-    const handlePicChange = async (event) => {
-        const filePath = event.target.files[0];
-        if (filePath && filePath.type.startsWith("image/")) {
-
-            const profilePicURL = URL.createObjectURL(filePath);
-            const picData = new FormData();
-            picData.append("profileImage", filePath);
-
-            try {
-                await axios.patch( import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/updateProfileImage", picData, 
-                    { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }, });
-                setUserInfo((prev) => ({
-                    ...prev,
-                    profimg: profilePicURL
-                }));
-                setIsEditingInfo(false);
-
-            } catch (err) {
-                console.error("Error updating profile image:", err.response?.data?.message || err.message);
-                alert(err.response?.data?.message || "Failed to update profile image. Try again later.");
-                return;
-            }
-        }
-        else {
-            alert("Invalid file, Please select a valid file!")
-        }
-    };
-
     useEffect(() => {
         const trimmedName = editedName.trim();
         if (trimmedName && !validateNameStrength(trimmedName)) {
@@ -118,10 +94,10 @@ export const MyProfile = () => {
 
     useEffect(() => {
         const trimmedPassword = newPass.trim();
-        if (!trimmedPassword) {
-            setPasswordError("");
-        } else {
+        if (trimmedPassword) {
             setPasswordError(checkPasswordStrength(trimmedPassword));
+        } else {
+            setPasswordError("");
         }
     }, [newPass]);
 
@@ -151,53 +127,6 @@ export const MyProfile = () => {
         setConfirmPass("");
     }
 
-    const handleSaveInfo = async () => {
-
-        const testName = validateNameStrength(editedName);
-        console.log("Valid Name", editedName);
-        if (testName) {
-            try {
-                await axios.patch(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/updateProfileName", { name: editedName }, { withCredentials: true });
-                setUserInfo((prev) => ({
-                    ...prev,
-                    name: editedName
-                }));
-                setIsEditingInfo(false);
-
-            } catch (err) {
-                console.error("Error updating name:", err.response?.data?.message || err.message);
-                alert(err.response?.data?.message || "Failed to update name. Try again later.");
-                return;
-            }
-        }
-        else {
-            alert("Invalid Name!");
-        }
-
-    };
-
-    const handleSavePass = async () => {
-        if (confirmPass !== newPass) {
-            console.log("new password and confirm password does not match!")
-        }
-
-        else {
-            try {
-                setIsSendingOtp(true);
-                await axios.patch(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/resetPassword", { password: currPass, newPassword: newPass }, { withCredentials: true });
-                setShowOtpModal(true);
-                setOtp("");
-                setOtpError("");
-                setResendCountdown(30);
-            } catch (err) {
-                console.error("Error sending OTP:", err.response?.data?.message || err.message);
-                alert(err.response?.data?.message || "Failed to send OTP. Try again later.");
-            } finally {
-                setIsSendingOtp(false);
-            }
-        }
-    }
-
     useEffect(() => {
         let timer = null;
         if (resendCountdown > 0) {
@@ -206,47 +135,14 @@ export const MyProfile = () => {
         return () => clearTimeout(timer);
     }, [resendCountdown]);
 
-    const resendOtp = async () => {
-        if (resendCountdown > 0) return;
-        try {
-            setIsSendingOtp(true);
-            await axios.patch(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/resetPassword", { password: currPass, newPassword: newPass }, { withCredentials: true });
-            setResendCountdown(30);
-        } catch (err) {
-            console.error("Error resending OTP:", err.response?.data?.message || err.message);
-            setOtpError("Failed to resend OTP. Try again.");
-        } finally {
-            setIsSendingOtp(false);
+    function checkCountdown() {
+        if(resendCountdown > 0){
+            return `Resend (${resendCountdown}s)`;
         }
-    };
-
-    const verifyOtpAndReset = async () => {
-        if (!otp.trim()) {
-            setOtpError("Please enter the OTP");
-            return;
+        else{
+            return isSendingOtp ? "Sending..." : "Resend";
         }
-
-        try {
-            setIsVerifyingOtp(true);
-            setOtpError("");
-            await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/verifyOtpForProfile", { otp: otp }, { withCredentials: true });
-            setShowOtpModal(false);
-            await axios.patch(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/setNewPasswordForProfile", { newPassword: newPass }, { withCredentials: true });
-            setIsEditingPass(false);
-            setCurrPass("");
-            setNewPass("");
-            setConfirmPass("");
-            setOtp("");
-            setOtpError("");
-            console.log("Password changed successfully after OTP verification.");
-        } catch (err) {
-            const msg = err.response?.data?.message || err.message;
-            console.error("OTP verify/reset error:", msg);
-            setOtpError(msg.includes("OTP") ? msg : "Wrong OTP or verification failed");
-        } finally {
-            setIsVerifyingOtp(false);
-        }
-    };
+    }
 
     return (
         <div className="Page">
@@ -296,7 +192,7 @@ export const MyProfile = () => {
 
                         {isEditingInfo && (
                             <div className="SaveCancelBtns">
-                                <button className="SaveBtn" value="Save Changes" onClick={handleSaveInfo}>Save changes</button>
+                                <button className="SaveBtn" value="Save Changes" onClick={handleSaveName}>Save changes</button>
                                 <button className="CancelBtn" value="Cancel" onClick={handleCancelInfo}>Cancel</button>
                             </div>
                         )}
@@ -331,11 +227,11 @@ export const MyProfile = () => {
                                                     value={currPass}
                                                     onChange={(e) => setCurrPass(e.target.value)}
                                                 />
-                                                <a className="password-toggle1" onClick={() => setShowPassword1(!showPassword1)}>
+                                                <button className="password-toggle1" onClick={() => setShowPassword1(!showPassword1)}>
                                                     <span className="eye-symbol">
                                                         <i className={`pi ${showPassword1 ? "pi-eye-slash" : "pi-eye"}`}></i>
                                                     </span>
-                                                </a>
+                                                </button>
                                             </div>
                                             <div className="NewPass">
                                                 <input
@@ -344,11 +240,11 @@ export const MyProfile = () => {
                                                     value={newPass}
                                                     onChange={(e) => setNewPass(e.target.value)}
                                                 />
-                                                <a className="password-toggle2" onClick={() => setShowPassword2(!showPassword2)}>
+                                                <button className="password-toggle2" onClick={() => setShowPassword2(!showPassword2)}>
                                                     <span className="eye-symbol">
                                                         <i className={`pi ${showPassword2 ? "pi-eye-slash" : "pi-eye"}`}></i>
                                                     </span>
-                                                </a>
+                                                </button>
                                                 <p style={{ display: newPass ? 'block' : 'none' }} className="pass-error error">{passwordError}</p>
                                             </div>
                                             <div className="ConfPass">
@@ -358,17 +254,17 @@ export const MyProfile = () => {
                                                     value={confirmPass}
                                                     onChange={(e) => setConfirmPass(e.target.value)}
                                                 />
-                                                <a className="password-toggle3" onClick={() => setShowPassword3(!showPassword3)}>
+                                                <button className="password-toggle3" onClick={() => setShowPassword3(!showPassword3)}>
                                                     <span className="eye-symbol">
                                                         <i className={`pi ${showPassword3 ? "pi-eye-slash" : "pi-eye"}`}></i>
                                                     </span>
-                                                </a>
+                                                </button>
                                                 <p style={{ display: confirmPass ? 'block' : 'none' }} className="confirm-pass-error error">{confirmPasswordError}</p>
                                             </div>
                                         </div>
                                         <div className="SaveCancelBtns">
-                                            <button className="SaveBtn" val="Save Changes" onClick={handleSavePass}> Save changes</button>
-                                            <button className="CancelBtn" val="Cancel" onClick={handleCancelPass}> Cancel </button>
+                                            <button className="SaveBtn" value="Save Changes" onClick={handleSavePass}> Save changes</button>
+                                            <button className="CancelBtn" value="Cancel" onClick={handleCancelPass}> Cancel </button>
                                         </div>
                                     </div>
                                 ) : (
@@ -396,10 +292,7 @@ export const MyProfile = () => {
                             <div className="InvExp">
                                 <label>Investment Experience</label>
                                 <div className="InfValueDropDown1">
-                                    <select className="InvExpList" value={userInfo.investmentExp} onChange={(e) => setUserInfo((prev) => ({
-                                        ...prev,
-                                        investmentExp: e.target.value
-                                    }))}>
+                                    <select className="InvExpList" value={userInfo.investmentExp} onChange={handleInvExp}>
                                         <option value="" disabled>Select an option</option>
                                         <option value="Beginner">Beginner</option>
                                         <option value="Intermediate">Intermediate</option>
@@ -412,10 +305,7 @@ export const MyProfile = () => {
                             <div className="RiskProfile">
                                 <label>Risk Profile</label>
                                 <div className="InfValueDropDown2">
-                                    <select className="RiskProfList" value={userInfo.riskProfile} onChange={(e) => setUserInfo((prev) => ({
-                                        ...prev,
-                                        riskProfile: e.target.value
-                                    }))}>
+                                    <select className="RiskProfList" value={userInfo.riskProfile} onChange={handleRiskProf}>
                                         <option value="" disabled>Select an option</option>
                                         <option value="Low - Conservative">Low - Conservative</option>
                                         <option value="Medium - Moderate">Medium - Moderate</option>
@@ -430,14 +320,11 @@ export const MyProfile = () => {
                             <div className="FinGoals">
                                 <label>Financial Goals</label>
                                 <div className="InfValueDropDown3">
-                                    <select className="FinGoalList" value={userInfo.FinGoal} onChange={(e) => setUserInfo((prev) => ({
-                                        ...prev,
-                                        FinGoal: e.target.value
-                                    }))}>
+                                    <select className="FinGoalList" value={userInfo.FinGoal} onChange={handleFinGoals}>
                                         <option value="" disabled>Select an option</option>
-                                        <option value="Primary growth">Primary growth</option>
-                                        <option value="Income generation">Income generation</option>
-                                        <option value="Balanced growth & income">Balanced growth & income</option>
+                                        <option value="Primary Growth">Primary growth</option>
+                                        <option value="Income Generation">Income generation</option>
+                                        <option value="Balanced Growth & Income">Balanced growth & income</option>
                                     </select>
                                     <img className="g1" src={GoToArrow} alt="go-to" />
                                 </div>
@@ -446,10 +333,7 @@ export const MyProfile = () => {
                             <div className="InvHorizon">
                                 <label>Investment Horizon</label>
                                 <div className="InfValueDropDown4">
-                                    <select className="InvHorizonList" value={userInfo.InvHorizon} onChange={(e) => setUserInfo((prev) => ({
-                                        ...prev,
-                                        InvHorizon: e.target.value
-                                    }))}>
+                                    <select className="InvHorizonList" value={userInfo.InvHorizon} onChange={handleInvHorizon}>
                                         <option value="" disabled>Select an option</option>
                                         <option value="Short-term (1-3 years)">Short-term (1-3 years)</option>
                                         <option value="Medium-term (3-10 years)">Medium-term (3-10 years)</option>
@@ -483,7 +367,8 @@ export const MyProfile = () => {
                                 {isVerifyingOtp ? "Verifying..." : "Continue"}
                             </button>
                             <button className="OTPResend" onClick={resendOtp} disabled={isSendingOtp || resendCountdown > 0}>
-                                {resendCountdown > 0 ? `Resend (${resendCountdown}s)` : isSendingOtp ? "Sending..." : "Resend"}
+                                {checkCountdown()}
+                                
                             </button>
                             <button className="OTPCancel" onClick={() => { setShowOtpModal(false); setOtp(""); setOtpError(""); }}>
                                 Cancel
