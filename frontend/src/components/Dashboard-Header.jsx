@@ -30,6 +30,7 @@ const DashboardHeader = () => {
 
       if (res.data?.data && Array.isArray(res.data.data)) {
         setStocks(res.data.data.slice(0, 3)); //show top 3 stocks
+        console.log(res.data.data.slice(0, 3))
       } else {
         setError('Invalid data format from server.');
       }
@@ -77,7 +78,7 @@ const DashboardHeader = () => {
         <div className="d-stock-display-container">
           {stocks.length > 0 ? (
             stocks.map((stock, index) => {
-              const isNegative = Number(stock.changePercent) < 0;
+              const isNegative = Number(stock.change) < 0;
               return (
                 <React.Fragment key={stock.Symbol || index}>
                   <div className="d-stock-info">

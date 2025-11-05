@@ -18,7 +18,8 @@ const stockmapping = (stockData) => ({
   name: stockData.shortName,
   nse: stockData.exchange,
   price: stockData.price,
-  change: `${stockData.changePercent}%`,
+  change: stockData.change,
+  changePercent: stockData.changePercent,
   isUp: parseFloat(stockData.changePercent) >= 0,
 });
 
@@ -88,15 +89,13 @@ const TrendingStocks = () => {
                   ₹{stock.price} {stock.isUp ? '↑' : '↓'}
                 </p>
                 <p className={`stock-change ${stock.isUp ? 'text-positive' : 'text-negative'}`}>
-                  {stock.change}
+                  {stock.change} ({stock.changePercent}%)
                 </p>
               </div>
             </div>
           ))}
         </div>
       )}
-
-      <a href="#" className="see-more-link">See More →</a>
     </div>
   );
 };

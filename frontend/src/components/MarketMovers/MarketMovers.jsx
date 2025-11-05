@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './MarketMovers.css';
 import tata_icon from '../../assets/tata-icon.png';
+import reliance_icon from '../../assets/reliance-icon.png';
+import adani_icon from '../../assets/adani-icon.png';
+import mahindra_icon from '../../assets/mahindra-icon.png';
+import bajaj_icon from '../../assets/bajaj-icon.png';
+import adityabirla_icon from '../../assets/adityabirla-icon.png';
 
 // Always include credentials for auth sessions
 axios.defaults.withCredentials = true;
@@ -56,7 +61,7 @@ const MarketMovers = () => {
   useEffect(() => {
     const fetchMarketData = async () => {
       try {
-        // ✅ Fetch all data concurrently
+        // Fetch all data concurrently
         const [newsRes, gainersRes, losersRes] = await Promise.all([
           axios.get(MARKET_ACTIVE_API),
           axios.get(MARKET_GAINERS_API),
@@ -108,11 +113,11 @@ const MarketMovers = () => {
   // Static business group cards
   const businessGroupsData = [
     { logo: tata_icon, name: 'TATA', stockCount: 15 },
-    { logo: tata_icon, name: 'Reliance', stockCount: 8 },
-    { logo: tata_icon, name: 'Adani', stockCount: 9 },
-    { logo: tata_icon, name: 'Mahindra', stockCount: 7 },
-    { logo: tata_icon, name: 'Bajaj', stockCount: 11 },
-    { logo: tata_icon, name: 'Aditya Birla', stockCount: 8 },
+    { logo: reliance_icon, name: 'Reliance', stockCount: 8 },
+    { logo: adani_icon, name: 'Adani', stockCount: 9 },
+    { logo: mahindra_icon, name: 'Mahindra', stockCount: 7 },
+    { logo: bajaj_icon, name: 'Bajaj', stockCount: 11 },
+    { logo: adityabirla_icon, name: 'Aditya Birla', stockCount: 8 },
   ];
 
   if (loading) {
