@@ -22,7 +22,7 @@ export const MyProfile = () => {
         InvHorizon: "",
         FinGoal: ""
     });
-    const [darkMode, setDarkMode] = useState(true);
+    const { darkMode, setDarkMode } = useAppContext();
     const fileInputRef = useRef(null);
     const [isEditingInfo, setIsEditingInfo] = useState(false);
     const [isEditingPass, setIsEditingPass] = useState(false);
@@ -36,6 +36,12 @@ export const MyProfile = () => {
     const [nameError, setNameError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [confirmPasswordError, setConfirmPasswordError] = useState("");
+    const [showOtpModal, setShowOtpModal] = useState(false);
+    const [otp, setOtp] = useState("");
+    const [otpError, setOtpError] = useState("");
+    const [isSendingOtp, setIsSendingOtp] = useState(false);
+    const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
+    const [resendCountdown, setResendCountdown] = useState(0);
     axios.defaults.withCredentials = true;
 
     useEffect(() => {
@@ -71,13 +77,28 @@ export const MyProfile = () => {
     }, []);
 
 
-    const handlePicChange = (event) => {
+    const handlePicChange = async (event) => {
         const filePath = event.target.files[0];
         if (filePath && filePath.type.startsWith("image/")) {
-            setUserInfo((prev) => ({
-                ...prev,
-                profimg: URL.createObjectURL(filePath)
-            }));
+
+            const profilePicURL = URL.createObjectURL(filePath);
+            const picData = new FormData();
+            picData.append("profileImage", filePath);
+
+            try {
+                await axios.patch( import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/updateProfileImage", picData, 
+                    { withCredentials: true, headers: { "Content-Type": "multipart/form-data" }, });
+                setUserInfo((prev) => ({
+                    ...prev,
+                    profimg: profilePicURL
+                }));
+                setIsEditingInfo(false);
+
+            } catch (err) {
+                console.error("Error updating profile image:", err.response?.data?.message || err.message);
+                alert(err.response?.data?.message || "Failed to update profile image. Try again later.");
+                return;
+            }
         }
         else {
             alert("Invalid file, Please select a valid file!")
@@ -131,13 +152,21 @@ export const MyProfile = () => {
     const handleSaveInfo = async () => {
 
         const testName = validateNameStrength(editedName);
-
+        console.log("Valid Name", editedName);
         if (testName) {
-            setUserInfo((prev) => ({
-                ...prev,
-                name: editedName
-            }));
-            setIsEditingInfo(false);
+            try {
+                await axios.patch(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/updateProfileName", { name: editedName }, { withCredentials: true });
+                setUserInfo((prev) => ({
+                    ...prev,
+                    name: editedName
+                }));
+                setIsEditingInfo(false);
+
+            } catch (err) {
+                console.error("Error updating name:", err.response?.data?.message || err.message);
+                alert(err.response?.data?.message || "Failed to update name. Try again later.");
+                return;
+            }
         }
         else {
             alert("Invalid Name!");
@@ -152,18 +181,70 @@ export const MyProfile = () => {
 
         else {
             try {
-                const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/resetpassword", { email: userInfo.email, password: currPass, newPassword: newPass }, { withCredentials: true });
-                console.log("Password changed succesfully!");
-                setIsEditingPass(false);
-                setCurrPass("");
-                setNewPass("");
-                setConfirmPass("");
+                setIsSendingOtp(true);
+                await axios.patch(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/resetPassword", { password: currPass, newPassword: newPass }, { withCredentials: true });
+                setShowOtpModal(true);
+                setOtp("");
+                setOtpError("");
+                setResendCountdown(30);
             } catch (err) {
-                if (err.response.data.message)
-                    console.error("Error:", err.response.data.message);
+                console.error("Error sending OTP:", err.response?.data?.message || err.message);
+                alert(err.response?.data?.message || "Failed to send OTP. Try again later.");
+            } finally {
+                setIsSendingOtp(false);
             }
         }
     }
+
+    useEffect(() => {
+        let timer = null;
+        if (resendCountdown > 0) {
+            timer = setTimeout(() => setResendCountdown((c) => c - 1), 1000);
+        }
+        return () => clearTimeout(timer);
+    }, [resendCountdown]);
+
+    const resendOtp = async () => {
+        if (resendCountdown > 0) return;
+        try {
+            setIsSendingOtp(true);
+            await axios.patch(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/resetPassword", { password: currPass, newPassword: newPass }, { withCredentials: true });
+            setResendCountdown(30);
+        } catch (err) {
+            console.error("Error resending OTP:", err.response?.data?.message || err.message);
+            setOtpError("Failed to resend OTP. Try again.");
+        } finally {
+            setIsSendingOtp(false);
+        }
+    };
+
+    const verifyOtpAndReset = async () => {
+        if (!otp.trim()) {
+            setOtpError("Please enter the OTP");
+            return;
+        }
+
+        try {
+            setIsVerifyingOtp(true);
+            setOtpError("");
+            await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/verifyOtpForProfile", { otp: otp }, { withCredentials: true });
+            setShowOtpModal(false);
+            await axios.patch(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/setNewPasswordForProfile", { newPassword: newPass }, { withCredentials: true });
+            setIsEditingPass(false);
+            setCurrPass("");
+            setNewPass("");
+            setConfirmPass("");
+            setOtp("");
+            setOtpError("");
+            console.log("Password changed successfully after OTP verification.");
+        } catch (err) {
+            const msg = err.response?.data?.message || err.message;
+            console.error("OTP verify/reset error:", msg);
+            setOtpError(msg.includes("OTP") ? msg : "Wrong OTP or verification failed");
+        } finally {
+            setIsVerifyingOtp(false);
+        }
+    };
 
     return (
         <div className="myPage">
@@ -295,16 +376,6 @@ export const MyProfile = () => {
                         </div>
                         <hr />
 
-                        {/*<div className="InfRow5">
-                            <label>Password
-                                <button className="EditDetails" val="Edit" />
-                            </label>
-                            <div className="InfValue">
-                                <span>**********</span>
-                            </div>
-                        </div>
-                        */}
-
                         <div className="InfRow4">
                             <label>Linked accounts</label>
                             <div className="LinkedBox">
@@ -390,6 +461,36 @@ export const MyProfile = () => {
                     </div>
                 </main>
             </div >
+            {/* OTP Overlay*/}
+            {showOtpModal && (
+                <div className="OTPOverlay">
+                    <div className="OTPModel">
+                        <h3>Verification required</h3>
+                        <p className="OTPNote">We have sent the verification OTP to your registered mail ID.</p>
+                        <input
+                            className="OTPInput"
+                            type="text"
+                            placeholder="Enter OTP"
+                            value={otp}
+                            onChange={(e) => setOtp(e.target.value)}
+                        />
+                        {otpError && <p className="OTPErrors">{otpError}</p>}
+
+                        <div className="OTPButtons">
+                            <button className="OTPContinue" onClick={verifyOtpAndReset} disabled={isVerifyingOtp}>
+                                {isVerifyingOtp ? "Verifying..." : "Continue"}
+                            </button>
+                            <button className="OTPResend" onClick={resendOtp} disabled={isSendingOtp || resendCountdown > 0}>
+                                {resendCountdown > 0 ? `Resend (${resendCountdown}s)` : isSendingOtp ? "Sending..." : "Resend"}
+                            </button>
+                            <button className="OTPCancel" onClick={() => { setShowOtpModal(false); setOtp(""); setOtpError(""); }}>
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="footer-div">
                 <Footer darkMode={darkMode}
                     navigationLinks={[

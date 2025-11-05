@@ -25,8 +25,10 @@ app.use(cookieParser());
 
 import userRouter from "./src/routes/user.routes.js";
 import dashBoardRouter from "./src/routes/dashBoard.routes.js"
+import aiInsightRouter from "./src/routes/aiInsight.routes.js"
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/dashboard",dashBoardRouter)
+app.use("/api/v1/dashboard", dashBoardRouter);
+app.use("/api/v1/ai-insight", aiInsightRouter);
 app.use((err, req, res, next) => {
     if (err instanceof multer.MulterError) {
         // Handle multer-specific errors
