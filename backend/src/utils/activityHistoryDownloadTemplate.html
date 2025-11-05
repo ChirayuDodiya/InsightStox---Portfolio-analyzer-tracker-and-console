@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Your InsightStox Portfolio Data</title>
+  <title>Your InsightStox Activity History Report</title>
   <style>
     body {
       margin: 0;
@@ -46,22 +46,6 @@
       color: #cccccc;
       margin: 12px 0;
     }
-    .download-btn {
-      display: inline-block;
-      background: #1db954;
-      color: #000000;
-      font-size: 18px;
-      font-weight: 600;
-      padding: 14px 35px;
-      border-radius: 10px;
-      margin: 25px 0;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(29, 185, 84, 0.4);
-      transition: all 0.3s ease;
-    }
-    .download-btn:hover {
-      background: #17a44d;
-    }
     .note {
       font-size: 14px;
       color: #999999;
@@ -88,10 +72,6 @@
       .content h1 {
         font-size: 22px !important;
       }
-      .download-btn {
-        font-size: 16px !important;
-        padding: 12px 24px !important;
-      }
       .content p {
         font-size: 14px !important;
       }
@@ -102,15 +82,15 @@
   <div class="container">
     <!-- Header -->
     <div class="header">
-      <img src={LOGO} alt="InsightStox Logo">
+      <img src="{LOGO}" alt="InsightStox Logo">
     </div>
 
     <!-- Content -->
     <div class="content">
-      <h1>Your Complete Portfolio Data</h1>
+      <h1>Your Activity History Report</h1>
       <p>Hello <strong>{USERNAME}</strong>,</p>
-      <p>As per your request on <strong>{DATE}</strong>, we’ve generated your complete portfolio data containing all your stocks and transactions details.</p>
-      <p>You can download your Excel file attached below,password to open excel sheet is <strong>{PASSWORD}</strong>.</p>
+      <p>As per your request on <strong>{DATE}</strong>, we’ve generated your complete <strong>activity history report</strong> containing all your recent actions, login records, and activities on InsightStox.</p>
+      <p>You can find your detailed report attached below in PDF format.</p>
       
     </div>
 

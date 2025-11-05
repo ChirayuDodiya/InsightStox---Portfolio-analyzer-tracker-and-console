@@ -37,6 +37,7 @@
     "nodemailer": "^7.0.6",
     "nodemailer-brevo-transport": "^2.2.1",
     "path": "^0.12.7",
+    "pdfkit-table": "^0.1.99",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "ua-parser-js": "^2.0.6",
