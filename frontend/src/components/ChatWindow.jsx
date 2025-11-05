@@ -36,7 +36,7 @@ const ChatWindow = () => {
         }catch(err){
             console.error("Error sending message:", err);
             setMessages((prev) => [...prev.filter((msg) => msg.id !== "typing"), { 
-                text: "Sorry, I'm having trouble connecting right now. Please try again.", 
+                text: err.message, 
                 sender: 'bot',
                 typing: false
                 }]);

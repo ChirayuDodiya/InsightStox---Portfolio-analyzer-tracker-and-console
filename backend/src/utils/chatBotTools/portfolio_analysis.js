@@ -2,14 +2,24 @@ import YahooFinance from "yahoo-finance2";
 import { z } from "zod";
 import { tool } from "@langchain/core/tools";
 const yahooFinance = new YahooFinance();
+// import { getUserPortfolio } from "../db/portfolioModel.js"; // your DB function
 
 export const Portfolio_analysis_tool = tool(
   // function
-  async () => {
+  async (context) => {
     const portfolio = [ {"symbol": "RELIANCE.NS", "quantity": 120}, {"symbol": "TCS.NS", "quantity": 45}, {"symbol": "INFY.NS", "quantity": 30} ];
-    console.log("Portfolio_analysis_tool used");
+    console.log("Portfolio_analysis_tool used with ", context);
 
+
+    // ✅ Fetch portfolio automatically from DB (for current user)
+    // const userId = context?.user?.id; // you get this from auth/session middleware
+    // const portfolio = await getUserPortfolio(userId);
+
+    // if (!portfolio || portfolio.length === 0) {
+    //   throw new Error("No portfolio found for the current user.");
+    // }
     // Convert JSON string into object
+
     let parsedPortfolio = typeof portfolio === "string" ? JSON.parse(portfolio) : portfolio;
     const stocks = Array.isArray(parsedPortfolio)
       ? parsedPortfolio
@@ -127,19 +137,13 @@ ${resultWithAllocation
 ### ⚠️ Disclaimer  
 This analysis is AI-generated and for informational purposes only. Always verify data and consult a certified financial advisor.
 `;
-
-    console.log("Generated Portfolio Analysis Report", resultWithAllocation);
-    return JSON.stringify(resultWithAllocation);
+    return report;
   },
   // options
   {
     name: "portfolio_analysis",
     description:
-      "Analyzes a user's stock portfolio using live Yahoo Finance data. Provides allocation, gainers/losers, valuation ratios, and diversification insights in Indian format.",
-    schema: z.object({
-      portfolio: z
-        .string()
-        .describe("The stock portfolio details in JSON format (array or {portfolio: [...]})"),
-    }),
+      "Analyzes the current logged-in user's stock portfolio using live Yahoo Finance data. Provides valuation, gainers/losers, allocation, and insights.",
+    schema: z.object({}) // ✅ No input needed
   }
 );
