@@ -119,11 +119,6 @@
   animation: slideDown 0.3s ease;
   transform-origin: top right;
 }
-.popupheading {
-  display: flex;
-  gap: 10px;
-}
-
 .name-email {
   display: flex;
   flex-direction: column;

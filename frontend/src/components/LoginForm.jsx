@@ -85,6 +85,28 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
           setTitleError('Google login failed');
         }
       });
+
+      const handleGoogleButtonClick = () => {
+        setGoogleLoginLoading(true);
+
+        // Detect when window regains focus after popup closes
+        const handleFocusBack = () => {
+          setTimeout(() => {
+            setGoogleLoginLoading(false);
+          }, 1000);
+          window.removeEventListener("focus", handleFocusBack);
+        };
+
+        window.addEventListener("focus", handleFocusBack);
+
+        try {
+          googleLogin();
+        } catch (error) {
+          console.log("Google popup failed:", error);
+          setGoogleLoginLoading(false);
+          window.removeEventListener("focus", handleFocusBack);
+        }
+      };
 /*----------------------------------- login handlers-------------------------------------------------------------------------- */
 // Function to handle login
     const handleLogin = async () => {
@@ -240,7 +262,7 @@ return (
             {forgotOtpvarified && (<button type="submit" className="resubmit resetpass loading" disabled = {newPasswordError!==""} style={{display: "flex",opacity: newPasswordError!=="" ? 0.5 : 1,cursor: newPasswordError!=="" ? 'not-allowed' : 'pointer'}} onClick={() => {handleResetPassword();}}>{isLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Reset Password"}</button>)}
 
             {/* Google Login Button */}
-            {!isForgotPassword && (<button type="button" className="google-btn loading" onClick = {()=>{googleLogin();setGoogleLoginLoading(true);}} style={{display: "flex"}} >
+            {!isForgotPassword && (<button type="button" className="google-btn loading" onClick = {()=>{handleGoogleButtonClick();}} style={{display: "flex"}} >
                 {googleLoginLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <><img src={google_logo} alt="Google logo" className="google-logo" />
                 <span>Continue with Google</span></>}
             </button>)}
