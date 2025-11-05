@@ -9,12 +9,10 @@ import GoToArrow from "../assets/routeicon.svg";
 import GoogleLogo from "../assets/google_logo.svg";
 import Footer from '../components/Footer.jsx';
 import { Sidebar } from "../components/Sidebar.jsx";
-import { useAppContext } from "../context/AppContext";
-import { useNavigate } from "react-router-dom";
+
 
 export const MyProfile = () => {
 
-    //const navigate = useNavigate();
     const [userInfo, setUserInfo] = useState({
         name: "",
         email: "",
@@ -249,7 +247,7 @@ export const MyProfile = () => {
     };
 
     return (
-        <div className="Page">
+        <div className="myPage">
             <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="myprofile"
                 profileData={{ name: userInfo.name, email: userInfo.email, profileImage: userInfo.profimg }} />
 
