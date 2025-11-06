@@ -5,6 +5,7 @@ import axios from "axios";
 import InputField from "./InputField.jsx";
 import PasswordInputField from "./PasswordInputField.jsx";
 import  {checkPasswordStrength,validateEmail,validateNameStrength} from "../utils/validation.js";
+import { useAppContext } from "../context/AppContext.jsx";
 const SignupForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
 /*----------------------------------- State Variables----------------------------------------------------------- */
     const navigate = useNavigate();
