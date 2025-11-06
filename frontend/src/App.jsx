@@ -23,15 +23,15 @@ const router = createBrowserRouter(
       element:<Auth/>      
     },
     {
-      path:"/DashBoard",
+      path:"/dashboard",
       element:<Dashboard/>
     },
     {
-      path:"/myprofile",
+      path:"/my-profile",
       element:<MyProfile/>
     }
     ,{
-      path:"/aiInsight",
+      path:"/ai-insight",
       element:<AiInsight/>
     },
     {
@@ -39,11 +39,11 @@ const router = createBrowserRouter(
       element: <StockDetails />
     },
     {
-      path:"/preference",
+      path:"/preferences",
       element:<Preference/>
     },
     {
-      path:"/helpsupport",
+      path:"/help-support",
       element:<HelpSupport/>
     }
   ]
