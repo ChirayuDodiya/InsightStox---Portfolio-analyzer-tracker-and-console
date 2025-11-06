@@ -6,7 +6,7 @@ import google_logo from "../assets/google_logo.svg";
 import InputField from "./InputField.jsx";
 import PasswordInputField from "./PasswordInputField.jsx";
 import  {checkPasswordStrength,validateEmail,} from "../utils/validation.js";
-
+import { useAppContext } from "../context/AppContext.jsx";
 const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
 /*----------------------------------- State Variables-----------------------------------------------------------*/
     const navigate = useNavigate();
@@ -31,6 +31,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     const [resetPassword, setResetPassword] = useState(false);
     const [googleLoginLoading, setGoogleLoginLoading] = useState(false);
     axios.defaults.withCredentials = true;
+    const {userLoggedIn, setUserLoggedIn} = useAppContext();
 /*----------------------------------- Functions----------------------------------------------------------------- */
     // Function to toggle forgot password state and update sessionStorage
     const toggleForgotPassword = () => {
@@ -69,6 +70,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
             access_token: tokenResponse.access_token},
             {withCredentials: true
           });
+          setUserLoggedIn(true);
           navigate("/Dashboard");
         }catch(err){  
           console.log("Google login error:", err.response.data.message);
@@ -114,6 +116,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
         try {
             const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/login", {email : email, password : password}, {withCredentials: true});
             console.log("✅ Logged in successfully:", res.data);
+            setUserLoggedIn(true);
             navigate("/Dashboard");
         } catch (err) {
             if(err.response.data.message)
@@ -164,6 +167,7 @@ const handleResetPassword = async () => {
     try{
         const res = await axios.patch(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/setNewPassword", {email : email, newPassword : newPassword}, {withCredentials: true});
         console.log("✅ Password reset successful:", res.data);
+        setUserLoggedIn(true);
         navigate("/Dashboard");
     } catch (err) {
       if(err.response.data.message){
