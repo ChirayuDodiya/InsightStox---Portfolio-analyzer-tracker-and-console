@@ -8,7 +8,7 @@ const Home = () => {
   const { darkMode, setDarkMode } = useAppContext();
   return (
     <div className="home">
-      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="dashboard"
+      <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="ai-insight"
         profileData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com", }} />
 
       <BotSidebar />

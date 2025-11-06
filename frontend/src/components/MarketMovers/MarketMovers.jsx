@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import axios from 'axios';
 import './MarketMovers.css';
 import tata_icon from '../../assets/tata-icon.png';
+import reliance_icon from '../../assets/reliance-icon.png';
+import adani_icon from '../../assets/adani-icon.png';
+import mahindra_icon from '../../assets/mahindra-icon.png';
+import bajaj_icon from '../../assets/bajaj-icon.png';
+import adityabirla_icon from '../../assets/adityabirla-icon.png';
 
 // Always include credentials for auth sessions
 axios.defaults.withCredentials = true;
@@ -14,10 +21,16 @@ const MARKET_ACTIVE_API = `${BASE_URL}/api/v1/dashboard/marketActiveStocks`;
 const MARKET_GAINERS_API = `${BASE_URL}/api/v1/dashboard/marketGainers`;
 const MARKET_LOSERS_API = `${BASE_URL}/api/v1/dashboard/marketLosers`;
 
-const StockListItem = ({ name, exchange, price, change, percentage, isGainer }) => {
+const StockListItem = ({ name,symbol, exchange, price, change, percentage, isGainer }) => {
   const changeColorClass = isGainer ? 'gainer' : 'loser';
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/StockDetails/${symbol}`);
+  };
+
   return (
-    <div className="stock-item">
+    <div className={`stock-item ${isGainer ? "gainer-row" : "loser-row"}`} onClick={handleClick}>
       <div className="stock-info">
         <p className="stock-name">{name}</p>
         <p className="stock-exchange">{exchange}</p>
@@ -40,12 +53,30 @@ const BusinessGroupCard = ({ logo, name, stockCount }) => (
   </div>
 );
 
-const MarketNewsItem = ({ headline, time }) => (
-  <div className="news-item">
+export const MarketNewsItem = ({ headline, time, link }) => (
+  <a 
+    href={link} 
+    target="_blank" 
+    rel="noopener noreferrer" 
+    className="news-item clickable-news"
+  >
     <p className="news-headline">{headline}</p>
     <p className="news-time">{time}</p>
-  </div>
+  </a>
 );
+function timeAgo(isoTime) {
+  const published = new Date(isoTime);
+  const now = new Date();
+  const diffMs = now - published;
+
+  const diffMins = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  return `${diffDays}d ago`;
+}
 
 const MarketMovers = () => {
   const [marketNewsData, setMarketNewsData] = useState([]);
@@ -56,7 +87,7 @@ const MarketMovers = () => {
   useEffect(() => {
     const fetchMarketData = async () => {
       try {
-        // ✅ Fetch all data concurrently
+        // Fetch all data concurrently
         const [newsRes, gainersRes, losersRes] = await Promise.all([
           axios.get(MARKET_ACTIVE_API),
           axios.get(MARKET_GAINERS_API),
@@ -67,15 +98,20 @@ const MarketMovers = () => {
         if (Array.isArray(newsRes.data?.news)) {
           const formattedNews = newsRes.data.news.map((news) => ({
             headline: news.title,
-            time: new Date(news.providerPublishTime * 1000).toLocaleString(),
+            time: timeAgo(news.providerPublishTime),
+            link: news.link,
           }));
+
           setMarketNewsData(formattedNews);
+          console.log(formattedNews);
         }
+
 
         // Format GAINERS
         if (Array.isArray(gainersRes.data?.data)) {
           const formattedGainers = gainersRes.data.data.map((stock) => ({
             name: stock.shortName,
+            symbol: stock.symbol,
             exchange: stock.exchange || 'NSE',
             price: stock.price,
             change: stock.change,
@@ -108,11 +144,11 @@ const MarketMovers = () => {
   // Static business group cards
   const businessGroupsData = [
     { logo: tata_icon, name: 'TATA', stockCount: 15 },
-    { logo: tata_icon, name: 'Reliance', stockCount: 8 },
-    { logo: tata_icon, name: 'Adani', stockCount: 9 },
-    { logo: tata_icon, name: 'Mahindra', stockCount: 7 },
-    { logo: tata_icon, name: 'Bajaj', stockCount: 11 },
-    { logo: tata_icon, name: 'Aditya Birla', stockCount: 8 },
+    { logo: reliance_icon, name: 'Reliance', stockCount: 8 },
+    { logo: adani_icon, name: 'Adani', stockCount: 9 },
+    { logo: mahindra_icon, name: 'Mahindra', stockCount: 7 },
+    { logo: bajaj_icon, name: 'Bajaj', stockCount: 11 },
+    { logo: adityabirla_icon, name: 'Aditya Birla', stockCount: 8 },
   ];
 
   if (loading) {

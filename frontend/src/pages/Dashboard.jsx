@@ -27,12 +27,12 @@ export const Dashboard = () => {
       <div className="section-wrapper">
         <WelcomeInvestor />
         <PortfolioChart/>
-        <MarketMovers />
         <div className="sectorai">
         <SectorAllocation/>
         <AiInsights/>
         </div>
         <MyHoldings/>
+        <MarketMovers />
       </div>
       <div className="footer-div">
         <Footer darkMode={darkMode}  
