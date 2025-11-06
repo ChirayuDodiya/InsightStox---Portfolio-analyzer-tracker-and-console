@@ -143,7 +143,7 @@ try{
 const handleResetPassword = async () => {
     setIsLoading(true);
     try{
-        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/setNewPassword", {email : email, newPassword : newPassword}, {withCredentials: true});
+        const res = await axios.patch(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/setNewPassword", {email : email, newPassword : newPassword}, {withCredentials: true});
         console.log("✅ Password reset successful:", res.data);
         setUserLoggedIn(true);
         navigate("/Dashboard");
