@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Dashboard-Header.css';
 import growthicon from '../assets/growthicon.svg';
@@ -16,6 +17,10 @@ const DashboardHeader = () => {
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [query, setQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [typingTimeout, setTypingTimeout] = useState(null);
+  const navigate = useNavigate();
 
   const handleFocus = () => setIsSearchActive(true);
   const handleClose = () => setIsSearchActive(false);
@@ -45,12 +50,64 @@ const DashboardHeader = () => {
       setLoading(false);
     }
   };
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+    // Clear previous timer
+    if (typingTimeout) clearTimeout(typingTimeout);
+
+    // Debounce execution
+    const timer = setTimeout(() => {
+      if (value.trim().length > 0) {
+        fetchSearchResults(value.trim());
+      } else {
+        setSearchResults([]);
+      }
+    }, 300);
+    setTypingTimeout(timer);
+    };
+    const fetchSearchResults = async (q) => {
+      try {
+        const res = await axios.get(`${BACKEND_URL}/api/v1/dashboard/searchStock`, {
+          params: { ticker: q },
+          withCredentials: true
+        });
+        if (Array.isArray(res.data?.suggestions)) {
+          setSearchResults(res.data.suggestions);
+          console.log(res.data.suggestions)
+        } else {
+        setSearchResults([]);
+        }
+      } catch (err) {
+        console.error('Search error:', err);
+        setSearchResults([]);
+      }
+    };
+    const handleStockClick = (symbol) => {
+      navigate(`/stockdetails/${symbol}`);
+      setIsSearchActive(false);
+      setQuery('');
+      setSearchResults([]);
+    };
 
   useEffect(() => {
     fetchStockData();
     // Optionally auto-refresh every minute:
     // const interval = setInterval(fetchStockData, 60000);
     // return () => clearInterval(interval);
+  }, []);
+    useEffect(() => {
+    const onEsc = (e) => {
+      if (e.key === 'Escape') {
+        setIsSearchActive(false);
+        setQuery('');
+        setSearchResults([]);
+      }
+    };
+
+    window.addEventListener('keydown', onEsc);
+
+    return () => window.removeEventListener('keydown', onEsc);
   }, []);
 
   // Loading state
@@ -127,6 +184,8 @@ const DashboardHeader = () => {
             className="search-input"
             placeholder="Search for a Stock (e.g., RELIANCE.NS, TATA MOTORS)"
             onFocus={handleFocus}
+            value={query}
+            onChange={handleSearchChange}
           />
         </div>
       </div>
@@ -141,30 +200,33 @@ const DashboardHeader = () => {
               className="popup-search-input"
               placeholder="Search for a Stock (e.g., RELIANCE.NS, TATA MOTORS)"
               autoFocus
+              value={query}
+              onChange={handleSearchChange}
             />
           </div>
           <hr />
           <div className="search-results">
-            <ul>
-              <li>
-                <img src={historyicon} alt="History" /> Tata Investment Corporation Ltd.
-              </li>
-              <li>
-                <img src={historyicon} alt="History" /> Five Star Senior Living Inc.
-              </li>
-            </ul>
-            <h4>Popular Stocks</h4>
-            <ul>
-              <li>
-                <img src={growthicon} alt="Popular" /> ITI Ltd.
-              </li>
-              <li>
-                <img src={growthicon} alt="Popular" /> Tata Motors Ltd.
-              </li>
-              <li>
-                <img src={growthicon} alt="Popular" /> SBI Gold Fund
-              </li>
-            </ul>
+            {query.length > 0 && searchResults.length === 0 && (
+              <p className="no-results">No matching stocks found.</p>
+            )}
+            {searchResults.length > 0 && (
+              <ul className="results-list">
+                {searchResults.map((item) => (
+                  <li
+                    key={item.symbol}
+                    className="result-item"
+                    onClick={() => handleStockClick(item.symbol)}
+                    role="button"
+                    tabIndex={0}
+                  >
+                    <img src={growthicon} alt="Stock" />
+                    <div className="result-meta">
+                      <span className="result-name">{item.longname || item.shortname}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       )}
