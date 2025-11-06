@@ -1,5 +1,6 @@
 import YahooFinance from "yahoo-finance2";
 import { stockPriceStore } from "./stockPriceStore.js";
+import { PriceStore } from "./stores/priceRates.js";
 const yahooFinance = new YahooFinance();
 export const getPrice = async (symbols) => {
     let attempt = 0;
@@ -11,15 +12,16 @@ export const getPrice = async (symbols) => {
                 return price;
             }
             const result = await yahooFinance.quoteSummary(symbols, {modules: ["price"],});
+            const currencychange = PriceStore.get(result.price.currency) || 1;
             const price = {
                 symbol: result.price.symbol ?? null,
-                current: result.price.regularMarketPrice ?? 0,
+                current: (result.price.regularMarketPrice/currencychange) ?? 0,
                 currency: result.price.currency ?? null,
-                close: result.price.regularMarketPreviousClose ?? 0,
+                close: (result.price.regularMarketPreviousClose/currencychange) ?? 0,
                 percentageChange:result.price.regularMarketChangePercent ?? 0,
                 shortname: result.price.shortName ?? null,
                 longname: result.price.longName ?? null,
-                change: result.regularMarketChange?? 0,
+                change: (result.regularMarketChange/currencychange)?? 0,
             };
             stockPriceStore.add(symbols,{...price,expiresAt: Date.now()+60*1000});
             return price;
