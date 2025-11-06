@@ -23,7 +23,7 @@ body {
 }
 
 .see-more-link {
-  color: #4ade80; 
+  color: #00c853; 
   text-decoration: none;
   font-size: 0.875rem; 
 }
@@ -58,16 +58,16 @@ body {
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 16px;
-  color: #4ade80; 
+  color: #00c853; 
 }
 
 
 .gainer {
-  color: #22c55e;
+  color: #00c853;
 }
 
 .loser {
-  color: #ef4444;
+  color: #c81b00;
 }
 
 /* -Stock List Item - */
@@ -110,6 +110,19 @@ body {
 .stock-change span {
   margin-right: 4px;
 }
+.stock-item:hover.gainer-row {
+  transform: translateY(-3px);
+  background: rgba(0, 255, 120, 0.07);
+  cursor: pointer;
+
+}
+
+.stock-item:hover.loser-row {
+  transform: translateY(-3px);
+  background: rgba(255, 80, 80, 0.07);
+  cursor: pointer;
+}
+
 
 /* -Top Business Groups -*/
 .groups-grid {
@@ -156,6 +169,7 @@ body {
 .news-item {
   padding: 8px 0;
   margin-bottom: 8px;
+  pointer-events: auto; /* ensures clicks go directly to <a> */
 }
 
 .news-headline {
@@ -166,4 +180,17 @@ body {
   font-size: 0.875rem;
   opacity: 0.8;;
   margin-top: 4px;
+}
+
+.clickable-news {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.clickable-news:hover {
+  opacity: 0.8;
 }

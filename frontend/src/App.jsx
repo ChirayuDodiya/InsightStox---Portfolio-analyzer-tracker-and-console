@@ -35,8 +35,8 @@ const router = createBrowserRouter(
       element:<AiInsight/>
     },
     {
-      path:"/stockdetails",
-      element:<StockDetails/>
+      path: "/stockdetails/:symbol",
+      element: <StockDetails />
     },
     {
       path:"/preference",

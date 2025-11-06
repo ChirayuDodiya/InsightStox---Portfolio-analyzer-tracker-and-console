@@ -25,6 +25,7 @@ const MyHoldings = () => {
 
         // Store the holdings data
         setHoldings(response.data.data);
+        console.log(response.data.data)
       } catch (err) {
         console.error("Error fetching holdings:", err);
         setError("Failed to load holdings. Please ensure you are logged in.");
@@ -74,7 +75,7 @@ const MyHoldings = () => {
           <tbody>
             {holdings.map((item, index) => (
               <tr key={index}>
-                <td>{item.stock}</td>
+                <td>{item.shortName}</td>
                 <td>{item.quantity}</td>
                 <td>{Number(item.avg_price).toLocaleString()}</td>
                 <td>{Number(item.current_price).toLocaleString()}</td>
