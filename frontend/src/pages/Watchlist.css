@@ -4,14 +4,13 @@
     box-sizing: border-box;
 }
 
-
 .footer-div{
     width: 100%;
     margin-top: auto;
 }
+
 .watchlist{
     background-color: black;
-    
     position: absolute;
     min-width: 100%;
     min-height: 100vh;
@@ -20,13 +19,351 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    color: #ffffff;
 }
-.watchlist_content {
+
+.watchlist-content {
     margin-top: 140px;
-    width: 100%;
-    height:100vh;
+    width: 80%;
+    padding:60px 0;
+    min-height: calc(100vh - 400px);
     display: flex;
     flex-direction: column;
+    gap:30px;
+}
+
+.watchlist-title h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: #00c853;
+    margin-bottom: 0.5rem;
+}
+
+.watchlist-title p {
+    color: #999;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.search-container {
+    position: relative;
+    width: 593px;
+
+}
+
+.search-container input {
+    background-color: #0E0E0E;
+    border-radius: 10px;
+    padding: 14px 52px;
+    color: #fff;
+    width: 593px;
+    font-size: 16px;
+    font-weight: 400;
+    gap:16px;
+}
+
+.search-container input::placeholder {
+    color: #fff;
+}
+
+.search-container i{
+    position: absolute;
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+}
+.filter-btn {
+    position:absolute;
+    top:50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    right:1rem;
+}
+
+
+/* Watchlist Table */
+.watchlist-table-container {
+    background-color: #0e0e0e;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid #1e1e1e;
+}
+
+.watchlist-table {
+    width: 100%;
+    padding:16px 32px !important;
+}
+
+
+.watchlist-table th {
+    padding: 1rem;
+    text-align: left;
+    font-weight: 700;
+    color: #FFF;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 3px solid #1e1e1e;
+}
+
+
+.watchlist-table td {
+    padding: 1.25rem 1rem;
+    color: #fff;
+}
+
+.company-name {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.company-symbol {
+    color: #ffffff80;
+    font-weight:300;
+    font-size: 0.85rem;
+}
+
+.price-cell {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.change-cell {
+    font-weight: 500;
+}
+
+.change-positive {
+    color: #24B500;
+}
+
+.change-negative {
+    color: #C81B00;
+}
+
+.action-btn {
+    /* background-color: transparent; */
+    border: 2px solid #1e1e1e;
+    border-radius: 10px;
+    padding: 0.5rem 1rem;
+    color: #999;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 1s ease-out ;
+}
+
+.action-btn:hover {
+    background-color: #1a1a1a;
+    color: #fff;
+    border-color: #c81b00;
+}
+
+/* Filter Modal */
+.filter-modal-overlay {
+    position: fixed;
+    z-index: 1000;
+    display: flex;
     justify-content: center;
     align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.filter-modal {
+    background-color: #0a0a0a;
+    width: 657px;
+    height: 600px;
+    overflow-y: auto;
+    border-left: 1px solid #1a1a1a;
+    animation: slideIn 0.3s ease;
+    padding: 20px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap:10px;
+}
+
+@keyframes slideIn {
+    from { transform: translateZ(100%); }
+    to { transform: translateZ(0); }
+}
+
+.filter-modal-header {
+    position: sticky;
+    top: 0;
+    background-color: #000000;
+    z-index: 10;
+}
+
+.filter-modal-header h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+
+.filter-section {
+    margin-bottom: 0.75rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:10px;
+}
+
+.filter-section-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #fff;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.filter-options {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.filter-option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.filter-options-sortby{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.filter-option input[type="radio"],
+.filter-option input[type="checkbox"] {
+     appearance: none;
+     -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+}
+.filter-option input[type="radio"],
+.filter-option input[type="checkbox"]{
+    border: 2px solid #00ff87;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+.filter-option input[type="radio"]{
+  border-radius: 50% !important;
+}
+.filter-option input[type="radio"]:checked,
+.filter-option input[type="checkbox"]:checked{
+    background-color:#00ff87;
+}
+.filter-option label {
+    color: #ccc;
+    cursor: pointer;
+    font-size: 0.95rem;
+}
+
+.price-range-inputs {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.price-input-group {
+    flex: 1;
+}
+
+.price-input-group label {
+    display: block;
+    color: #fff;
+    font-weight:400;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.price-input-group input {
+    width: 108px;
+    height:27px;
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: #fff;
+    font-size: 0.9rem;
+}
+
+.price-input-group input::placeholder {
+    color: #666;
+}
+.filter-section-market-cap {
+    grid-column: span 2;
+    margin-bottom: 0.75rem;
+}
+.filter-section-sector {
+    grid-column: span 2;
+    margin-bottom: 0.75rem;
+}
+
+.sector-btn {
+    border: 2px solid #1e1e1e;
+    border-radius: 5px;
+    padding: 12px;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 11px;
+    text-align: center;
+    transition: all 0.3s ease;
+    margin-left:2px;
+}
+
+.sector-btn:hover {
+    border-color: #00ff87;
+    color: #fff;
+}
+
+.sector-btn.active {
+    background-color: #00ff87;
+    border-color: #00ff87;
+    color: #000;
+}
+
+.filter-modal-footer {
+    padding: 0.5rem;
+    background-color: #0a0a0a;
+    display: flex;
+    gap: 1rem;
+}
+
+.apply-filter-btn,
+.clear-filter-btn {
+    flex: 1;
+    padding: 0.875rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.apply-filter-btn {
+    background-color: #00ff87;
+    border: none;
+    color: #000;
+}
+
+.apply-filter-btn:hover {
+    background-color: #00dd75;
+}
+
+.clear-filter-btn {
+    background-color: transparent;
+    border: 1px solid #333;
+    color: #fff;
+}
+
+.clear-filter-btn:hover {
+    background-color: #1a1a1a;
+    border-color: #00ff87;
 }

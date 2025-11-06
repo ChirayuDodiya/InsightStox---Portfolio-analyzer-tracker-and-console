@@ -8,7 +8,7 @@ import { Home } from './pages/Home'
 import { Dashboard } from './pages/Dashboard';
 import { MyProfile} from './pages/MyProfile';
 import AiInsight from './pages/AiInsight';
-import Watchlist from './pages/Watchlist';
+import Watchlist from './pages/WatchList';
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
 const router = createBrowserRouter(
   [

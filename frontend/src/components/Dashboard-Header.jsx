@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import './Dashboard-Header.css';
 import growthicon from '../assets/growthicon.svg';
 import historyicon from '../assets/historyicon.svg';
+import { useAppContext } from "../context/AppContext.jsx";
 
 const DashboardHeader = () => {
-  const [isSearchActive, setIsSearchActive] = useState(false);
+  const { isSearchActive, setIsSearchActive } = useAppContext();
 
   const handleFocus = () => setIsSearchActive(true);
   const handleClose = () => setIsSearchActive(false);
