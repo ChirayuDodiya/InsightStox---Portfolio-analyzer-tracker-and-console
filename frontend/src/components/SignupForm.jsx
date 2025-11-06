@@ -23,6 +23,7 @@ const SignupForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     const [areAllFieldsValid, setAreAllFieldsValid] = useState(false);
     const [timer, setTimer] = useState(30);
     axios.defaults.withCredentials = true;
+    const {setUserLoggedIn} = useAppContext();
 
 /*----------------------------------- Functions--------------------------------------------------------------- */
 // Function to reset all form states
@@ -83,6 +84,7 @@ const handleRegister = async () => {
     const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/register", {email : email, otp: otp}, {withCredentials: true});
     console.log("✅ Registered successfully:", res.data);
     setIsOtpSent((prev)=>!prev);
+    setUserLoggedIn(true);
     navigate("/Dashboard");
     } catch (err) {
           setTitleError(err.response.data.message);

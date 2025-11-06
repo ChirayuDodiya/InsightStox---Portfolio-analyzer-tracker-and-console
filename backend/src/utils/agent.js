@@ -1,6 +1,5 @@
 import { ChatGroq } from "@langchain/groq";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-
 import {StateGraph,MessagesAnnotation } from "@langchain/langgraph";
 import {ToolNode } from "@langchain/langgraph/prebuilt";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -51,6 +50,9 @@ Follow the rules below exactly — your output must be visually clear, concise, 
 
 You should generate final output  strictly in Markdown format only.
 
+Start by Giving friendly greeting to user with his {name} and then format the following text into a well-organized financial report:
+
+{text}
 
 🪙 Formatting Rules
 
@@ -141,7 +143,9 @@ User Query: {user_query}
 // Prompt template for greeting response
 const promptToResponsedForGreet = PromptTemplate.fromTemplate(`
 You are a friendly and engaging financial assistant. 
-When the user sends a greeting, respond with a warm welcome message that encourages them to ask finance-related questions.
+When the user with name {name} sends a greeting, respond with a warm welcome message that encourages them to ask finance-related questions.
+Message should be concise and professional.add some emojis to make it more engaging.
+
 
 User Query: {user_query}
 `);
@@ -153,8 +157,11 @@ User Query: {user_query}
 async function formatOutput(state){
   try{
     const reply  = state.messages.at(-1).content;
-    const formattedPrompt = await promptForOutputFormatting.format({ text: reply });
-    console.log("Formatting output with prompt:", formattedPrompt);
+    const userDetails = state.messages.at(0).additional_kwargs?.userDetails || {};
+    console.log("Formatting output:");
+    const userName = state.messages.at(-1).name || "User";
+    const formattedPrompt = await promptForOutputFormatting.format({ text: reply ,name: userDetails.name || "User"});
+    console.log("Formatting output with prompt:");
     const res = await llm.invoke([
       { role: "system", content: formattedPrompt },
     ]);
@@ -201,8 +208,9 @@ function defaultResponse(state) {
 async function greetingResponse(state) {
   try{
   const userMessage = state.messages.at(-1).content;
-  console.log("Greeting detected:", userMessage);
-  const formattedPrompt = await promptToResponsedForGreet.format({ user_query: userMessage });
+  const userDetails = state.messages.at(0).additional_kwargs?.userDetails || {};
+  console.log("Greeting detected:");
+  const formattedPrompt = await promptToResponsedForGreet.format({ user_query: userMessage,name: userDetails.name || "User" });
   const res = await smallLLm.invoke([
     { role: "system", content: formattedPrompt },
   ]);
@@ -222,7 +230,8 @@ async function greetingResponse(state) {
 async function isRelevant(state) {
   try{
   const userMessage = state.messages.at(-1).content;
-  console.log("Checking relevance of user message:", userMessage);
+  const userDetails = state.messages.at(0).additional_kwargs?.userDetails || {};
+  console.log("Checking relevance of user message:");
   const formattedPrompt = await promptToCheckRelevance.format({ user_query: userMessage });
   const res = await smallLLm.invoke([
     { role: "system", content: formattedPrompt },
@@ -256,7 +265,7 @@ async function isRelevant(state) {
 
 // function to decide if tools should be used
 function shouldUseTools(state) {
-  console.log("Inside shouldUseTools with state:", state);
+  console.log("Inside shouldUseTools with state:");
   const lastMessage = state.messages[state.messages.length - 1];
   if(lastMessage.tool_calls && lastMessage.tool_calls.length > 0){
     console.log("Deciding to call tools...",);
