@@ -1,12 +1,10 @@
 import { addSymbol, getWatchlist, removeSymbol } from "../../db/watchlist.js";
 import { getPrice } from "../../utils/getQuotes.js";
-import { stockPriceStore } from "../../utils/stockPriceStore.js";
 
 export const showWatchlist = async (req, res) => {
     const { email } = req.user;
     try {
         let watchlistData = [];
-        let priceData = stockPriceStore;
         const watchlist = await getWatchlist(email);
         if(!watchlist){
             return res.status(500).json({ success: false,message: "Failed to fetch watchlist."})
@@ -15,15 +13,8 @@ export const showWatchlist = async (req, res) => {
             return res.status(500).json({ success: false,message: "User Doesn't have a watchlist."})
         }
         for (const symbol of watchlist) {
-            if(!priceData.get(symbol)){
-                const q = await getPrice(symbol);
-                if (!q) {
-                    return res.status(500).json({ success: false, message: "Failed to fetch stock prices." });
-                }
-                priceData.add(symbol,{...q,expiresAt: Date.now()+60*1000});
-            }
-            const data = priceData.get(symbol);
-            if (!data) continue;
+            const data = await getPrice(symbol);
+            if (!data) return res.status(500).json({ success: false, message: "Failed to fetch stock prices." });
             watchlistData.push({
                 symbol: symbol,
                 currentPrice: data.MarketPrice,

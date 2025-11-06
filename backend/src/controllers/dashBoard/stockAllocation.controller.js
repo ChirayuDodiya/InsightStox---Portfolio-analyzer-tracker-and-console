@@ -13,13 +13,6 @@ export const getStockAllocation = async (req, res) => {
         let sectorAllocation = {};
         let totalPortfolioValue = 0;
         for (const stock of stocksSector) {
-            if(!priceData.get(stock.symbol)){
-                const q = await getPrice(stock.symbol);
-                if (!q) {
-                    continue;
-                }
-                priceData.add(stock.symbol,{...q,expiresAt: Date.now()+60*1000});
-            }
             const data = priceData.get(stock.symbol);
             if (!data) continue;
             const currentValue = stock.current_holding * data.current;
