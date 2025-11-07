@@ -5,6 +5,9 @@ import ReactMarkDown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import remarkEmoji from 'remark-emoji';
 import { useAppContext } from "../context/AppContext";
+import { RingLoader } from "react-spinners";
+
+
 const ChatWindow = () => {
 // ----------------------------------------------------------state variables--------------------------------------------------------
     const [messages,setMessages] = useState([]);
@@ -12,7 +15,7 @@ const ChatWindow = () => {
     const [chatStart,setChatStart] = useState(false);
     const { userDetails } = useAppContext(); 
     const chatEndRef = useRef(null);
-
+    const [isLoading, setIsLoading] = useState(false);
 
 // ----------------------------------------------------------useEffects--------------------------------------------------------
    // Scroll to the bottom of the chat when a new message is added
@@ -23,9 +26,10 @@ useEffect(() => {
 // ----------------------------------------------------------functions--------------------------------------------------------
 // Function to handle sending message
     const handleSend = async ()=>{
-        setChatStart(true);
         const text = input.trim();
         if(!text)return;
+        setIsLoading(true);
+        setChatStart(true);
         setInput("");
         const typingMsg = { id: "typing", text: "Bot is typing... ", sender: "bot", typing: true };
         const userMsg = {id:Date.now(),text, sender:"user"};
@@ -35,8 +39,10 @@ useEffect(() => {
                 message : userMsg,
                 withCredentials: true,
             });
+            
             const replyText = <ReactMarkDown remarkPlugins={[remarkGfm, remarkEmoji]}>{res.data.reply}</ReactMarkDown>;
             setMessages((prev) => [...prev.filter((msg)=>msg.id !== "typing"), { id: Date.now(), text: replyText, sender: 'bot' }]);
+            setIsLoading(false);
         }catch(err){
             console.error("Error sending message:", err);
             setMessages((prev) => [...prev.filter((msg) => msg.id !== "typing"), { 
@@ -44,6 +50,7 @@ useEffect(() => {
                 sender: 'bot',
                 typing: false
             }]);
+            setIsLoading(false);
         }
     }
 // Function to handle Enter key press
@@ -72,9 +79,9 @@ useEffect(() => {
                 <div ref={chatEndRef} />
         </div>
 
-        <div className="chat-input-area">
+        <div className={`chat-input-area ${isLoading ? "loading" : ""}`}>
                 <input type="text" value={input} onChange={(e) => {setInput(e.target.value)}} onKeyDown={handleKeyDown} placeholder="Type a message..." className="chat-input"/>
-                <button className="send-btn" onClick={handleSend}>Send</button>
+                <button className="send-btn" onClick={handleSend}>{isLoading ? <RingLoader color="#000000" size={25}/> : <>Send</>}</button>
         </div>
     </div>
   )

@@ -36,6 +36,11 @@ export const Portfolio_analysis_tool = tool(
       console.log(`Fetching data for ${symbol} with quantity ${current_holding}, avg_price: ${avg_price}, spended_amount: ${spended_amount}`);
       try {
         const quote = await yahooFinance.quote(symbol);
+        const end = new Date(); // current date
+        const start = new Date();
+        start.setFullYear(end.getFullYear() - 1); // exactly 1 year ago
+
+        
         console.log(`Fetched annual report data for ${symbol}:`, quote);
 
         const name = quote?.shortName || quote?.longName || "Unknown Company";
