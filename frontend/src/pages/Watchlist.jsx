@@ -7,7 +7,7 @@ import Footer from '../components/Footer.jsx';
 import filterIcon from '../assets/filter-button.svg';
 
 
-const Watchlist = () => {
+const  watchlist= () => {
   const { darkMode, setDarkMode, isSearchActive, setIsSearchActive } = useAppContext();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   
@@ -103,12 +103,11 @@ const Watchlist = () => {
                 placeholder="Search your stock"
                 onFocus={() => setIsSearchActive(true)}
               />
-              <img 
+              <button className="filter-btn"  onClick={() => setIsFilterOpen(true)}> <img 
                 src={filterIcon} 
-                alt="filter-icon"
-                className="filter-btn"
-                onClick={() => setIsFilterOpen(true)}
-              />
+                alt="filter-icon"               
+              /></button>
+            
             </div>
        
 
@@ -385,4 +384,4 @@ const Watchlist = () => {
   )
 }
 
-export default Watchlist;
+export default watchlist;

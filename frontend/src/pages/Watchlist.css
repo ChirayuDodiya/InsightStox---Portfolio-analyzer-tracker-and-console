@@ -47,8 +47,10 @@
 
 .search-container {
     position: relative;
-    width: 593px;
-
+    width: 710px;
+    display: flex;
+    flex-direction: row;
+    gap:24px;
 }
 
 .search-container input {
@@ -56,7 +58,8 @@
     border-radius: 10px;
     padding: 14px 52px;
     color: #fff;
-    width: 593px;
+    width: 640px;
+    height:48px;
     font-size: 16px;
     font-weight: 400;
     gap:16px;
@@ -74,11 +77,14 @@
     color: #fff;
 }
 .filter-btn {
-    position:absolute;
-    top:50%;
-    transform: translateY(-50%);
     cursor: pointer;
-    right:1rem;
+    height:48px;
+    width:46px;
+    display: flex;
+    justify-content: center;
+    border-radius:10px;
+    padding:15px;
+    background-color: #0E0E0E;
 }
 
 
@@ -104,10 +110,21 @@
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 3px solid #1e1e1e;
+}
+.watchlist-table thead {
+    border-bottom: none; /* remove default border */
+    position: relative;
 }
 
-
+.watchlist-table thead::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    width: 95%;
+    border-bottom: 3px solid #1e1e1e;
+}
 .watchlist-table td {
     padding: 1.25rem 1rem;
     color: #fff;
@@ -184,7 +201,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap:10px;
 }
 
 @keyframes slideIn {
@@ -197,6 +213,7 @@
     top: 0;
     background-color: #000000;
     z-index: 10;
+    margin-bottom: 10px;
 }
 
 .filter-modal-header h2 {
@@ -217,7 +234,7 @@
     font-size: 0.9rem;
     font-weight: 500;
     color: #fff;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
@@ -231,6 +248,8 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
+      line-height: 1;
+
 }
 
 .filter-options-sortby{
@@ -238,27 +257,46 @@
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
 }
+
 .filter-option input[type="radio"],
 .filter-option input[type="checkbox"] {
-     appearance: none;
-     -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-}
-.filter-option input[type="radio"],
-.filter-option input[type="checkbox"]{
-    border: 2px solid #00ff87;
-    cursor: pointer;
-    position: relative;
-    transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #00c853;
+  cursor: pointer;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  vertical-align: middle;
 }
 .filter-option input[type="radio"]{
-  border-radius: 50% !important;
+  border-radius: 50% ;
 }
-.filter-option input[type="radio"]:checked,
-.filter-option input[type="checkbox"]:checked{
-    background-color:#00ff87;
+.filter-option input[type="radio"]:checked::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #00c853;
+  border-radius: 50%;
 }
+
+.filter-option input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 10px;
+  border: solid #00c853;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-10%,-10%);
+}
+
+
 .filter-option label {
     color: #ccc;
     cursor: pointer;
@@ -309,23 +347,24 @@
 .sector-btn {
     border: 2px solid #1e1e1e;
     border-radius: 5px;
-    padding: 12px;
+    height:35px;
+    padding: 0px 12px;
     color: #ffffff;
     cursor: pointer;
-    font-size: 11px;
+    font-size: 13px;
     text-align: center;
     transition: all 0.3s ease;
-    margin-left:2px;
+    margin:2px;
 }
 
 .sector-btn:hover {
-    border-color: #00ff87;
+    border-color: #00c853;
     color: #fff;
 }
 
 .sector-btn.active {
-    background-color: #00ff87;
-    border-color: #00ff87;
+    background-color: #00c853;
+    border-color: #00c853;
     color: #000;
 }
 
@@ -348,13 +387,13 @@
 }
 
 .apply-filter-btn {
-    background-color: #00ff87;
+    background-color: #00c853;
     border: none;
     color: #000;
 }
 
 .apply-filter-btn:hover {
-    background-color: #00dd75;
+    background-color: #00c853;
 }
 
 .clear-filter-btn {
@@ -365,5 +404,5 @@
 
 .clear-filter-btn:hover {
     background-color: #1a1a1a;
-    border-color: #00ff87;
+    border-color: #00c853;
 }
