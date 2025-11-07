@@ -64,18 +64,8 @@
     font-weight: 400;
     gap:16px;
 }
-@media (max-width: 820px) {
-    .search-container input {
-        width: 164px;
-    }
-    .search-container {
-        width: 100%;
-    }
-     .watchlist-table th:nth-child(2),
-  .watchlist-table td:nth-child(2) {
-    display: none;
-  }
-}
+
+
 .search-container input::placeholder {
     color: #fff;
 }
@@ -108,9 +98,10 @@
 
 .watchlist-table {
     width: 100%;
-    padding:16px 32px !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    background-color: transparent !important;
 }
-
 
 .watchlist-table th {
     padding: 1rem;
@@ -120,26 +111,34 @@
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    border: none !important;
+    background-color: transparent !important;
 }
 .watchlist-table thead {
-    border-bottom: none; /* remove default border */
-    position: relative;
+  position: relative !important;
+}
+.watchlist-table thead::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 32px;
+  right: 32px;
+  border-bottom: 3px solid #1e1e1e;
+}
+.watchlist-table th:first-child{
+  padding-left: 32px;
 }
 
-.watchlist-table thead::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: 95%;
-    border-bottom: 3px solid #1e1e1e;
+.watchlist-table th:last-child{
+  padding-right: 32px;
 }
 .watchlist-table td {
     padding: 1.25rem 1rem;
     color: #fff;
     padding-left:5%;
-
+    border: none !important;
+    background-color: transparent !important;
+    text-align: left !important;
 }
 
 .company-name {
@@ -157,6 +156,34 @@
 .price-cell {
     font-weight: 600;
     font-size: 1.1rem;
+}
+.change-cell-after {
+  display: none;
+}
+@media (max-width: 820px) {
+    .search-container input {
+        width: 164px;
+    }
+    .search-container {
+        width: 100%;
+    }
+    .watchlist-table th:nth-child(4),
+    .watchlist-table td:nth-child(4) {
+    display: none;
+  }
+  .change-cell-after {
+    display: block; 
+    font-size: 0.75rem;
+    width:100px;
+  }
+  .price-cell {
+    font-size: 1rem;
+  }
+   
+ .watchlist-table th:nth-child(2),
+    .watchlist-table td:nth-child(2) {
+    display: none;
+  }
 }
 
 .change-cell {

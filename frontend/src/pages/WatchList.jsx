@@ -137,6 +137,9 @@ const  Watchlist= () => {
                     </td>
                     <td>
                       <span className="price-cell">{stock.price.toFixed(2)}</span>
+                       <span className={`change-cell ${stock.change >= 0 ? 'change-positive' : 'change-negative'} change-cell-after`}>
+                        {stock.change >= 0 ? '+' : ''}{stock.change.toFixed(2)} ({stock.changePercent >= 0 ? '+' : ''}{stock.changePercent.toFixed(2)}%)
+                      </span>
                     </td>
                     <td>
                       <span className={`change-cell ${stock.change >= 0 ? 'change-positive' : 'change-negative'}`}>
