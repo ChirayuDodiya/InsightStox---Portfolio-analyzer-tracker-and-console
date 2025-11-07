@@ -47,7 +47,7 @@
 
 .search-container {
     position: relative;
-    width: 710px;
+    width: 48%;
     display: flex;
     flex-direction: row;
     gap:24px;
@@ -58,13 +58,24 @@
     border-radius: 10px;
     padding: 14px 52px;
     color: #fff;
-    width: 640px;
+    width: 90%;
     height:48px;
     font-size: 16px;
     font-weight: 400;
     gap:16px;
 }
-
+@media (max-width: 820px) {
+    .search-container input {
+        width: 164px;
+    }
+    .search-container {
+        width: 100%;
+    }
+     .watchlist-table th:nth-child(2),
+  .watchlist-table td:nth-child(2) {
+    display: none;
+  }
+}
 .search-container input::placeholder {
     color: #fff;
 }
@@ -88,7 +99,6 @@
 }
 
 
-/* Watchlist Table */
 .watchlist-table-container {
     background-color: #0e0e0e;
     border-radius: 12px;
@@ -104,7 +114,7 @@
 
 .watchlist-table th {
     padding: 1rem;
-    text-align: left;
+    text-align: center;
     font-weight: 700;
     color: #FFF;
     font-size: 0.85rem;
@@ -128,9 +138,12 @@
 .watchlist-table td {
     padding: 1.25rem 1rem;
     color: #fff;
+    padding-left:5%;
+
 }
 
 .company-name {
+    display:block;
     font-weight: 600;
     font-size: 1rem;
 }
@@ -159,7 +172,6 @@
 }
 
 .action-btn {
-    /* background-color: transparent; */
     border: 2px solid #1e1e1e;
     border-radius: 10px;
     padding: 0.5rem 1rem;
@@ -168,7 +180,20 @@
     font-size: 0.85rem;
     transition: all 1s ease-out ;
 }
+@media (max-width: 1150px) {
+   .action-btn::before {
+    content: "-";
+    transition:  color 0.4s ease;
 
+  }
+  .action-btn:hover::before {
+    color:#c81b00;
+
+  }
+  .action-btn span{
+    display: none; 
+  }
+}
 .action-btn:hover {
     background-color: #1a1a1a;
     color: #fff;
@@ -331,9 +356,18 @@
     color: #fff;
     font-size: 0.9rem;
 }
-
 .price-input-group input::placeholder {
     color: #666;
+}
+.price-error {
+  color: #c81b00;
+  font-size: 13px;
+  margin-top: 5px;
+  margin-bottom:-5px;
+}
+.apply-filter-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 .filter-section-market-cap {
     grid-column: span 2;

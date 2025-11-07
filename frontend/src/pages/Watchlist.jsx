@@ -10,7 +10,8 @@ import filterIcon from '../assets/filter-button.svg';
 const  watchlist= () => {
   const { darkMode, setDarkMode, isSearchActive, setIsSearchActive } = useAppContext();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  
+  const [priceError, setPriceError] = useState('');
+
   // Filter states
   const [filters, setFilters] = useState({
     dailyChange: '',
@@ -76,6 +77,7 @@ const  watchlist= () => {
       marketCap: [],
       sortBy: ''
     });
+    setPriceError('');
   };
 
   return (
@@ -103,10 +105,9 @@ const  watchlist= () => {
                 placeholder="Search your stock"
                 onFocus={() => setIsSearchActive(true)}
               />
-              <button className="filter-btn"  onClick={() => setIsFilterOpen(true)}> <img 
-                src={filterIcon} 
-                alt="filter-icon"               
-              /></button>
+              <button className="filter-btn"  onClick={() => setIsFilterOpen(true)}> 
+                <img src={filterIcon} alt="filter-icon" />
+              </button>
             
             </div>
        
@@ -147,7 +148,7 @@ const  watchlist= () => {
                         className="action-btn" 
                         onClick={() => handleRemoveStock(stock.symbol)}
                       >
-                        Remove
+                       <span>Remove</span>
                       </button>
                     </td>
                   </tr>
@@ -160,7 +161,7 @@ const  watchlist= () => {
 
       {/* Filter Modal */}
       {isFilterOpen && (
-        <div className="filter-modal-overlay overlay" onClick={() => setIsFilterOpen(false)}>
+        <div className="filter-modal-overlay overlay" onClick={() => {setIsFilterOpen(false);handleClearFilters();}}>
           <div className="filter-modal" onClick={(e) => e.stopPropagation()}>
             <div className="filter-modal-header">
               <h2>Filter Options</h2>
@@ -230,25 +231,48 @@ const  watchlist= () => {
                 <div className="price-range">
                 <div className="filter-section-title">Price Range</div>
                 <div className="price-range-inputs">
-                  <div className="price-input-group">
-                    <label>From</label>
-                    <input 
-                      type="number" 
-                      placeholder="10"
-                      value={filters.priceFrom}
-                      onChange={(e) => setFilters({...filters, priceFrom: e.target.value})}
-                    />
-                  </div>
-                  <div className="price-input-group">
-                    <label>Upto</label>
-                    <input 
-                      type="number" 
-                      placeholder="439"
-                      value={filters.priceUpto}
-                      onChange={(e) => setFilters({...filters, priceUpto: e.target.value})}
-                    />
-                  </div>
+                      <div className="price-input-group">
+                        <label>From</label>
+                        <input 
+                          type="number" 
+                          placeholder="10"
+                          value={filters.priceFrom}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            setFilters({ ...filters, priceFrom: value });
+
+                            if (filters.priceUpto && Number(value) > Number(filters.priceUpto)) {
+                              setPriceError('“From” cannot be greater than “Upto”.');
+                            } else {
+                              setPriceError('');
+                            }
+                          }}
+                        />
+                      </div>
+
+                      <div className="price-input-group">
+                        <label>Upto</label>
+                        <input 
+                          type="number" 
+                          placeholder="439"
+                          value={filters.priceUpto}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            setFilters({ ...filters, priceUpto: value });
+
+                            if (filters.priceFrom && Number(value) < Number(filters.priceFrom)) {
+                              setPriceError('“Upto” cannot be less than “From”.');
+                            } else {
+                              setPriceError('');
+                            }
+                          }}
+                        />
+                      </div>
+
+
                 </div>
+              {priceError && <p className="price-error">{priceError}</p>}
+
                 </div>
 
 
@@ -356,7 +380,7 @@ const  watchlist= () => {
               <button className="clear-filter-btn" onClick={handleClearFilters}>
                 Clear All
               </button>
-              <button className="apply-filter-btn" onClick={handleApplyFilters}>
+              <button className="apply-filter-btn" onClick={handleApplyFilters}  disabled={!!priceError}>
                 Apply Filters
               </button>
             </div>
