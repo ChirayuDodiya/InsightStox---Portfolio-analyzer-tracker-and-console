@@ -9,8 +9,11 @@ const graphFormetData = async (req, res) => {
   }
 
   try {
-    let rawData = await getHistoricData(ticker, '01-01-2025', Date.now(), '1d');
-    
+    let endDate = Date.now();
+    let startDate = new Date();
+    startDate.setFullYear(startDate.getFullYear() - 1);
+
+    let rawData = await getHistoricData(ticker, startDate.getTime(), endDate, '1d');    
     // Check if rawData is an array before processing
     if (!Array.isArray(rawData)) {
         console.log("getHistoricData did not return an array:", rawData);

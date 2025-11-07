@@ -20,8 +20,21 @@ export const getFinancialDetails = async (req, res) => {
     ];
 
     try {
-        const results = await yahooFinance.quoteSummary("TCS.NS", { modules });
+        const results = await yahooFinance.quoteSummary("ticker", { modules });
 
+        const endDate = new Date();
+        const startDate = new Date();
+        startDate.setFullYear(startDate.getFullYear() - 1);
+
+        const history = await yahooFinance.historical("ticker", {
+            period1: startDate,
+            period2: endDate,
+            interval: '1d'
+        });
+
+        const prices = history.map(day => day.close);
+        const fiftyTwoWeekLow = Math.min(...prices);
+        const fiftyTwoWeekHigh = Math.max(...prices);
         
         const stockData = {
             priceInfo: {
@@ -35,6 +48,8 @@ export const getFinancialDetails = async (req, res) => {
                 changePercentage: results.price.regularMarketChangePercent,
                 open: results.price.regularMarketOpen,
                 fiftytwoWeekchange: results.defaultKeyStatistics['52WeekChange'],
+                fiftytwoWeekHigh : fiftyTwoWeekHigh,
+                fiftyTwoWeekLow : fiftyTwoWeekLow,
             },
 
             fundamentals: {
