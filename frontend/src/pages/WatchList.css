@@ -12,7 +12,8 @@
 .watchlist{
     background-color: black;
     position: absolute;
-    min-width: 100%;
+    width: 100%;
+    min-width:450px;
     min-height: 100vh;
     overflow-x: hidden;
     display: flex;
@@ -184,8 +185,13 @@
     .watchlist-table td:nth-child(2) {
     display: none;
   }
+ 
 }
-
+@media(max-width: 450px){
+    .watchlist-content {
+    width: 90%;
+  }
+  }
 .change-cell {
     font-weight: 500;
 }
@@ -205,13 +211,16 @@
     color: #999;
     cursor: pointer;
     font-size: 0.85rem;
-    transition: all 1s ease-out ;
 }
 @media (max-width: 1150px) {
    .action-btn::before {
     content: "-";
-    transition:  color 0.4s ease;
-
+  }
+  .action-btn{
+       border-radius: 50%;
+       height:40px;
+        width:40px;
+        padding:0;
   }
   .action-btn:hover::before {
     color:#c81b00;
