@@ -108,8 +108,8 @@
 
 .watchlist-table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
 }
 
 .watchlist-table th {
@@ -120,6 +120,7 @@
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    border: none !important;
 }
 .watchlist-table thead {
   position: relative;
@@ -145,7 +146,7 @@
     padding: 1.25rem 1rem;
     color: #fff;
     padding-left:5%;
-
+    border: none !important;
 }
 
 .company-name {
