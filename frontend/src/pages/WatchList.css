@@ -108,9 +108,7 @@
 
 .watchlist-table {
     width: 100%;
-    padding:16px 32px !important;
 }
-
 
 .watchlist-table th {
     padding: 1rem;
@@ -122,18 +120,24 @@
     letter-spacing: 0.5px;
 }
 .watchlist-table thead {
-    border-bottom: none; /* remove default border */
-    position: relative;
+  position: relative;
 }
 
+/* This new rule replaces all other ::after rules */
 .watchlist-table thead::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-    width: 95%;
-    border-bottom: 3px solid #1e1e1e;
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 32px;
+  right: 32px;
+  border-bottom: 3px solid #1e1e1e;
+}
+.watchlist-table th:first-child{
+  padding-left: 32px;
+}
+
+.watchlist-table th:last-child{
+  padding-right: 32px;
 }
 .watchlist-table td {
     padding: 1.25rem 1rem;
