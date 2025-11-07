@@ -113,7 +113,7 @@
     margin: 10px;
     border: 2px solid #2b2b2b;
     /* background-color: rgba(18, 18, 18, 0.9); */
-    position: sticky;
+    position: relative;
     background-color: #0E0E0E;
     width: 95%;
     z-index: 10;
