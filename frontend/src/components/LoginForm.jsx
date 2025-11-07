@@ -6,7 +6,7 @@ import google_logo from "../assets/google_logo.svg";
 import InputField from "./InputField.jsx";
 import PasswordInputField from "./PasswordInputField.jsx";
 import  {checkPasswordStrength,validateEmail,} from "../utils/validation.js";
-
+import { useAppContext } from "../context/AppContext.jsx";
 const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
 /*----------------------------------- State Variables-----------------------------------------------------------*/
     const navigate = useNavigate();
@@ -31,6 +31,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     const [resetPassword, setResetPassword] = useState(false);
     const [googleLoginLoading, setGoogleLoginLoading] = useState(false);
     axios.defaults.withCredentials = true;
+    const {userLoggedIn, setUserLoggedIn} = useAppContext();
 /*----------------------------------- Functions----------------------------------------------------------------- */
     // Function to toggle forgot password state and update sessionStorage
     const toggleForgotPassword = () => {
@@ -69,6 +70,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
             access_token: tokenResponse.access_token},
             {withCredentials: true
           });
+          setUserLoggedIn(true);
           navigate("/Dashboard");
         }catch(err){  
           console.log("Google login error:", err.response.data.message);
@@ -85,6 +87,28 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
           setTitleError('Google login failed');
         }
       });
+
+      const handleGoogleButtonClick = () => {
+        setGoogleLoginLoading(true);
+
+        // Detect when window regains focus after popup closes
+        const handleFocusBack = () => {
+          setTimeout(() => {
+            setGoogleLoginLoading(false);
+          }, 1000);
+          window.removeEventListener("focus", handleFocusBack);
+        };
+
+        window.addEventListener("focus", handleFocusBack);
+
+        try {
+          googleLogin();
+        } catch (error) {
+          console.log("Google popup failed:", error);
+          setGoogleLoginLoading(false);
+          window.removeEventListener("focus", handleFocusBack);
+        }
+      };
 /*----------------------------------- login handlers-------------------------------------------------------------------------- */
 // Function to handle login
     const handleLogin = async () => {
@@ -92,6 +116,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
         try {
             const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/login", {email : email, password : password}, {withCredentials: true});
             console.log("✅ Logged in successfully:", res.data);
+            setUserLoggedIn(true);
             navigate("/Dashboard");
         } catch (err) {
             if(err.response.data.message)
@@ -140,8 +165,9 @@ try{
 const handleResetPassword = async () => {
     setIsLoading(true);
     try{
-        const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/setNewPassword", {email : email, newPassword : newPassword}, {withCredentials: true});
+        const res = await axios.patch(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/setNewPassword", {email : email, newPassword : newPassword}, {withCredentials: true});
         console.log("✅ Password reset successful:", res.data);
+        setUserLoggedIn(true);
         navigate("/Dashboard");
     } catch (err) {
       if(err.response.data.message){
@@ -240,7 +266,7 @@ return (
             {forgotOtpvarified && (<button type="submit" className="resubmit resetpass loading" disabled = {newPasswordError!==""} style={{display: "flex",opacity: newPasswordError!=="" ? 0.5 : 1,cursor: newPasswordError!=="" ? 'not-allowed' : 'pointer'}} onClick={() => {handleResetPassword();}}>{isLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Reset Password"}</button>)}
 
             {/* Google Login Button */}
-            {!isForgotPassword && (<button type="button" className="google-btn loading" onClick = {()=>{googleLogin();setGoogleLoginLoading(true);}} style={{display: "flex"}} >
+            {!isForgotPassword && (<button type="button" className="google-btn loading" onClick = {()=>{handleGoogleButtonClick();}} style={{display: "flex"}} >
                 {googleLoginLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <><img src={google_logo} alt="Google logo" className="google-logo" />
                 <span>Continue with Google</span></>}
             </button>)}
