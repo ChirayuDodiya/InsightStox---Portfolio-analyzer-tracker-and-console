@@ -24,7 +24,7 @@ const BotSidebar = () => {
         src={isOpen ? close_icon : open_icon}
         alt="toggle sidebar icon"
         className="bot-toggle-sidebar-btn"
-        height={35}
+        // height={50}
         onClick={toggleSidebar}
       />
 

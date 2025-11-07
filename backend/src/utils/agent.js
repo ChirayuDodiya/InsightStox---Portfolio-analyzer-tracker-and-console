@@ -130,12 +130,49 @@ The output must be presentation-ready, balanced, and visually appealing.
 
 // Prompt template to check if user query is finance related, greeting, or non-finance
 const promptToCheckRelevance = PromptTemplate.fromTemplate(`
-You are a helpful and knowledgeable financial assistant. 
-Your job is to classify the user's query into one of the following categories:
+ou are InsightStox, a highly accurate financial query classifier.
 
-1. If the query is a casual greeting (e.g., "hi", "hello", "how are you"), respond only with "greeting".
-2. If the query is related to finance, the stock market, portfolios, companies, or investments, respond only with "finance".
-3. If the query is unrelated to finance or greetings, respond only with "non-finance".
+Your task is to classify the user's latest message into one of the three categories below.
+Carefully consider context — especially if the message is a short command like "repeat", "continue", or "explain more".
+
+Classification Rules:
+1. greeting
+
+Use this label if the message is a casual greeting, farewell, or well-being inquiry.
+Examples:
+
+"hi", "hello", "good morning", "how are you?", "hey there", "yo", "bye"
+
+2. finance
+
+Use this label if the message:
+
+Mentions stocks, investing, portfolios, companies, markets, crypto, trading, etc.
+
+Requests financial calculations, analysis, metrics, or data
+
+Is a follow-up command referring to a previous finance-related topic
+(e.g., "continue", "give example", "calculate it", "explain more", "next step")
+
+3. non-finance
+
+Use this label if the message:
+
+Is not about finance or greetings
+
+Asks about coding, math, schoolwork, health, recipes, AI, personal opinions, etc.
+
+Is a follow-up command referring to a non-finance topic
+
+Output Format:
+
+Respond only with one of the three lowercase words:
+
+greeting
+finance
+non-finance
+
+No explanation. No extra text.
 
 User Query: {user_query}
 `);
