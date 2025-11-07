@@ -108,6 +108,8 @@
 
 .watchlist-table {
     width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 .watchlist-table th {
