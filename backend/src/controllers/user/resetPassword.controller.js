@@ -23,7 +23,7 @@ const SendResetPasswordOtp = async (req, res) => {
         if (!userResult || userResult.length === 0) {
             return res.status(401).json({success: false,message: "User not found with this email address."});
         }
-        if(!(await bcrypt.compare(hashedPassword,userResult.password))){
+        if(!(await bcrypt.compare(password,userResult[0].password))){
             return res.status(401).json({success: false,message: "password doesn't match."});
         }
         
@@ -52,12 +52,14 @@ const SendResetPasswordOtp = async (req, res) => {
 const VerifyOtp = async (req, res) => {
     const { otp } = req.body;
     const email = req.user.email
+    console.log(email,otp);
     if ( !otp ) {
         return res.status(401).json({success: false,message: "OTP are required."});
     }
 
     try {
         let otpData = otpStore.get(email);
+        console.log(otpData);
 
         if (!otpData) {
             return res.status(401).json({success: false,message: "OTP expired or invalid. Please request a new one."});
@@ -112,6 +114,7 @@ const setNewPassword = async (req, res) => {
             return res.status(401).json({success: false,message: "Failed to reset password. Please try again."});
         }
         otpStore.remove(email);
+        console.log('Password reset successfully for user:', email);
         return res.status(200).json({success: true,message: "Password reset successfully. You can now login with your new password."});
 
     } catch (error) {

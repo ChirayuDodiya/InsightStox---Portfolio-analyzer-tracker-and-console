@@ -3,10 +3,20 @@ import "../components/BotSidebar.css";
 import close_icon from "../assets/closeIcon.png";
 import open_icon from "../assets/openIcon.png";
 import profileicon from "../assets/profileicon.svg";
+import { useAppContext } from "../context/AppContext";
 
 const BotSidebar = () => {
+  const botSidebarRef = useRef(null);
+  const {userDetails} = useAppContext();
   const [isOpen, setIsOpen] = useState(true);
   const toggleSidebar = () => setIsOpen(!isOpen);
+  
+  // Debug: Log userDetails whenever it changes
+  useEffect(() => {
+    console.log("BotSidebar - userDetails:", userDetails);
+    console.log("BotSidebar - profileImage:", userDetails?.profileImage);
+  }, [userDetails]);
+  
   return (
     <div className={`bot-sidebar ${isOpen ? "open" : "close"}`}>
       {/* close icon */}
@@ -14,7 +24,7 @@ const BotSidebar = () => {
         src={isOpen ? close_icon : open_icon}
         alt="toggle sidebar icon"
         className="bot-toggle-sidebar-btn"
-        height={35}
+        // height={50}
         onClick={toggleSidebar}
       />
 
@@ -44,9 +54,10 @@ const BotSidebar = () => {
             </div>
           </div>
         </div>
-          <div className="userInfo">
-            <img src={profileicon} alt="profile icon" height={50} className="bot-userProfile-img"/>
-            <h3>Ayush Dhamecha</h3>
+          <div className="profileContainer">
+            {/* {console.log("Rendering profile image:", userDetails.profileImage)} */}
+            <img src={userDetails?.profileImage || profileicon} alt="profile icon" height={50} className="profile-avatar"/>
+            <h3>{userDetails?.name?.split(" ")[0] || 'Guest'}</h3>
           </div>
         </>
       )}
