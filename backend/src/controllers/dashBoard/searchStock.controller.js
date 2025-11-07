@@ -54,7 +54,7 @@ const stocks = [
 ]
 const fuse = new Fuse(stocks, {
   keys: ["symbol", "shortname", "longname"],
-  threshold: 0.3,
+  threshold: 0.2,
 });
 
 export const searchStock = async (req,res)=>{
@@ -78,7 +78,10 @@ export const searchStock = async (req,res)=>{
                 shortname: stock.shortname,
             }
         });
-        const suggestions = [...localsuggestions,...yahoosuggestions];
+        const merged = [...localsuggestions,...yahoosuggestions];
+        const suggestions = Array.from(
+  new Map(merged.map(stock => [stock.symbol, stock])).values()
+);
         return res.status(200).json({success:true,suggestions: suggestions});
     }catch(error){
         console.log('Stock search error:',error);

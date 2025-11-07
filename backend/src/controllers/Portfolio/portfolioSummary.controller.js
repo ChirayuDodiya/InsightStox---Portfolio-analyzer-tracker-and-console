@@ -1,8 +1,8 @@
 import YahooFinance from "yahoo-finance2";
 const yahooFinance = new YahooFinance();
-import { getStockSummary } from "../../db/stockSummary";
-import { PriceStore } from "../../utils/stores/priceRates";
-import { stockPriceStore } from "../../utils/stockPriceStore";
+import { getStockSummary } from "../../db/stockSummary.js";
+import { PriceStore } from "../../utils/stores/priceRates.js";
+import { stockPriceStore } from "../../utils/stockPriceStore.js";
 
 export const getSummaryTable = async (req,res) => {
   try {
@@ -21,7 +21,7 @@ export const getSummaryTable = async (req,res) => {
     const tableData = results
       .map((res, i) => {
         if (res.status !== "fulfilled") return null;
-        const currencychange = PriceStore.get(res.value.price.currency);
+        const currencychange = PriceStore.get(res.value.price.currency)||1;
         const price = res.value.price;
         const lastPrice = price.regularMarketPrice/currencychange ?? 0;
         const previousClose = price.regularMarketPreviousClose/currencychange ?? 0;
@@ -36,8 +36,8 @@ export const getSummaryTable = async (req,res) => {
           minute: "2-digit",
           hour12: true,
         });
-        stockPriceStore.add(holding.symbol,{
-            symbol: holding.symbol,
+        stockPriceStore.add(price.symbol,{
+            symbol: price.symbol,
             current: lastPrice,
             currency: currency,
             close: previousClose,
@@ -48,7 +48,7 @@ export const getSummaryTable = async (req,res) => {
             expiresAt: Date.now() + 60*1000
         });
         const shares = userHoldings[i].current_holding ?? 0;
-        const summary = data.summaryDetail;
+        const summary = res.value.summaryDetail;
         const dayLow = summary?.dayLow ?? "-";
         const dayHigh = summary?.dayHigh ?? "-";
         const yearLow = summary?.fiftyTwoWeekLow ?? "-";
@@ -58,7 +58,7 @@ export const getSummaryTable = async (req,res) => {
         const marketCap = price.marketCap ? formatNumber(price.marketCap) : "-";
 
         return {
-          symbol: holding.symbol,
+          symbol: price.symbol,
           shortname: shortname,
           longname: longname,
           lastPrice: lastPrice,
