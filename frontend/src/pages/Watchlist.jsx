@@ -7,7 +7,7 @@ import Footer from '../components/Footer.jsx';
 import filterIcon from '../assets/filter-button.svg';
 
 
-const  watchlist= () => {
+const  Watchlist= () => {
   const { darkMode, setDarkMode, isSearchActive, setIsSearchActive } = useAppContext();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [priceError, setPriceError] = useState('');
@@ -408,4 +408,4 @@ const  watchlist= () => {
   )
 }
 
-export default watchlist;
+export default Watchlist;
