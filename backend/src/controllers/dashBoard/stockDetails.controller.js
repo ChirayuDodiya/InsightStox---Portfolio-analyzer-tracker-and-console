@@ -14,13 +14,13 @@ export const stockDetails = async (req, res) => {
     if (!ticker) {
         return res.status(400).json({ success: false, message: 'Stock ticker is required.' });
     }
-
+    console.log(ticker);
     const modules = [
         'price', 'summaryDetail', 'defaultKeyStatistics', 'financialData', 'balanceSheetHistoryQuarterly'
     ];
 
     try {
-        const results = await yahooFinance.quoteSummary("ticker", { modules });
+        const results = await yahooFinance.quoteSummary(ticker, { modules });
 
         const endDate = new Date();
         const startDate = new Date();
@@ -123,7 +123,7 @@ export const stockDetails = async (req, res) => {
         return res.status(200).json({ success: true, data: stockData });
 
     } catch (error) {
-        console.error(`Error fetching or processing data for ${ticker}:`, error.message);
+        console.error(`Error fetching or processing data for ${ticker}:`, error);
         return res.status(500).json({ 
             success: false, 
             message: 'Failed to fetch or process stock details. Data may be missing or the ticker is invalid.', 

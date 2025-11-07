@@ -21,7 +21,8 @@ export const getPrice = async (symbols) => {
                 percentageChange:result.price.regularMarketChangePercent ?? 0,
                 shortname: result.price.shortName ?? null,
                 longname: result.price.longName ?? null,
-                change: (result.regularMarketChange/currencychange)?? 0,
+                change: (result.price.regularMarketChange/currencychange)?? 0,
+                marketstate: result.price.marketState?? "unknown",
             };
             stockPriceStore.add(symbols,{...price,expiresAt: Date.now()+60*1000});
             return price;
