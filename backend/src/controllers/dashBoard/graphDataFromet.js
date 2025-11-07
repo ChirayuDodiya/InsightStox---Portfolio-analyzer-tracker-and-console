@@ -2,7 +2,7 @@ import { getHistoricData } from "../../utils/historicData.js";
 
 // Make the function async
 const graphFormetData = async (req, res) => {
-  const { ticker } = req.body;
+  const { ticker } = req.query;
 
   if (!ticker) {
     return res.status(400).json({ success: false, message: "Ticker symbol is required." });

@@ -8,7 +8,7 @@ const formatValue = (value, unit = '') => {
     return value; 
 };
 
-export const getFinancialDetails = async (req, res) => {
+export const stockDetails = async (req, res) => {
     const { ticker } = req.query; 
 
     if (!ticker) {
