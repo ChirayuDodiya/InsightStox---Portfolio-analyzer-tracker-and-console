@@ -4,6 +4,7 @@ import axios from 'axios';
 import './Dashboard-Header.css';
 import growthicon from '../assets/growthicon.svg';
 import historyicon from '../assets/historyicon.svg';
+import { useAppContext } from "../context/AppContext.jsx";
 
 //Enable cookies for all axios requests (important for auth sessions)
 axios.defaults.withCredentials = true;
@@ -13,7 +14,6 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_LINK;
 const STOCK_API = `${BACKEND_URL}/api/v1/dashboard/starter`;
 
 const DashboardHeader = () => {
-  const [isSearchActive, setIsSearchActive] = useState(false);
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,6 +21,7 @@ const DashboardHeader = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [typingTimeout, setTypingTimeout] = useState(null);
   const navigate = useNavigate();
+  const { isSearchActive, setIsSearchActive } = useAppContext();
 
   const handleFocus = () => setIsSearchActive(true);
   const handleClose = () => setIsSearchActive(false);
@@ -204,7 +205,6 @@ const DashboardHeader = () => {
               onChange={handleSearchChange}
             />
           </div>
-          <hr />
           <div className="search-results">
             {query.length > 0 && searchResults.length === 0 && (
               <p className="no-results">No matching stocks found.</p>

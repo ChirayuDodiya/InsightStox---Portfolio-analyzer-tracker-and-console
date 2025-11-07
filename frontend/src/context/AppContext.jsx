@@ -5,9 +5,10 @@ const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
     const [darkMode, setDarkMode] = useState(true);
+    const [isSearchActive, setIsSearchActive] = useState(false);
     const [userDetails, setUserDetails] = useState(null); 
     const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const val = { darkMode, setDarkMode ,userDetails,setUserDetails,userLoggedIn,setUserLoggedIn};
+    const val = { darkMode, setDarkMode ,userDetails,setUserDetails,userLoggedIn,setUserLoggedIn,isSearchActive,setIsSearchActive};
     useEffect(() => {
         GetUserDetails(setUserDetails);
     }, [userLoggedIn]);

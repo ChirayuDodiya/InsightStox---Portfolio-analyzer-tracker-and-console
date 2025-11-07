@@ -75,7 +75,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
               <Link className="navbar_btn" to="#">Portfolio</Link>
               <Link className="navbar_btn" to="/ai-insight">AI Insights</Link>
               <Link className="navbar_btn" to="#">Compare Stocks</Link>
-              <Link className="navbar_btn" to="#">Watchlist</Link>
+              <Link className="navbar_btn" to="/watchlist">Watchlist</Link>
             </>
           )}
         </div>

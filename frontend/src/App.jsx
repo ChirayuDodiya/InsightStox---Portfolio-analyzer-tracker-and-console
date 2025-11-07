@@ -11,6 +11,7 @@ import { StockDetails } from './pages/StockDetails';
 import {HelpSupport} from './pages/HelpSupport';
 import {Preference} from './pages/Preference'
 import AiInsight from './pages/AiInsight';
+import Watchlist from './pages/WatchList';
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
 const router = createBrowserRouter(
   [
@@ -45,6 +46,10 @@ const router = createBrowserRouter(
     {
       path:"/help-support",
       element:<HelpSupport/>
+    }
+    ,{
+      path:"/watchlist",
+      element:<Watchlist/>
     }
   ]
 );
