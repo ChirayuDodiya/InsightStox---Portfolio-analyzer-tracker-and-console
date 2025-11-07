@@ -125,7 +125,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
               <Link to="#"><li>Portfolio</li></Link>
               <Link to="/ai-insight"><li>AI Insights</li></Link>
               <Link to="#"><li>Compare Stocks</li></Link>
-              <Link to="#"><li className="lastli">Watchlist</li></Link>
+              <Link to="/watchlist"><li className="lastli">Watchlist</li></Link>
              </ul>
               </div>
           )}
