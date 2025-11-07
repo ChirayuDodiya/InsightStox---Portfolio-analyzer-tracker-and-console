@@ -1,4 +1,5 @@
 import React, { useState,useEffect } from "react";
+import axios from "axios";
 import { Link, Navigate } from "react-router-dom";
 import ButtonDiv from "./ButtonDiv.jsx";
 import web_logo_without_bg_darkmode from "../assets/web_logo_without_bg_darkmode.png";
@@ -11,7 +12,8 @@ import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 // import tailwind from "tailwindcss/tailwind.css";
 const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
-
+  
+  axios.defaults.withCredentials = true;
   const navigate = useNavigate();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
@@ -23,6 +25,22 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
     navigate(path);
   };
 
+  const handleLogout = async () => {
+        try{
+            await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/logout", {withCredentials: true});
+            navigate("/");
+        }
+        catch(err){
+            console.error("Error during logout:", err.response?.data?.message || err.message);
+        }
+  }
+
+  function checkPageType(){
+    if(pageType !== "/" && pageType !== "my-profile" && pageType !== "data-privacy" && pageType !== "preferences" && pageType !== "help-support" && pageType !== "activity"){
+      return true;
+    }
+    else return false;
+}
   useEffect(() => {
   const handleResize = () => {
     if (window.innerWidth > 1100 && isMenuOpen) {
@@ -45,7 +63,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
         </div>
 
         <div className="center_btn">
-          {pageType === "home" ? (
+          {pageType === "/" ? (
             <>
               <a className="navbar_btn" href="#feature">Features</a>
               <a className="navbar_btn" href="#HowItWorks">How it Works?</a>
@@ -55,7 +73,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
             <>
               <Link className="navbar_btn" to="/dashboard">Dashboard</Link>
               <Link className="navbar_btn" to="#">Portfolio</Link>
-              <Link className="navbar_btn" to="/aiInsight">AI Insights</Link>
+              <Link className="navbar_btn" to="/ai-insight">AI Insights</Link>
               <Link className="navbar_btn" to="#">Compare Stocks</Link>
               <Link className="navbar_btn" to="#">Watchlist</Link>
             </>
@@ -64,20 +82,18 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
 
         <div className="right_btn">
 
-          {pageType === "home" && (
+          {pageType === "/" && (
             <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
                                               sessionStorage.setItem("forgotpassword", "false");}}>
               <ButtonDiv className="login_btn" val="Log In" />
             </Link>
           )}
 
-          {pageType === "dashboard" && (
-            <div className="profile_btn">
-              <button onClick={handleProfileClick}>
-                <img src={profileicon} alt="Profile" />
-              </button>
-            </div>
-          )}
+          <div className="profile_btn">
+            <button onClick={handleProfileClick}>
+              <img src={profileicon} alt="Profile" style={checkPageType() ? {visibility: "visible"} : {visibility: "hidden"}}/>
+            </button>
+          </div>
 
           <div className="toggle_btn">
             <button style = {{display : "none"}}onClick={() => setDarkMode(!darkMode)}>
@@ -90,7 +106,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
       </div>
            {isMenuOpen && (
         <div className="mobile_menu ">
-          {pageType === "home" ? (
+          {pageType === "/" ? (
             <div className="menuoptions">
               <ul>
                  <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
@@ -115,7 +131,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           )}
         </div>
       )}
-      {pageType === "dashboard" && isProfileOpen && (
+      {isProfileOpen && (
         <div className="profilepopup">
           <div className="popupheading">
             <img src={profileicon} alt="Profile" />
@@ -126,10 +142,10 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           </div>
           <div className="popupoptions">
             <ul>
-              <li onClick={() => handleNavigation("/myprofile")}>My Profile <img src={routeicon} alt="" /></li>
-              <li>Manage <img src={routeicon} alt="" /></li>
-              <li>Help & Support <img src={routeicon} alt="" /></li>
-              <li className="lastli">Log Out <img src={exiticon} alt="" /></li>
+              <li onClick={() => handleNavigation("/my-profile")}>My Profile <img src={routeicon} alt="" /></li>
+              <li onClick={() => handleNavigation("/data-privacy")}>Manage <img src={routeicon} alt="" /></li>
+              <li onClick={() => handleNavigation("/help-support")}>Help & Support <img src={routeicon} alt="" /></li>
+              <li onClick={handleLogout}>Log Out <img src={exiticon} alt="" /></li>
             </ul>
           </div>
         </div>

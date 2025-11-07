@@ -1,18 +1,16 @@
-/* Styles for SectorAllocationChart */
-
 .loading-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 440px;
-  font-size: 1.25rem; /* 20px */
-  color: #a1a1aa; /* zinc-400 */
+  font-size: 1.25rem; 
+  color: #a1a1aa;
   background-color: #000;
   padding: 20px;
   border-radius: 8px;
   width: 100%;
-  max-width: 672px; /* max-w-2xl */
-  margin: 0 auto; /* mx-auto */
+  max-width: 672px; 
+  margin: 0 auto;
 }
 
 .sector-allocation-container {
@@ -20,9 +18,9 @@
   padding: 20px;
   border-radius: 8px;
   width: 100%;
-  max-width: 672px; /* max-w-2xl */
-  margin: 0 auto; /* mx-auto */
-  color: #f4f4f5; /* zinc-100 */
+  max-width: 672px;
+  margin: 0 auto; 
+  color: #f4f4f5; 
 }
 
 .chart-wrapper {

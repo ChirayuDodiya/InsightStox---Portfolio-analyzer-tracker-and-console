@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './WelcomeInvestor.css';
 import evaluation_icon from '../../assets/evaluation-icon.png';
@@ -16,9 +17,11 @@ const USER_API = `${BASE_URL}/api/user`;
 
 const stockmapping = (stockData) => ({
   name: stockData.shortName,
+  symbol: stockData.symbol,
   nse: stockData.exchange,
   price: stockData.price,
-  change: `${stockData.changePercent}%`,
+  change: stockData.change,
+  changePercent: stockData.changePercent,
   isUp: parseFloat(stockData.changePercent) >= 0,
 });
 
@@ -35,6 +38,11 @@ const TrendingStocks = () => {
   const [stocksData, setStocksData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  const handleOpenDetails = (symbol) => {
+    navigate(`/stockdetails/${symbol}`);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -78,7 +86,7 @@ const TrendingStocks = () => {
       {!loading && !error && (
         <div className="stocks-list">
           {stocksData.map((stock, index) => (
-            <div key={index} className="trending-stock-item">
+            <div key={index} className="trending-stock-item" onClick={() => handleOpenDetails(stock.symbol)}>
               <div className="stock-info flex flex-col">
                 <p className="stock-name">{stock.name}</p>
                 <p className="stock-nse">{stock.nse}</p>
@@ -88,15 +96,13 @@ const TrendingStocks = () => {
                   ₹{stock.price} {stock.isUp ? '↑' : '↓'}
                 </p>
                 <p className={`stock-change ${stock.isUp ? 'text-positive' : 'text-negative'}`}>
-                  {stock.change}
+                  {stock.change} ({stock.changePercent}%)
                 </p>
               </div>
             </div>
           ))}
         </div>
       )}
-
-      <a href="#" className="see-more-link">See More →</a>
     </div>
   );
 };

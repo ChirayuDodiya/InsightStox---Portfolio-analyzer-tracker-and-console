@@ -11,7 +11,7 @@ export const starter = async(req,res)=>{
         result = result.map(stock=>{
             return {
                 Symbol: stock.price.symbol,
-                name: stock.price.longname,
+                name: stock.price.longName,
                 exchange: stock.price.exchange,
                 currency: stock.price.currency,
                 price: stock.price.regularMarketPrice?.toFixed(2) ?? 'N/A',
