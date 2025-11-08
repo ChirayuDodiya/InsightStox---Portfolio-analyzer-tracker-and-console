@@ -16,7 +16,7 @@ export const stockDetails = async (req, res) => {
     }
     console.log(ticker);
     const modules = [
-        'price', 'summaryDetail', 'defaultKeyStatistics', 'financialData', 'balanceSheetHistoryQuarterly'
+        'price', 'summaryDetail', 'defaultKeyStatistics', 'financialData', 'balanceSheetHistoryQuarterly','assetProfile'
     ];
 
     try {
@@ -85,6 +85,16 @@ export const stockDetails = async (req, res) => {
             fiscalInformation:{
                 fiscalYearEnd : results.defaultKeyStatistics.nextFiscalYearEnd,
                 MRQ: results.defaultKeyStatistics.mostRecentQuarter,
+            },
+            Company:{
+                longname: results.price.longName||"--",
+                shortname: results.price.shortName||"--",
+                description: results.assetProfile.description||"--",
+                longdescription: results.assetProfile.longBusinessSummary||"--",
+                fulltimeemployees: results.assetProfile.fullTimeEmployees||0,
+                sector: results.assetProfile.sector||"--",
+                industry: results.assetProfile.industry||"--",
+                website: results.assetProfile.website||"--"
             }
         };
 
@@ -106,7 +116,7 @@ export const stockDetails = async (req, res) => {
             stockData.financials.operatingMargins = formatValue(stockData.financials.operatingMargin * 100, '%');
         }
 
-        console.log(stockData)
+        
         return res.status(200).json({ success: true, data: stockData });
 
     } catch (error) {

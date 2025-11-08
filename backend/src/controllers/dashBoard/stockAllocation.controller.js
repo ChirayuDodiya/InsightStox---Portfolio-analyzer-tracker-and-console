@@ -5,8 +5,11 @@ export const getStockAllocation = async (req, res) => {
     const { email } = req.user;
     try {
         const stocksSector = await getStocksSector(email);
-        if (!stocksSector || stocksSector.length === 0) {
-            return res.status(404).json({ success: false, message: "No stocks found for the user." });
+        if (!stocksSector ) {
+            return res.status(500).json({ success: false, message: "Failed to get stock from db." });
+        }
+        if(stocksSector.length === 0){
+            return res.status(200).json({ success: false, labels: [], values: []});
         }
         let sectorAllocation = {};
         let totalPortfolioValue = 0;
