@@ -25,7 +25,6 @@ const MyHoldings = () => {
 
         // Store the holdings data
         setHoldings(response.data.data);
-        console.log(response.data.data)
       } catch (err) {
         console.error("Error fetching holdings:", err);
         setError("Failed to load holdings. Please ensure you are logged in.");
@@ -61,7 +60,7 @@ const MyHoldings = () => {
   return (
     <div>
       <div className="card holdings-card">
-        <h2>My Holdings</h2>
+        <h2 className="header-title">My Holdings</h2>
         <table>
           <thead>
             <tr>

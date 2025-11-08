@@ -17,6 +17,10 @@
 }
 
 .section-wrapper {
+  width: 1280px;     
+  margin: 0 auto;
+  padding: 0;
+  display: block;
   width: 100%;
   margin-top: 145px;
 }
@@ -29,13 +33,13 @@
   gap: 30px;
   margin: 0 auto;
   align-items: stretch;
+  /* padding: 40px; */
 }
 
 .sectorai > :first-child {
   flex: 0 0 40%;
   border: 2px solid #00C853;
   border-radius: 12px;
-  padding: 10px;
   background-color: #0c1014;
   box-shadow: 0 0 10px rgba(0, 200, 83, 0.25);
 }
@@ -43,7 +47,6 @@
 .sectorai > :last-child {
   flex: 0 0 60%;
 }
-
 .dashboard-content {
   margin-top: 140px;
   width: 100%;

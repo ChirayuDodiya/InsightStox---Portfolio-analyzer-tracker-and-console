@@ -13,7 +13,7 @@ axios.defaults.withCredentials = true;
 const BASE_URL = import.meta.env.VITE_BACKEND_LINK;
 const API_URL = `${BASE_URL}/api/v1/dashboard/Valuation`;
 const STOCKS_API = `${BASE_URL}/api/v1/dashboard/marketActiveStocks`;
-const USER_API = `${BASE_URL}/api/user`;
+const USER_API = `${BASE_URL}/api/v1/users/myProfile`;
 
 const stockmapping = (stockData) => ({
   name: stockData.shortName,
@@ -68,7 +68,7 @@ const TrendingStocks = () => {
     }
 
     fetchTrendingStocks();
-    const interval = setInterval(fetchTrendingStocks, 60000); // auto-refresh every 60s
+    const interval = setInterval(fetchTrendingStocks, 900000); // auto-refresh every 15min
 
     return () => {
       cancelled = true;
@@ -155,7 +155,11 @@ const WelcomeInvestor = () => {
     async function fetchUser() {
       try {
         const res = await axios.get(USER_API);
-        if (!cancelled) setUserName(res.data.name);
+        if (!cancelled) {
+          const fullName = res.data.data.name || '';
+          const firstName = fullName.split(' ')[0];
+          setUserName(firstName);
+        }
       } catch (err) {
         console.error('Error fetching user:', err);
       }

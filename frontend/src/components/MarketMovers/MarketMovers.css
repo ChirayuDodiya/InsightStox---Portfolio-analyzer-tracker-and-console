@@ -7,8 +7,11 @@ body {
 
 
 .market-movers-container {
-  padding: 32px;
+  padding: 30px;
+  width: 85%;
+  margin: 0 auto;
 }
+
 
 .header {
   display: flex;
