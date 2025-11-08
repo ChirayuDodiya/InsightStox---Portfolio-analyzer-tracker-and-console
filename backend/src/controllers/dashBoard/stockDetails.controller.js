@@ -20,22 +20,8 @@ export const stockDetails = async (req, res) => {
     ];
 
     try {
-        const results = await yahooFinance.quoteSummary("ticker", { modules });
+        const results = await yahooFinance.quoteSummary(ticker, { modules });
 
-        const endDate = new Date();
-        const startDate = new Date();
-        startDate.setFullYear(startDate.getFullYear() - 1);
-
-        const history = await yahooFinance.historical("ticker", {
-            period1: startDate,
-            period2: endDate,
-            interval: '1d'
-        });
-
-        const prices = history.map(day => day.close);
-        const fiftyTwoWeekLow = Math.min(...prices);
-        const fiftyTwoWeekHigh = Math.max(...prices);
-        
         const stockData = {
             priceInfo: {
                 currentPrice: results.price.regularMarketPrice,
@@ -48,8 +34,8 @@ export const stockDetails = async (req, res) => {
                 changePercentage: results.price.regularMarketChangePercent,
                 open: results.price.regularMarketOpen,
                 fiftytwoWeekchange: results.defaultKeyStatistics['52WeekChange'],
-                fiftytwoWeekHigh : fiftyTwoWeekHigh,
-                fiftyTwoWeekLow : fiftyTwoWeekLow,
+                fiftytwoWeekHigh : results.summaryDetail.fiftyTwoWeekHigh,
+                fiftyTwoWeekLow : results.summaryDetail.fiftyTwoWeekLow,
             },
 
             fundamentals: {
@@ -59,7 +45,7 @@ export const stockDetails = async (req, res) => {
                 epsTTM: results.defaultKeyStatistics.trailingEps,
                 pbRatio: results.summaryDetail.priceToBook,
                 dividendYield: results.summaryDetail.dividendYield,
-                // faceValue: results.summaryDetail.faceValue, //::TODO:: 
+                beta : results.defaultKeyStatistics.beta,
                 bookValue: results.defaultKeyStatistics.bookValue,
                 debtToEquity: results.financialData.debtToEquity,
             },
@@ -83,6 +69,7 @@ export const stockDetails = async (req, res) => {
                 totalDebt: results.financialData.totalDebt,
                 deptToEquity: results.financialData.debtToEquity,
                 currentRatioMRQ: results.financialData.currentRatio,
+                bookValuePerShare: (results.defaultKeyStatistics.bookValue) / (results.defaultKeyStatistics.sharesOutstanding) || "--",
             },
             profitability:{
                 // Profitability
@@ -92,8 +79,8 @@ export const stockDetails = async (req, res) => {
                 returnOnEquity: results.financialData.returnOnEquity,
             },
             cashFlow:{
-                operatingCashFlow: results.financialData.operatingCashFlow,
-                freeCashFlow: results.financialData.freeCashFlow,
+                operatingCashFlow: results.financialData.operatingCashFlow || "--" ,
+                freeCashFlow: results.financialData.freeCashFlow || "--",
             },
             fiscalInformation:{
                 fiscalYearEnd : results.defaultKeyStatistics.nextFiscalYearEnd,
