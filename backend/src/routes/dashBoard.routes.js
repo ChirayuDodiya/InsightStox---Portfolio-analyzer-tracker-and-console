@@ -13,7 +13,7 @@ router.route("/Valuation").get(verifyToken,calculatePortfolio);
 router.route("/addTransaction").post(verifyToken,addTransaction);
 router.route("/displayWatchlist").get(verifyToken,showWatchlist);
 router.route("/addToWatchlist").post(verifyToken,addToWatchlist);
-router.route("/removeFromWatchlist").post(verifyToken,removeFromWatchlist);
+router.route("/removeFromWatchlist").delete(verifyToken,removeFromWatchlist);
 router.route("/stockAllocation").get(verifyToken,getStockAllocation);
 router.route("/marketGainers").get(getMarketGainers);
 router.route("/marketActiveStocks").get(getMarketactiveStocks);

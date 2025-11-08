@@ -11,7 +11,7 @@ export const getPrice = async (symbols) => {
                 const {expiresAt,...price} = prices; 
                 return price;
             }
-            const result = await yahooFinance.quoteSummary(symbols, {modules: ["price"],});
+            const result = await yahooFinance.quoteSummary(symbols, {modules: ["price","assetProfile"],});
             const currencychange = PriceStore.get(result.price.currency) || 1;
             const price = {
                 symbol: result.price.symbol ?? null,
@@ -23,6 +23,8 @@ export const getPrice = async (symbols) => {
                 longname: result.price.longName ?? null,
                 change: (result.price.regularMarketChange/currencychange)?? 0,
                 marketstate: result.price.marketState?? "unknown",
+                marketcap: result.price.marketCap?? 0,
+                sector: result.assetProfile?.sector ?? null,
             };
             stockPriceStore.add(symbols,{...price,expiresAt: Date.now()+60*1000});
             return price;
