@@ -254,6 +254,7 @@
 .filter-modal {
     background-color: #0a0a0a;
     width: 657px;
+    min-width:350px;
     height: 600px;
     overflow-y: auto;
     border-left: 1px solid #1a1a1a;
@@ -270,8 +271,6 @@
 }
 
 .filter-modal-header {
-    position: sticky;
-    top: 0;
     background-color: #000000;
     z-index: 10;
     margin-bottom: 10px;
@@ -290,7 +289,25 @@
     grid-template-columns: 1fr 1fr;
     gap:10px;
 }
-
+@media (max-width: 750px) {
+    .filter-section-second{
+        grid-template-columns: 1fr;
+    }
+    .filter-modal{
+        width:500px;
+    }
+}
+@media (max-width: 550px) {
+    .filter-modal{
+        width:375px;
+    }
+    .filter-section{
+        grid-template-columns: 1fr;
+    }
+}
+.filter-modal-content {
+    overflow: auto;
+}
 .filter-section-title {
     font-size: 0.9rem;
     font-weight: 500;
@@ -363,7 +380,12 @@
     cursor: pointer;
     font-size: 0.95rem;
 }
-
+.price-range{
+    width:280px;
+}
+.sort-by{
+    width:280px;
+}
 .price-range-inputs {
     display: flex;
     gap: 1rem;
@@ -439,6 +461,8 @@
 }
 
 .filter-modal-footer {
+    position:sticky;
+    bottom: 0;
     padding: 0.5rem;
     background-color: #0a0a0a;
     display: flex;

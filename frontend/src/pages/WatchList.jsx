@@ -230,7 +230,7 @@ const  Watchlist= () => {
 
 
               {/* Price Range */}
-              <div className="filter-section">
+              <div className="filter-section filter-section-second">
                 <div className="price-range">
                 <div className="filter-section-title">Price Range</div>
                 <div className="price-range-inputs">
