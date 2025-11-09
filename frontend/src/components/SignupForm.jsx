@@ -6,6 +6,7 @@ import InputField from "./InputField.jsx";
 import PasswordInputField from "./PasswordInputField.jsx";
 import  {checkPasswordStrength,validateEmail,validateNameStrength} from "../utils/validation.js";
 import { useAppContext } from "../context/AppContext.jsx"
+import LogoDark from "../assets/LogoDark.png";
 const SignupForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
 /*----------------------------------- State Variables----------------------------------------------------------- */
     const navigate = useNavigate();
@@ -162,6 +163,9 @@ useEffect(() => {
 /*----------------------------------- JSX --------------------------------------------------------------------- */
     return (
         <>
+           <div className="authlogo">
+            <img src={LogoDark} alt="Dark Mode Logo" />
+          </div>
           <div className="title-text">
             <h1>{isOtpSent ? 'Check your email for the OTP' : 'Create your account'}</h1>
           </div>

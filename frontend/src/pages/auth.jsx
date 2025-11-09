@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./auth.css";
 import bg_img from "../assets/dark-mode-login-bg.png";
-import LogoDark from "../assets/LogoDark.png";
 import {Link} from "react-router-dom";
 import LoginForm from "../components/LoginForm.jsx";
 import SignupForm from "../components/SignupForm.jsx";
@@ -23,10 +22,11 @@ export const Auth = () => {
     });
   };
   return (
-    <div className="container">
       <div className="auth_main_div px-0 py-0">
        <Link to ="/">
-         <button className="backToHome"  onClick={() => {resetFormStates();}}>← Back to Home</button>
+            <button className="backToHome"  
+            onClick={() => {sessionStorage.removeItem("isLogin");sessionStorage.removeItem("forgotpassword");resetFormStates();}}> 
+            <i class="pi pi-arrow-left"></i> Back</button>
          </Link>
         <div className="left_inner_div">
          
@@ -43,9 +43,7 @@ export const Auth = () => {
         </div>
 
         <div className="right_inner_div">
-          <div className="logo">
-            <img src={LogoDark} alt="Dark Mode Logo" />
-          </div>
+          <div className="auth_form_wrapper">
           <div className="auth_form">
             {isLogin ? (<LoginForm toggleForm={toggleForm} resetFormStates={resetFormStates} />) : (<SignupForm toggleForm={toggleForm} resetFormStates={resetFormStates} />)}
           </div>
