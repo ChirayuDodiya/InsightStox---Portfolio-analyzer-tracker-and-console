@@ -168,7 +168,7 @@ const  Watchlist= () => {
           <div className="filter-modal" onClick={(e) => e.stopPropagation()}>
             <div className="filter-modal-header">
               <h2>Filter Options</h2>
-           
+              <i class="pi pi-times close-btn" onClick={() => {setIsFilterOpen(false);handleClearFilters();}}></i>
             </div>
 
             <div className="filter-modal-content">
