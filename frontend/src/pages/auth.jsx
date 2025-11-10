@@ -26,7 +26,7 @@ export const Auth = () => {
        <Link to ="/">
             <button className="backToHome"  
             onClick={() => {sessionStorage.removeItem("isLogin");sessionStorage.removeItem("forgotpassword");resetFormStates();}}> 
-            <i class="pi pi-arrow-left"></i> Back</button>
+            <i className="pi pi-arrow-left"></i> Back</button>
          </Link>
         <div className="left_inner_div">
          
