@@ -35,7 +35,6 @@ body {
   text-decoration: underline;
 }
 
-/* -Layout Grids - */
 .main-grid {
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -52,10 +51,17 @@ body {
 
 
 .content-card {
-  background-color: #111827;
+  background-color: #000000;
   padding: 24px;
   border-radius: 8px;
 }
+/*White border ONLY for Business Groups + Market News*/
+.main-grid .content-card {
+  border: 1px solid #ffffff;
+  border-radius: 10px;
+  padding: 16px;
+}
+
 
 .content-title {
   font-size: 1.25rem;
@@ -134,6 +140,25 @@ body {
   gap: 16px;
   margin-bottom: 16px;
 }
+.framed-section {
+  border: 1px solid #ffffff;
+  border-radius: 8px;
+  padding: 24px;
+  margin-top: 32px;
+}
+
+.framed-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 32px;
+}
+
+@media (min-width: 1024px) {
+  .framed-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 
 @media (min-width: 640px) {
   .groups-grid {

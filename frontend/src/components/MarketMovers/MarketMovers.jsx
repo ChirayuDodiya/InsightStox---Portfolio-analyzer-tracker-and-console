@@ -123,6 +123,7 @@ const MarketMovers = () => {
         if (Array.isArray(losersRes.data?.data)) {
           const formattedLosers = losersRes.data.data.map((stock) => ({
             name: stock.shortName,
+            symbol: stock.symbol,
             exchange: stock.exchange || 'NSE',
             price: stock.price,
             change: stock.change,
@@ -161,21 +162,24 @@ const MarketMovers = () => {
         <a href="#" className="see-more-link">See More →</a>
       </div>
 
-      <div className="main-grid">
-        <div className="content-card">
-          <h3 className="content-title gainer">Gainers</h3>
-          {gainersData.map((stock, index) => (
-            <StockListItem key={index} {...stock} isGainer />
-          ))}
-        </div>
+      <div className="framed-section">
+  <div className="framed-grid">
+    <div className="content-card">
+      <h3 className="content-title gainer">Gainers</h3>
+      {gainersData.map((stock, index) => (
+        <StockListItem key={index} {...stock} isGainer />
+      ))}
+    </div>
 
-        <div className="content-card">
-          <h3 className="content-title loser">Losers</h3>
-          {losersData.map((stock, index) => (
-            <StockListItem key={index} {...stock} isGainer={false} />
-          ))}
-        </div>
-      </div>
+    <div className="content-card">
+      <h3 className="content-title loser">Losers</h3>
+      {losersData.map((stock, index) => (
+        <StockListItem key={index} {...stock} isGainer={false} />
+      ))}
+    </div>
+  </div>
+</div>
+
 
       <div className="main-grid">
         <div className="content-card">
