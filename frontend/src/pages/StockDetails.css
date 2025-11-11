@@ -41,11 +41,11 @@
     border-radius: 12%;
 }
 
-.stk-buy {
-    margin-left: 5rem;
+.stk-add {
+    margin-left: 3rem;
 }
 
-.stk-sell {
+.stk-rmv {
     margin-left: 1rem;
 }
 
@@ -54,7 +54,7 @@
     margin-left: auto;
 }
 
-.stk-buy {
+.stk-add {
     font-weight: 600;
     height: 30px;
     color: #fff;
@@ -66,7 +66,7 @@
     border-radius: 6px;
 }
 
-.stk-sell {
+.stk-rmv {
     font-weight: 600;
     height: 30px;
     color: #fff;
@@ -90,13 +90,13 @@
     border-radius: 8px;
 }
 
-.stk-buy:hover {
+.stk-add:hover {
     color: #fff;
     background-color: transparent;
     transition: 0.3s;
 }
 
-.stk-sell:hover {
+.stk-rmv:hover {
     color: #fff;
     background-color: transparent;
     transition: 0.3s;
@@ -110,9 +110,9 @@
 }
 
 .stk-stock-name {
-    margin-top: 0.5rem;
-    font-size: 1.8rem;
-    font-weight: 500;
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff
 }
 
 .stk-stock-price {
@@ -159,11 +159,11 @@
     margin-left: 2%;
 }
 
-#stk-heads1,
-#stk-heads2,
-#stk-heads3,
-#stk-heads4,
-#stk-heads5 {
+#heads1,
+#heads2,
+#heads3,
+#heads4,
+#heads5 {
     display: block;
     margin-top: 2rem;
     font-size: 1.5rem;
