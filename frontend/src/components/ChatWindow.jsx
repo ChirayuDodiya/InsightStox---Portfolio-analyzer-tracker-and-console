@@ -16,12 +16,28 @@ const ChatWindow = () => {
     const { userDetails } = useAppContext(); 
     const chatEndRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
+    const inputRef = useRef(null);
 
 // ----------------------------------------------------------useEffects--------------------------------------------------------
    // Scroll to the bottom of the chat when a new message is added
 useEffect(() => {
         chatEndRef.current?.scrollIntoView({behavior : "smooth"});
     },[messages])
+
+// Handle mobile keyboard opening - scroll input into view
+useEffect(() => {
+    const handleFocus = () => {
+        setTimeout(() => {
+            inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 300); // Delay to allow keyboard to open
+    };
+
+    const inputElement = inputRef.current;
+    if (inputElement) {
+        inputElement.addEventListener('focus', handleFocus);
+        return () => inputElement.removeEventListener('focus', handleFocus);
+    }
+}, []);
 
 // ----------------------------------------------------------functions--------------------------------------------------------
 // Function to handle sending message
@@ -80,7 +96,15 @@ useEffect(() => {
         </div>
 
         <div className={`chat-input-area ${isLoading ? "loading" : ""}`}>
-                <input type="text" value={input} onChange={(e) => {setInput(e.target.value)}} onKeyDown={handleKeyDown} placeholder="Type a message..." className="chat-input"/>
+                <input 
+                    ref={inputRef}
+                    type="text" 
+                    value={input} 
+                    onChange={(e) => {setInput(e.target.value)}} 
+                    onKeyDown={handleKeyDown} 
+                    placeholder="Type a message..." 
+                    className="chat-input"
+                />
                 <button className="send-btn" onClick={handleSend}>{isLoading ? <RingLoader color="#000000" size={25}/> : <>Send</>}</button>
         </div>
     </div>

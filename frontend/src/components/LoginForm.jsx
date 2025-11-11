@@ -7,6 +7,7 @@ import InputField from "./InputField.jsx";
 import PasswordInputField from "./PasswordInputField.jsx";
 import  {checkPasswordStrength,validateEmail,} from "../utils/validation.js";
 import { useAppContext } from "../context/AppContext.jsx";
+import LogoDark from "../assets/LogoDark.png";
 const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
 /*----------------------------------- State Variables-----------------------------------------------------------*/
     const navigate = useNavigate();
@@ -230,6 +231,9 @@ useEffect(() => {
 /*----------------------------------- JSX --------------------------------------------------------------------- */
 return (
         <>
+          <div className="authlogo">
+            <img src={LogoDark} alt="Dark Mode Logo" />
+          </div>
           <div className="title-text">
             <h1>{isForgotPassword ? 'Reset your password' : 'Login to your account'}</h1>
           </div>
@@ -266,7 +270,7 @@ return (
             {forgotOtpvarified && (<button type="submit" className="resubmit resetpass loading" disabled = {newPasswordError!==""} style={{display: "flex",opacity: newPasswordError!=="" ? 0.5 : 1,cursor: newPasswordError!=="" ? 'not-allowed' : 'pointer'}} onClick={() => {handleResetPassword();}}>{isLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Reset Password"}</button>)}
 
             {/* Google Login Button */}
-            {!isForgotPassword && (<button type="button" className="google-btn loading" onClick = {()=>{handleGoogleButtonClick();}} style={{display: "flex"}} >
+            {!isForgotPassword && (<button type="button" className="google-btn " onClick = {()=>{handleGoogleButtonClick();}} style={{display: "flex"}} >
                 {googleLoginLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <><img src={google_logo} alt="Google logo" className="google-logo" />
                 <span>Continue with Google</span></>}
             </button>)}

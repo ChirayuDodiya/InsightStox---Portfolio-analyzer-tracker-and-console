@@ -42,7 +42,7 @@
 }
 
 .stk-buy {
-    margin-left: 5rem;
+    margin-left: 2rem;
 }
 
 .stk-sell {
@@ -110,7 +110,6 @@
 }
 
 .stk-stock-name {
-    margin-top: 0.5rem;
     font-size: 1.8rem;
     font-weight: 500;
 }

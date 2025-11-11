@@ -168,7 +168,7 @@ const  Watchlist= () => {
           <div className="filter-modal" onClick={(e) => e.stopPropagation()}>
             <div className="filter-modal-header">
               <h2>Filter Options</h2>
-           
+              <i class="pi pi-times close-btn" onClick={() => {setIsFilterOpen(false);handleClearFilters();}}></i>
             </div>
 
             <div className="filter-modal-content">
@@ -230,7 +230,7 @@ const  Watchlist= () => {
 
 
               {/* Price Range */}
-              <div className="filter-section">
+              <div className="filter-section filter-section-second">
                 <div className="price-range">
                 <div className="filter-section-title">Price Range</div>
                 <div className="price-range-inputs">

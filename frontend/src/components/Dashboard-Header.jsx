@@ -24,7 +24,7 @@ const DashboardHeader = () => {
   const { isSearchActive, setIsSearchActive } = useAppContext();
 
   const handleFocus = () => setIsSearchActive(true);
-  const handleClose = () => setIsSearchActive(false);
+  const handleClose = () => {setIsSearchActive(false); setQuery(''); setSearchResults([]);}
 
   // Fetch stock data from backend (session cookie included)
   const fetchStockData = async () => {
@@ -122,7 +122,7 @@ const DashboardHeader = () => {
   // Error state
   if (error)
     return (
-      <div className="dashboard-header error">
+      <div className="dashboard-header dashboard-header-error">
         <p>{error}</p>
       </div>
     );
@@ -185,8 +185,6 @@ const DashboardHeader = () => {
             className="search-input"
             placeholder="Search for a Stock (e.g., RELIANCE.NS, TATA MOTORS)"
             onFocus={handleFocus}
-            value={query}
-            onChange={handleSearchChange}
           />
         </div>
       </div>

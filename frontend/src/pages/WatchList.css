@@ -13,7 +13,7 @@
     background-color: black;
     position: absolute;
     width: 100%;
-    min-width:450px;
+    min-width:350px;
     min-height: 100vh;
     overflow-x: hidden;
     display: flex;
@@ -105,7 +105,8 @@
 }
 
 .watchlist-table th {
-    padding: 1rem;
+    padding: 0 0.75rem;
+    padding-bottom:1rem;
     text-align: center;
     font-weight: 700;
     color: #FFF;
@@ -126,20 +127,31 @@
   right: 32px;
   border-bottom: 3px solid #1e1e1e;
 }
-.watchlist-table th:first-child{
-  padding-left: 32px;
+.watchlist-table th:first-child,.watchlist-table td:first-child{
+  padding-left: 2rem;
+  width:250px !important;
 }
 
 .watchlist-table th:last-child{
-  padding-right: 32px;
+  padding-right: 2rem;
+
+}
+.watchlist-table td:last-child{
+    display:flex;
+    justify-content: center;
+    padding-right:2rem;
+}
+.watchlist-table td:nth-child(2),.watchlist-table td:nth-child(3),.watchlist-table td:nth-child(4){
+    padding-left:2.75rem;
 }
 .watchlist-table td {
-    padding: 1.25rem 1rem;
+    padding: 1rem ;
     color: #fff;
-    padding-left:5%;
     border: none !important;
     background-color: transparent !important;
     text-align: left !important;
+    position:relative;
+    
 }
 
 .company-name {
@@ -191,7 +203,25 @@
     .watchlist-content {
     width: 90%;
   }
+}
+  @media(max-width: 550px){
+    .watchlist-table td:nth-child(3){
+        padding:0.75rem 0 0.75rem 1.5rem;
+    }
+.watchlist-table th:first-child{
+    padding:0 0 0.75rem 1.75rem;
+}
+.watchlist-table td:first-child{
+padding:0.75rem 0 0.75rem 1.75rem;
+}
+.watchlist-table th:last-child{
+padding-right:1.75rem;
+}
+.watchlist-table td:last-child{
+padding-right:0.75rem;
+}
   }
+
 .change-cell {
     font-weight: 500;
 }
@@ -254,6 +284,7 @@
 .filter-modal {
     background-color: #0a0a0a;
     width: 657px;
+    /* min-width:350px; */
     height: 600px;
     overflow-y: auto;
     border-left: 1px solid #1a1a1a;
@@ -270,13 +301,18 @@
 }
 
 .filter-modal-header {
-    position: sticky;
-    top: 0;
-    background-color: #000000;
     z-index: 10;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-
+.close-btn{
+    cursor: pointer;
+}
+.close-btn:hover{
+    color:#00c853;
+}
 .filter-modal-header h2 {
     font-size: 1.25rem;
     font-weight: 700;
@@ -290,7 +326,26 @@
     grid-template-columns: 1fr 1fr;
     gap:10px;
 }
-
+@media (max-width: 750px) {
+    .filter-section-second{
+        grid-template-columns: 1fr;
+    }
+    .filter-modal{
+        width:500px;
+    }
+}
+@media (max-width: 550px) {
+    .filter-modal{
+        width:90%;
+        height:90%;
+    }
+    .filter-section{
+        grid-template-columns: 1fr;
+    }
+}
+.filter-modal-content {
+    overflow: auto;
+}
 .filter-section-title {
     font-size: 0.9rem;
     font-weight: 500;
@@ -363,7 +418,12 @@
     cursor: pointer;
     font-size: 0.95rem;
 }
-
+.price-range{
+    width:280px;
+}
+.sort-by{
+    width:280px;
+}
 .price-range-inputs {
     display: flex;
     gap: 1rem;
@@ -439,6 +499,8 @@
 }
 
 .filter-modal-footer {
+    position:sticky;
+    bottom: 0;
     padding: 0.5rem;
     background-color: #0a0a0a;
     display: flex;
