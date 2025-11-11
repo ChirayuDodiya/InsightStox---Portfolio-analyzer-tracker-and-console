@@ -120,12 +120,12 @@ const DashboardHeader = () => {
     );
 
   // Error state
-  // if (error)
-  //   return (
-  //     <div className="dashboard-header dashboard-header-error">
-  //       <p>{error}</p>
-  //     </div>
-  //   );
+  if (error)
+    return (
+      <div className="dashboard-header dashboard-header-error">
+        <p>{error}</p>
+      </div>
+    );
 
   return (
     <>
