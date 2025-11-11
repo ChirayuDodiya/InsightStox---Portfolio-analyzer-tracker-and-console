@@ -8,7 +8,10 @@ import { Home } from './pages/Home'
 import { Dashboard } from './pages/Dashboard';
 import { MyProfile} from './pages/MyProfile';
 import { StockDetails } from './pages/StockDetails';
+import {HelpSupport} from './pages/HelpSupport';
+import {Preference} from './pages/Preference'
 import AiInsight from './pages/AiInsight';
+import Watchlist from './pages/WatchList';
 import {createBrowserRouter,RouterProvider} from "react-router-dom";
 const router = createBrowserRouter(
   [
@@ -21,20 +24,32 @@ const router = createBrowserRouter(
       element:<Auth/>      
     },
     {
-      path:"/DashBoard",
+      path:"/dashboard",
       element:<Dashboard/>
     },
     {
-      path:"/myprofile",
+      path:"/my-profile",
       element:<MyProfile/>
     }
     ,{
-      path:"/aiInsight",
+      path:"/ai-insight",
       element:<AiInsight/>
     },
     {
-      path:"/stockdetails",
-      element:<StockDetails/>
+      path: "/stockdetails/:symbol",
+      element: <StockDetails />
+    },
+    {
+      path:"/preferences",
+      element:<Preference/>
+    },
+    {
+      path:"/help-support",
+      element:<HelpSupport/>
+    }
+    ,{
+      path:"/watchlist",
+      element:<Watchlist/>
     }
   ]
 );

@@ -28,7 +28,7 @@
 .stk-stock-info-page * {
     font-family: inherit;
 }
-     
+
 .stk-stock-head {
     display: flex;
     align-items: center;
@@ -158,11 +158,11 @@
     margin-left: 2%;
 }
 
-#heads1,
-#heads2,
-#heads3,
-#heads4,
-#heads5 {
+#stk-heads1,
+#stk-heads2,
+#stk-heads3,
+#stk-heads4,
+#stk-heads5 {
     display: block;
     margin-top: 2rem;
     font-size: 1.5rem;

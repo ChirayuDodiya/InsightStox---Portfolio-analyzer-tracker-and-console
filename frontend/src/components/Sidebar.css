@@ -1,9 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 .Sidebar {
     background-color: #0E0E0E;
@@ -12,7 +7,7 @@
     padding: 1.5rem 1.5rem;
     display: flex;
     flex-direction: column;
-    margin-top: 7rem;
+    margin-top: 2rem;
     margin-right: 1%;
     border: 4px solid #28282889;
 }
@@ -40,11 +35,13 @@
 .Sidebar h2 {
     font-size: 1.7rem;
     margin-bottom: 0.3rem;
+    font-family: 'Poppins', sans-serif;
 }
 
 .Email {
     font-size: 1rem;
-    opacity: 0.8
+    opacity: 0.8;
+    font-family: 'Poppins', sans-serif;
 }
 
 .Menu {
@@ -68,6 +65,7 @@
     cursor: pointer;
     transition: 0.3s;
     text-align: left;
+    font-family: 'Poppins', sans-serif;
 }
 
 .Menu .Sidebar-item:hover {

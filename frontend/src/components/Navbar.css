@@ -6,6 +6,7 @@
   top: 0;
   left: 0;
   width: 100%;
+  min-width:350px;
   height: 80px;
   display: flex;
   justify-content: space-between;
@@ -119,11 +120,6 @@
   animation: slideDown 0.3s ease;
   transform-origin: top right;
 }
-.popupheading {
-  display: flex;
-  gap: 10px;
-}
-
 .name-email {
   display: flex;
   flex-direction: column;

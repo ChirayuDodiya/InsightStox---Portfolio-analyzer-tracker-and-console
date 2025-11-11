@@ -1,6 +1,5 @@
 import { ChatGroq } from "@langchain/groq";
 import { ChatGoogleGenerativeAI } from "@langchain/google-genai";
-
 import {StateGraph,MessagesAnnotation } from "@langchain/langgraph";
 import {ToolNode } from "@langchain/langgraph/prebuilt";
 import { PromptTemplate } from "@langchain/core/prompts";
@@ -51,6 +50,9 @@ Follow the rules below exactly — your output must be visually clear, concise, 
 
 You should generate final output  strictly in Markdown format only.
 
+Start by Giving friendly greeting to user with his {name} and then format the following text into a well-organized financial report:
+
+{text}
 
 🪙 Formatting Rules
 
@@ -128,12 +130,49 @@ The output must be presentation-ready, balanced, and visually appealing.
 
 // Prompt template to check if user query is finance related, greeting, or non-finance
 const promptToCheckRelevance = PromptTemplate.fromTemplate(`
-You are a helpful and knowledgeable financial assistant. 
-Your job is to classify the user's query into one of the following categories:
+ou are InsightStox, a highly accurate financial query classifier.
 
-1. If the query is a casual greeting (e.g., "hi", "hello", "how are you"), respond only with "greeting".
-2. If the query is related to finance, the stock market, portfolios, companies, or investments, respond only with "finance".
-3. If the query is unrelated to finance or greetings, respond only with "non-finance".
+Your task is to classify the user's latest message into one of the three categories below.
+Carefully consider context — especially if the message is a short command like "repeat", "continue", or "explain more".
+
+Classification Rules:
+1. greeting
+
+Use this label if the message is a casual greeting, farewell, or well-being inquiry.
+Examples:
+
+"hi", "hello", "good morning", "how are you?", "hey there", "yo", "bye"
+
+2. finance
+
+Use this label if the message:
+
+Mentions stocks, investing, portfolios, companies, markets, crypto, trading, etc.
+
+Requests financial calculations, analysis, metrics, or data
+
+Is a follow-up command referring to a previous finance-related topic
+(e.g., "continue", "give example", "calculate it", "explain more", "next step")
+
+3. non-finance
+
+Use this label if the message:
+
+Is not about finance or greetings
+
+Asks about coding, math, schoolwork, health, recipes, AI, personal opinions, etc.
+
+Is a follow-up command referring to a non-finance topic
+
+Output Format:
+
+Respond only with one of the three lowercase words:
+
+greeting
+finance
+non-finance
+
+No explanation. No extra text.
 
 User Query: {user_query}
 `);
@@ -141,7 +180,9 @@ User Query: {user_query}
 // Prompt template for greeting response
 const promptToResponsedForGreet = PromptTemplate.fromTemplate(`
 You are a friendly and engaging financial assistant. 
-When the user sends a greeting, respond with a warm welcome message that encourages them to ask finance-related questions.
+When the user with name {name} sends a greeting, respond with a warm welcome message that encourages them to ask finance-related questions.
+Message should be concise and professional.add some emojis to make it more engaging.
+
 
 User Query: {user_query}
 `);
@@ -153,8 +194,11 @@ User Query: {user_query}
 async function formatOutput(state){
   try{
     const reply  = state.messages.at(-1).content;
-    const formattedPrompt = await promptForOutputFormatting.format({ text: reply });
-    console.log("Formatting output with prompt:", formattedPrompt);
+    const userDetails = state.messages.at(0).additional_kwargs?.userDetails || {};
+    console.log("Formatting output:");
+    const userName = state.messages.at(-1).name || "User";
+    const formattedPrompt = await promptForOutputFormatting.format({ text: reply ,name: userDetails.name || "User"});
+    console.log("Formatting output with prompt:");
     const res = await llm.invoke([
       { role: "system", content: formattedPrompt },
     ]);
@@ -201,8 +245,9 @@ function defaultResponse(state) {
 async function greetingResponse(state) {
   try{
   const userMessage = state.messages.at(-1).content;
-  console.log("Greeting detected:", userMessage);
-  const formattedPrompt = await promptToResponsedForGreet.format({ user_query: userMessage });
+  const userDetails = state.messages.at(0).additional_kwargs?.userDetails || {};
+  console.log("Greeting detected:");
+  const formattedPrompt = await promptToResponsedForGreet.format({ user_query: userMessage,name: userDetails.name || "User" });
   const res = await smallLLm.invoke([
     { role: "system", content: formattedPrompt },
   ]);
@@ -222,7 +267,8 @@ async function greetingResponse(state) {
 async function isRelevant(state) {
   try{
   const userMessage = state.messages.at(-1).content;
-  console.log("Checking relevance of user message:", userMessage);
+  const userDetails = state.messages.at(0).additional_kwargs?.userDetails || {};
+  console.log("Checking relevance of user message:");
   const formattedPrompt = await promptToCheckRelevance.format({ user_query: userMessage });
   const res = await smallLLm.invoke([
     { role: "system", content: formattedPrompt },
@@ -256,7 +302,7 @@ async function isRelevant(state) {
 
 // function to decide if tools should be used
 function shouldUseTools(state) {
-  console.log("Inside shouldUseTools with state:", state);
+  console.log("Inside shouldUseTools with state:");
   const lastMessage = state.messages[state.messages.length - 1];
   if(lastMessage.tool_calls && lastMessage.tool_calls.length > 0){
     console.log("Deciding to call tools...",);

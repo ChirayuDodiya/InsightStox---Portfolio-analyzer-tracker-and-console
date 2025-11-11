@@ -1,25 +1,51 @@
 import React,{useEffect,useRef, useState} from "react";
 import "../components/ChatWindow.css";
 import axios from "axios";
-// Renders Markdown text (like **bold**, _italic_, code blocks) as proper HTML inside React.
 import ReactMarkDown from 'react-markdown';
-// A plugin for react-markdown that adds GitHub-style Markdown features (tables, task lists, strikethrough, autolinks).
 import remarkGfm from 'remark-gfm';
-// Convert emoji shortnames like :rocket: to Unicode emoji
 import remarkEmoji from 'remark-emoji';
+import { useAppContext } from "../context/AppContext";
+import { RingLoader } from "react-spinners";
+
+
 const ChatWindow = () => {
+// ----------------------------------------------------------state variables--------------------------------------------------------
     const [messages,setMessages] = useState([]);
     const [input,setInput] = useState("");
     const [chatStart,setChatStart] = useState(false);
+    const { userDetails } = useAppContext(); 
     const chatEndRef = useRef(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const inputRef = useRef(null);
 
-    useEffect(()=>{
+// ----------------------------------------------------------useEffects--------------------------------------------------------
+   // Scroll to the bottom of the chat when a new message is added
+useEffect(() => {
         chatEndRef.current?.scrollIntoView({behavior : "smooth"});
     },[messages])
-    
+
+// Handle mobile keyboard opening - scroll input into view
+useEffect(() => {
+    const handleFocus = () => {
+        setTimeout(() => {
+            inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 300); // Delay to allow keyboard to open
+    };
+
+    const inputElement = inputRef.current;
+    if (inputElement) {
+        inputElement.addEventListener('focus', handleFocus);
+        return () => inputElement.removeEventListener('focus', handleFocus);
+    }
+}, []);
+
+// ----------------------------------------------------------functions--------------------------------------------------------
+// Function to handle sending message
     const handleSend = async ()=>{
         const text = input.trim();
         if(!text)return;
+        setIsLoading(true);
+        setChatStart(true);
         setInput("");
         const typingMsg = { id: "typing", text: "Bot is typing... ", sender: "bot", typing: true };
         const userMsg = {id:Date.now(),text, sender:"user"};
@@ -27,31 +53,36 @@ const ChatWindow = () => {
         try{
                 const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/ai-insight/sendMessage",{
                 message : userMsg,
+                withCredentials: true,
             });
-            console.log("Response from backend:", res);
-            const markdownText = res.data.reply;
-            console.log("Backend markdownText:", markdownText);
-            const replyText = <ReactMarkDown remarkPlugins={[remarkGfm, remarkEmoji]}>{markdownText}</ReactMarkDown>;
+            
+            const replyText = <ReactMarkDown remarkPlugins={[remarkGfm, remarkEmoji]}>{res.data.reply}</ReactMarkDown>;
             setMessages((prev) => [...prev.filter((msg)=>msg.id !== "typing"), { id: Date.now(), text: replyText, sender: 'bot' }]);
+            setIsLoading(false);
         }catch(err){
             console.error("Error sending message:", err);
             setMessages((prev) => [...prev.filter((msg) => msg.id !== "typing"), { 
                 text: err.message, 
                 sender: 'bot',
                 typing: false
-                }]);
+            }]);
+            setIsLoading(false);
         }
     }
+// Function to handle Enter key press
     const handleKeyDown = (e) => {
         if(e.key === "Enter") handleSend();
     }
+    
+    
 
+// ----------------------------------------------------------JSX--------------------------------------------------------
   return (
-    <div className="chat-window">    
+    <div className="chat-window">
+
     {!chatStart && (
         <div className="chat-welcome-message">
-                    {/* here take name from backend */}
-                    <h2>Hello, <span className="user-name">Ayush!</span></h2>
+                    <h2>Hello, <span className="user-name">{userDetails?.name?.split(" ")[0]  || 'Guest'}!</span></h2>
                     <h3>How can I help you Today?</h3>
         </div>
     )}
@@ -64,9 +95,17 @@ const ChatWindow = () => {
                 <div ref={chatEndRef} />
         </div>
 
-        <div className="chat-input-area">
-                <input type="text" value={input} onChange={(e) => {setInput(e.target.value),setChatStart(true)}} onKeyDown={handleKeyDown} placeholder="Type a message..." className="chat-input"/>
-                <button className="send-btn" onClick={handleSend}>Send</button>
+        <div className={`chat-input-area ${isLoading ? "loading" : ""}`}>
+                <input 
+                    ref={inputRef}
+                    type="text" 
+                    value={input} 
+                    onChange={(e) => {setInput(e.target.value)}} 
+                    onKeyDown={handleKeyDown} 
+                    placeholder="Type a message..." 
+                    className="chat-input"
+                />
+                <button className="send-btn" onClick={handleSend}>{isLoading ? <RingLoader color="#000000" size={25}/> : <>Send</>}</button>
         </div>
     </div>
   )

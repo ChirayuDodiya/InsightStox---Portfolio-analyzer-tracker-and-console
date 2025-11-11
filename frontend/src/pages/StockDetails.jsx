@@ -60,7 +60,7 @@ export const StockDetails = () => {
 
     return (
         <div className="stk-main-page-for-stock">
-            <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="dashboard"
+            <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="stock-details"
                 profileData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com", }} />
             <DashboardHeader darkMode={darkMode} />
             <div className="stk-empty"></div>
@@ -341,8 +341,8 @@ export const StockDetails = () => {
                                 value={stockData.cashFlow?.freeCashFlow}
                             />
                         </div>
-                        <div className="info-right-lower">
-                            <div className="fisc-info">Fiscal Information</div>
+                        <div className="stk-info-right-lower">
+                            <div className="stk-fisc-info">Fiscal Information</div>
 
                             <FieldValue
                                 className="stk-info"

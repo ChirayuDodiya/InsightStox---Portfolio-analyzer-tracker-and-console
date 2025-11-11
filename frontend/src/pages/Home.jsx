@@ -37,7 +37,7 @@ export const Home = () => {
   }
   return (
       <div className="home-main">
-        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="home" />
+        <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="/" />
 
         <div className="main_page">
 
