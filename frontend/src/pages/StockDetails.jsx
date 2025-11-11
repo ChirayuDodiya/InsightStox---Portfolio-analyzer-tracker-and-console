@@ -7,10 +7,12 @@ import { FieldValue } from "../components/FieldValue.jsx";
 import { MarketNewsItem } from "../components/MarketMovers/MarketMovers.jsx";
 import './StockDetails.css';
 import { useNavigate, useParams } from "react-router-dom";
+import { useAppContext } from "../context/AppContext.jsx";
 
 export const StockDetails = () => {
     const BASE_URL = import.meta.env.VITE_BACKEND_LINK;
     const [darkMode, setDarkMode] = useState(true);
+    const {userDetails} = useAppContext();
     const [buyStock, handleBuyStock] = useState("");
     const [sellStock, handleSellStock] = useState("");
     const [addedStock, handleAdd] = useState("");
@@ -29,13 +31,128 @@ export const StockDetails = () => {
 
     console.log(symbol);
 
+    const roundTo = (num, decimals = 2) => {
+        if (num === null || num === undefined || isNaN(Number(num))) return "--";
+        return Number.parseFloat(num).toFixed(decimals);
+    };
+
+    const formatPercentage = (num, decimals = 2) => {
+        if (num === null || num === undefined || isNaN(Number(num))) return "--";
+        const val = Number(num);
+        const percent = Math.abs(val) < 1 ? val * 100 : val;
+        return percent.toFixed(decimals);
+    };
+
+    const formatLargeNumber = (num) => {
+        if (num === null || num === undefined || isNaN(Number(num))) return "--";
+
+        const val = Number(num);
+        const absNum = Math.abs(val);
+        if (absNum >= 1e12) return (val / 1e12).toFixed(2) + "T";
+        if (absNum >= 1e9) return (val / 1e9).toFixed(2) + "B";
+        if (absNum >= 1e6) return (val / 1e6).toFixed(2) + "M";
+        if (absNum >= 1e3) return (val / 1e3).toFixed(2) + "K";
+        return val.toFixed(2);
+    };
+
+    const formatSmallNumber = (num) => {
+        if (num === null || num === undefined || isNaN(Number(num))) return "--";
+        const val = Number.parseFloat(num);
+        if (Math.abs(val) < 1e-3) return "0.00";
+        return val.toFixed(2);
+    };
+
+    const formatDate = (isoString) => {
+        if (!isoString) return "--";
+        try {
+            const date = new Date(isoString);
+            return date.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            });
+        } catch {
+            return "--";
+        }
+    };
+
+
     useEffect(() => {
         const getStockDetails = async () => {
             try {
                 const res = await axios.get(`${BASE_URL}/api/v1/dashBoard/stockDetails?ticker=${symbol}`,
                     { withCredentials: true });
 
-                setStockData(res.data?.data || res.data)
+                const raw = res?.data.data || res.data;
+
+                setStockData({
+                    priceInfo: {
+                        currentPrice: roundTo(raw.priceInfo?.currentPrice),
+                        previousClose: roundTo(raw.priceInfo?.previousClose),
+                        open: roundTo(raw.priceInfo?.open),
+                        dayHigh: roundTo(raw.priceInfo?.dayHigh),
+                        dayLow: roundTo(raw.priceInfo?.dayLow),
+                        volume: formatLargeNumber(raw.priceInfo?.volume),
+                        fiftytwoWeekHigh: roundTo(raw.priceInfo?.fiftytwoWeekHigh),
+                        fiftyTwoWeekLow: roundTo(raw.priceInfo?.fiftyTwoWeekLow),
+                        marketCap: formatLargeNumber(raw.priceInfo?.marketCap),
+                        change: roundTo(raw.priceInfo?.change),
+                        changePercentage: formatPercentage(raw.priceInfo?.changePercentage),
+                    },
+                    fundamentals: {
+                        roceTTM: formatPercentage(raw.fundamentals?.roceTTM),
+                        peRatioTTM: formatSmallNumber(raw.fundamentals?.peRatioTTM),
+                        pbRatio: formatSmallNumber(raw.fundamentals?.pbRatio),
+                        industryPE: formatSmallNumber(raw.fundamentals?.industryPE),
+                        debtToEquity: formatSmallNumber(raw.fundamentals?.debtToEquity),
+                        roeTTM: formatPercentage(raw.fundamentals?.roeTTM),
+                        epsTTM: formatSmallNumber(raw.fundamentals?.epsTTM),
+                        dividendYield: formatPercentage(raw.fundamentals?.dividendYield),
+                        bookValue: formatSmallNumber(raw.fundamentals?.bookValue),
+                        faceValue: formatSmallNumber(raw.fundamentals?.faceValue),
+                    },
+                    financials: {
+                        revenueTTM: formatLargeNumber(raw.financials?.revenueTTM),
+                        revenuePerShare: formatSmallNumber(raw.financials?.revenuePerShare),
+                        earningGrowthQuater: formatPercentage(raw.financials?.earningGrowthQuater),
+                        grossProfitTTM: formatLargeNumber(raw.financials?.grossProfitTTM),
+                        ebitda: formatLargeNumber(raw.financials?.ebitda),
+                        netIncome: formatLargeNumber(raw.financials?.netIncome),
+                        dilutedEPS: formatSmallNumber(raw.financials?.dilutedEPS),
+                    },
+                    balenceSheet: {
+                        totalCash: formatLargeNumber(raw.balenceSheet?.totalCash),
+                        totalCashPerShare: formatSmallNumber(raw.balenceSheet?.totalCashPerShare),
+                        totalDebt: formatLargeNumber(raw.balenceSheet?.totalDebt),
+                        deptToEquity: formatSmallNumber(raw.balenceSheet?.deptToEquity),
+                        currentRatioMRQ: formatSmallNumber(raw.balenceSheet?.currentRatioMRQ),
+                        bookValuePerShare: formatSmallNumber(raw.balenceSheet?.bookValuePerShare),
+                    },
+                    profitability: {
+                        profitMargin: formatPercentage(raw.profitability?.profitMargin),
+                        operatingMargin: formatPercentage(raw.profitability?.operatingMargin),
+                        returnOnAssets: formatPercentage(raw.profitability?.returnOnAssets),
+                        returnOnEquity: formatPercentage(raw.profitability?.returnOnEquity),
+                    },
+                    cashFlow: {
+                        operatingCashFlow: formatLargeNumber(raw.cashFlow?.operatingCashFlow),
+                        freeCashFlow: formatLargeNumber(raw.cashFlow?.freeCashFlow),
+                    },
+                    fiscalInformation: {
+                        fiscalYearEnd: formatDate(raw.fiscalInformation?.fiscalYearEnd),
+                        MRQ: formatDate(raw.fiscalInformation?.MRQ),
+                    },
+                    Company: {
+                        longname: raw.Company?.longname || "--",
+                        shortname: raw.Company?.shortname || "--",
+                        fulltimeemployees: raw.Company?.fulltimeemployees || "--",
+                        sector: raw.Company?.sector || "--",
+                        industry: raw.Company?.industry || "--",
+                        longdescription: raw.Company?.longdescription || "--",
+                        website: raw.Company?.website || "--",
+                    },
+                });
+
             }
             catch (error) {
                 console.error("Error fetching stock details:", error);
@@ -61,22 +178,20 @@ export const StockDetails = () => {
     return (
         <div className="stk-main-page-for-stock">
             <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="stock-details"
-                profileData={{ name: "Ayush Dhamecha", email: "ma**@gmail.com", }} />
+                profileData={{ name: userDetails?.name , email: userDetails?.email }} />
             <DashboardHeader darkMode={darkMode} />
             <div className="stk-empty"></div>
             <div className="stk-stock-info-page">
 
                 <div className="stk-stock-head">
-                    <img className="stk-stock-icon" src={symbol} alt="Stock image" />
-                    <button className="stk-buy" val="Buy" onClick={handleBuyStock}>Buy</button>
-                    <button className="stk-sell" val="Sell" onClick={handleSellStock}>Sell</button>
-                    <button className="stk-add-watchlist" val="Add" onClick={handleAdd}>Add to watchlist</button>
+                    <div className="stk-stock-name">{symbol}</div>
+                    <button className="stk-add" value="Add" onClick={handleBuyStock}>Add</button>
+                    <button className="stk-rmv" value="Remove" onClick={handleSellStock}>Remove</button>
+                    <button className="stk-add-watchlist" val="Add-w" onClick={handleAdd}>Add to watchlist</button>
                 </div>
 
-                <div className="stk-stock-name">{symbol}</div>
-
                 <div className="stk-stock-price">
-                    <div className="stk-abs">{stockData.priceInfo?.currentPrice ?? stockData.priceInfo?.previousClose ?? "--"}</div>
+                    <div className="stk-abs">{stockData.priceInfo?.currentPrice ?? stockData.priceInfo?.previousClose}</div>
                     <div
                         className="stk-percentage"
                         style={{
@@ -88,8 +203,8 @@ export const StockDetails = () => {
                                     : "#FFF",   
                         }}
                     >
-                        {stockData?.priceInfo?.change ?? "--"} (
-                        {stockData?.priceInfo?.changePercentage ?? "--"}%)
+                        {stockData?.priceInfo?.change > 0 ? `+${stockData?.priceInfo?.change}` : stockData?.priceInfo?.change} (
+                        {stockData?.priceInfo?.changePercentage > 0 ? `+${stockData?.priceInfo?.changePercentage}%` : `${stockData?.priceInfo?.changePercentage}%`})
                     </div>
                 </div>
                 <div className="stk-stock-detail-navbar">
@@ -109,13 +224,13 @@ export const StockDetails = () => {
                     <div className="stk-price-range">
                         <div className="stk-range-field">
                             <span className="stk-low-f">Today's low:</span>
-                            <span className="stk-low-v">{stockData.priceInfo?.dayLow ?? "--"}</span>
+                            <span className="stk-low-v">{stockData.priceInfo?.dayLow}</span>
                         </div>
 
                         <hr />
                         <div className="stk-range-val">
                             <span className="stk-high-f">Today's high:</span>
-                            <span className="stk-high-v">{stockData.priceInfo?.dayHigh ?? "--"}</span>
+                            <span className="stk-high-v">{stockData.priceInfo?.dayHigh}</span>
                         </div>
 
                     </div>
@@ -125,40 +240,36 @@ export const StockDetails = () => {
                         <FieldValue
                             className="stk-info"
                             fieldname="Previous Close"
-                            value={stockData.priceInfo?.previousClose ?? "--"}
+                            value={stockData.priceInfo?.previousClose}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="Open"
-                            value={stockData.priceInfo?.open ?? "--"}
+                            value={stockData.priceInfo?.open}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="Volume"
-                            value={stockData.priceInfo?.volume ?? "--"}
+                            value={stockData.priceInfo?.volume}
                         />
                     </div>
                     <div className="stk-info-right">
                         <FieldValue
                             className="stk-info"
                             fieldname={`Day's range`}
-                            value={(stockData.priceInfo?.dayLow && stockData.priceInfo?.dayHigh) ? `${stockData.priceInfo.dayLow} - ${stockData.priceInfo.dayHigh}` : (stockData.priceInfo?.dayLow ?? stockData.priceInfo?.dayHigh ?? "--")}
+                            value={(stockData.priceInfo?.dayLow && stockData.priceInfo?.dayHigh) ? `${stockData.priceInfo.dayLow} - ${stockData.priceInfo.dayHigh}` : (stockData.priceInfo?.dayLow ?? stockData.priceInfo?.dayHigh)}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="52 week range"
                             value={stockData.priceInfo?.fiftyTwoWeekLow && stockData.priceInfo?.fiftytwoWeekHigh
                                 ? `${stockData.priceInfo.fiftyTwoWeekLow} - ${stockData.priceInfo.fiftytwoWeekHigh}`
-                                : (stockData.priceInfo?.fiftytwoWeekHigh ?? "--")}
+                                : (stockData.priceInfo?.fiftytwoWeekHigh)}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="Market Cap (intraday)"
-                            value={
-                                stockData.priceInfo?.marketCap
-                                    ? Math.round(stockData.priceInfo.marketCap * 100) / 100
-                                    : "--"
-                            }
+                            value={stockData.priceInfo?.marketCap}
                         />
                     </div>
                 </div>
@@ -169,27 +280,27 @@ export const StockDetails = () => {
                         <FieldValue
                             className="stk-info"
                             fieldname="ROCE (TTM)"
-                            value={stockData.fundamentals?.roceTTM ?? "--"}
+                            value={stockData.fundamentals?.roceTTM}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="P/E Ratio (TTM)"
-                            value={stockData.fundamentals?.peRatioTTM ?? "--"}
+                            value={stockData.fundamentals?.peRatioTTM}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="P/B Ratio"
-                            value={stockData.fundamentals?.pbRatio ?? "--"}
+                            value={stockData.fundamentals?.pbRatio}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="Industry P/E"
-                            value={stockData.fundamentals?.industryPE ?? "--"}
+                            value={stockData.fundamentals?.industryPE}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="Debt to Equity"
-                            value={stockData.fundamentals?.debtToEquity ?? "--"}
+                            value={stockData.fundamentals?.debtToEquity}
                         />
 
                     </div>
@@ -197,22 +308,22 @@ export const StockDetails = () => {
                         <FieldValue
                             className="stk-info"
                             fieldname="ROE"
-                            value={stockData.fundamentals?.roeTTM ?? "--"}
+                            value={stockData.fundamentals?.roeTTM}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="EPS (TTM)"
-                            value={stockData.fundamentals?.epsTTM ?? "--"}
+                            value={stockData.fundamentals?.epsTTM}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="Dividend Yield"
-                            value={stockData.fundamentals?.dividendYield ?? "--"}
+                            value={stockData.fundamentals?.dividendYield}
                         />
                         <FieldValue
                             className="stk-info"
                             fieldname="Book Value"
-                            value={stockData.fundamentals?.bookValue ?? "--"}
+                            value={stockData.fundamentals?.bookValue}
                         />
                         <FieldValue
                             className="stk-info"
@@ -232,42 +343,42 @@ export const StockDetails = () => {
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Revenue (TTM)"
-                                value={stockData.financials?.revenueTTM ?? "--"}
+                                value={stockData.financials?.revenueTTM}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Revenue Per Share (TTM)"
-                                value={stockData.financials?.revenuePerShare ?? "--"}
+                                value={stockData.financials?.revenuePerShare}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Quarterly Revenue Growth (YOY)"
-                                value={stockData.financials?.earningGrowthQuater ?? "--"}
+                                value={stockData.financials?.earningGrowthQuater}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Gross Profit (TTM)"
-                                value={stockData.financials?.grossProfitTTM ?? "--"}
+                                value={stockData.financials?.grossProfitTTM}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="EBITDA"
-                                value={stockData.financials?.ebitda ?? "--"}
+                                value={stockData.financials?.ebitda}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Net Income Available to Common (TTM)"
-                                value={stockData.financials?.netIncome ?? "--"}
+                                value={stockData.financials?.netIncome}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Diluted EPS (TTM)"
-                                value={stockData.financials?.dilutedEPS ?? "--"}
+                                value={stockData.financials?.dilutedEPS}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Quarterly Earnings Growth (YOY)"
-                                value={stockData.financials?.earningGrowthQuater ?? "--"}
+                                value={stockData.financials?.earningGrowthQuater}
                             />
 
                         </div>
@@ -277,19 +388,19 @@ export const StockDetails = () => {
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Profit Margin"
-                                value={stockData.profitability.profitMargin ?? "--"} />
+                                value={stockData.profitability.profitMargin} />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Operating Margin (TTM)"
-                                value={stockData.profitability.operatingMargin ?? "--"} />
+                                value={stockData.profitability.operatingMargin} />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Return on Assets (TTM)"
-                                value={stockData.profitability.returnOnAssets ?? "--"} />
+                                value={stockData.profitability.returnOnAssets} />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Return on Equity (TTM)"
-                                value={stockData.profitability.returnOnEquity ?? "--"} />
+                                value={stockData.profitability.returnOnEquity} />
                         </div>
                     </div>
                     <div className="stk-info-right">
@@ -299,32 +410,32 @@ export const StockDetails = () => {
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Total Cash (MRQ)"
-                                value={stockData.balenceSheet?.totalCash ?? "--"}
+                                value={stockData.balenceSheet?.totalCash}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Total Cash Per Share (MRQ)"
-                                value={stockData.balenceSheet?.totalCashPerShare ?? "--"}
+                                value={stockData.balenceSheet?.totalCashPerShare}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Total Debt (MRQ)"
-                                value={stockData.balenceSheet?.totalDebt ?? "--"}
+                                value={stockData.balenceSheet?.totalDebt}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Total Debt / Equity (MRQ)"
-                                value={stockData.balenceSheet?.deptToEquity ?? "--"}
+                                value={stockData.balenceSheet?.deptToEquity}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Current Ratio (MRQ)"
-                                value={stockData.balenceSheet?.currentRatioMRQ ?? "--"}
+                                value={stockData.balenceSheet?.currentRatioMRQ}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Book Value Per Share (MRQ)"
-                                value={stockData.balenceSheet?.bookValuePerShare ?? "--"}
+                                value={stockData.balenceSheet?.bookValuePerShare}
                             />
                         </div>
                         <div className="stk-info-right-middle">
@@ -347,12 +458,12 @@ export const StockDetails = () => {
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Fiscal Year Ends"
-                                value={stockData.fiscalInformation?.fiscalYearEnd ?? "--"}
+                                value={stockData.fiscalInformation?.fiscalYearEnd}
                             />
                             <FieldValue
                                 className="stk-info"
                                 fieldname="Most Recent Quarter (MRQ)"
-                                value={stockData.fiscalInformation?.MRQ ?? "--"}
+                                value={stockData.fiscalInformation?.MRQ}
                             />
                         </div>
                     </div>
@@ -386,14 +497,14 @@ export const StockDetails = () => {
 
                 <div id="heads5">About Company</div>
                 <div className="stk-about-company">
-                    <h3>{stockData.Company?.longname} ({stockData.Company?.shortname}) </h3>
+                    <h3>{stockData.Company?.longname} ({symbol}) </h3>
                     <div className="stk-sub-about">
                         <div className="stk-sub-info">
                             <span id="stk-span1">{stockData.Company.fulltimeemployees}</span>
                             <span id="stk-span2">Full-time employees</span>
                         </div>
                         <div className="stk-sub-info">
-                            <span id="stk-span1">{stockData.fiscalInformation?.fiscalYearEnd ?? "--"}</span>
+                            <span id="stk-span1">{stockData.fiscalInformation?.fiscalYearEnd}</span>
                             <span id="stk-span2">Fiscal year ends</span>
                         </div>
                         <div className="stk-sub-info">
