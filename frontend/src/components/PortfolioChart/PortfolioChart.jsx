@@ -149,7 +149,6 @@ export default function PortfolioChart() {
       if (!data?.daily) throw new Error("Backend data missing.");
 
       const daily = data.daily;
-      console.log(daily);
 
       let labels = [];
       let values = [];

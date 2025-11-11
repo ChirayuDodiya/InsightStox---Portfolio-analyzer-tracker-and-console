@@ -103,7 +103,6 @@ const MarketMovers = () => {
           }));
 
           setMarketNewsData(formattedNews);
-          console.log(formattedNews);
         }
 
 
