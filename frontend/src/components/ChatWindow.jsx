@@ -47,8 +47,10 @@ useEffect(() => {
         setIsLoading(true);
         setChatStart(true);
         setInput("");
+        let screenWidth = window.innerWidth;
+        console.log("Screen Width:", screenWidth);
         const typingMsg = { id: "typing", text: "Bot is typing... ", sender: "bot", typing: true };
-        const userMsg = {id:Date.now(),text, sender:"user"};
+        const userMsg = {id:Date.now(),text, sender:"user",screenWidth: screenWidth};
         setMessages((prev) => [...prev, userMsg, typingMsg]);
         try{
                 const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/ai-insight/sendMessage",{
@@ -105,7 +107,7 @@ useEffect(() => {
                     placeholder="Type a message..." 
                     className="chat-input"
                 />
-                <button className="send-btn" onClick={handleSend}>{isLoading ? <RingLoader color="#000000" size={25}/> : <>Send</>}</button>
+                <button className="send-btn" onClick={handleSend}>{isLoading ? <RingLoader color="#000000" size={20}/> : <>Send</>}</button>
         </div>
     </div>
   )

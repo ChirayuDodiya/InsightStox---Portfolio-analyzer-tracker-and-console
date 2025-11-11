@@ -79,9 +79,14 @@
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
-    transition: box-shadow 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
-
+.backToHome:hover {
+    box-shadow: 0 6px 20px rgba(0, 200, 83, 0.6);
+}
+.backToHome:active{
+    transform:  scale(0.96);
+}
 .backToHome i{
     font-size: 0.8rem;
 }

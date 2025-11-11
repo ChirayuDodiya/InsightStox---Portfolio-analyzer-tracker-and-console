@@ -1,6 +1,5 @@
 import  app  from "../../utils/agent.js";
 
-
 // -------------------------------------------------sendMessage controller----------------------------------------
 export const sendMessage = async (req, res) => {
     try{
@@ -20,9 +19,10 @@ export const sendMessage = async (req, res) => {
         // if(!userDetails.emailId){
         //     return res.status(500).json({message:"emailid is absent"});
         // }
+        // console.log("Message received in controller:",message.screenWidth );
         if(!message) return res.status(400).json({error : "message is required"});
         const result = await app.invoke({
-            messages : [{ role: "user", content: message.text,additional_kwargs: { userDetails: userDetails } }]
+            messages : [{ role: "user", content: message.text,additional_kwargs: { userDetails: userDetails ,screenWidth: message.screenWidth} }]
         },{
             configurable : {
                 thread_id : userDetails.emailId,

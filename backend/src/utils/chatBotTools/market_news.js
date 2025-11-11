@@ -104,7 +104,7 @@ export const Market_news_tool = tool(
                 }
             }
         console.log("Market news results:", newsResults);
-        return JSON.stringify(newsResults.slice(7000));
+        return JSON.stringify(newsResults);
 
     },{
         name: "market_news",
