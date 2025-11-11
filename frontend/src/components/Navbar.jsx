@@ -89,11 +89,11 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
             </Link>
           )}
 
-          <div className="profile_btn">
+          {pageType === "dashboard" && <div className="profile_btn">
             <button onClick={handleProfileClick}>
               <img src={profileicon} alt="Profile" style={checkPageType() ? {visibility: "visible"} : {visibility: "hidden"}}/>
             </button>
-          </div>
+          </div>}
 
           <div className="toggle_btn">
             <button style = {{display : "none"}}onClick={() => setDarkMode(!darkMode)}>
