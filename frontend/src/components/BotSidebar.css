@@ -224,7 +224,7 @@
 /* Extra large (desktop) */
 @media (min-width:1200px) and (max-width:1599px) {
 .bot-sidebar{ 
-  width: 350px;
+  width: 280px;
 }
 .bot-sidebar.close {
   width: 60px; /* explicitly set width so the sidebar shrinks */
@@ -256,7 +256,7 @@
   text-wrap: wrap;
 }
 .chatbot-feature > h2{
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-align: center;
   font-weight: 650;
 }
@@ -270,7 +270,7 @@
 }
 .chatbot-f  > p{
   color: #999999;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   padding: 5px 4px;
 }
 .chatbot-f{
@@ -283,13 +283,13 @@
   transition: all 0.3s ease;
 }
 .chatbot-f  > h4{
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 0px 4px;
   font-weight: 600;
 }
 .chatbot-feature > p{
   color: #999999;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   text-align: center;
 }
 
