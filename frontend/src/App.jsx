@@ -17,7 +17,7 @@ const router = createBrowserRouter(
   [
     {
       path:"/",
-      element:<AiInsight/>
+      element:<Home/>
     },
      {
       path:"/auth",
