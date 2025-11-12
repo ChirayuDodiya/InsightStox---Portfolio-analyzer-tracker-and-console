@@ -85,13 +85,10 @@
     box-shadow: 0 6px 20px rgba(0, 200, 83, 0.6);
 }
 .backToHome:active{
-    transform:  scale(0.96);
+    transform:  scale(0.9);
 }
 .backToHome i{
     font-size: 0.8rem;
-}
-.backToHome:hover {
-    box-shadow: 1px 1px 12px rgb(0, 0, 0);
 }
 
 .right_inner_div {
@@ -203,7 +200,7 @@
     font-family: 'Inter', sans-serif;
     cursor: pointer;
     margin-top: 1.2rem;
-    font-weight: 550;
+    font-weight: 600;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 2px 8px rgba(0, 200, 83, 0.2);
 }
