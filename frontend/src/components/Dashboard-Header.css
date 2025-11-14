@@ -227,10 +227,34 @@
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  cursor: pointer; 
+  cursor: pointer;
+  position: relative;
 }
 .result-item:hover{ 
   background: rgba(0,0,0,0.05); 
+}
+.add-to-watchlist-btn {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+.add-to-watchlist-btn:hover {
+  background: rgba(0, 200, 83, 0.2);
+  border-color: #00C853;
+  transform: scale(1.1);
+}
+.add-to-watchlist-btn i {
+  font-size: 16px;
 }
 .result-meta { 
   display: flex; 

@@ -13,7 +13,7 @@ axios.defaults.withCredentials = true;
 const BACKEND_URL = import.meta.env.VITE_BACKEND_LINK;
 const STOCK_API = `${BACKEND_URL}/api/v1/dashboard/starter`;
 
-const DashboardHeader = () => {
+const DashboardHeader = ({ isWatchlistPage = false, onAddToWatchlist = null }) => {
   const [stocks, setStocks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -89,6 +89,13 @@ const DashboardHeader = () => {
       setIsSearchActive(false);
       setQuery('');
       setSearchResults([]);
+    };
+    
+    const handleAddStock = async (e, symbol) => {
+      e.stopPropagation();
+      if (onAddToWatchlist) {
+        await onAddToWatchlist(symbol);
+      }
     };
 
   useEffect(() => {
@@ -221,6 +228,15 @@ const DashboardHeader = () => {
                     <div className="result-meta">
                       <span className="result-name">{item.longname || item.shortname}</span>
                     </div>
+                    {isWatchlistPage && onAddToWatchlist && (
+                      <button
+                        className="add-to-watchlist-btn"
+                        onClick={(e) => handleAddStock(e, item.symbol)}
+                        aria-label={`Add ${item.symbol} to watchlist`}
+                      >
+                        <i className="pi pi-plus"></i>
+                      </button>
+                    )}
                   </li>
                 ))}
               </ul>

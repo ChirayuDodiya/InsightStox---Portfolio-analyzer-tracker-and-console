@@ -97,6 +97,49 @@
     border: 3px solid #1e1e1e;
 }
 
+/* Empty watchlist state uses same card as table */
+.watchlist-empty-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.watchlist-empty-state {
+    width: 100%;
+    min-height: 260px; /* roughly height of skeleton table (~4 rows) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem 1rem;
+    gap: 1rem;
+}
+
+.watchlist-empty-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #cccccc;
+}
+
+.add-stocks-btn {
+    margin-top: 0.25rem;
+    padding: 0.6rem 1.5rem;
+    border-radius: 999px;
+    border: 1px solid #00c853;
+    background-color: transparent;
+    color: #00c853;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.add-stocks-btn:hover {
+    background-color: #00c853;
+    color: #000;
+}
+
 .watchlist-table {
     width: 100%;
     border-collapse: separate !important;
@@ -265,7 +308,9 @@ padding-right:0.75rem;
     color: #fff;
     border-color: #c81b00;
 }
-
+.watchlist-hidden{
+    display:none;
+}
 /* Filter Modal */
 .filter-modal-overlay {
     position: fixed;
@@ -413,6 +458,7 @@ padding-right:0.75rem;
     cursor: pointer;
     font-size: 0.95rem;
 }
+
 .price-range{
     width:280px;
 }
@@ -534,6 +580,12 @@ padding-right:0.75rem;
     border-color: #00c853;
 }
 
+.no-results-row .no-results-cell {
+  vertical-align: middle;          /* vertical center inside tall row */
+  padding: 3.5rem 1rem;            /* visually about 3–4 normal rows */
+  display: table-cell !important;  /* override flex display on td:last-child */
+}
+
 /* Skeleton loading */
 .skeleton {
   position: relative;
@@ -551,4 +603,33 @@ padding-right:0.75rem;
 }
 @keyframes skeleton-shimmer {
   100% { transform: translateX(100%); }
+}
+@media (max-width: 470px) {
+    .filter-option{
+        gap:0.5rem;
+    }
+    .filter-option label {
+        font-size: 0.75rem;
+    }
+    .filter-option input[type="radio"],
+    .filter-option input[type="checkbox"] {
+        height:16px;
+        width:16px;
+    }
+    .filter-option input[type="radio"]:checked::after{
+        width:8px;
+        height:8px;
+    }
+    .filter-options-sortby{
+        gap:0.5rem;
+    }
+
+    /* .price-input-group input {
+        width: 100px;
+    } */
+        .price-range{
+            width:100%;
+            max-width:280px;
+
+        }
 }
