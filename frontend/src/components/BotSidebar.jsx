@@ -41,12 +41,8 @@ const BotSidebar = () => {
               <p>Get insights into your portfolio’s value, gains, and performance.</p>
             </div>
             <div className="chatbot-f2 chatbot-f">
-              <h4>Stock Data Lookup</h4>
-              <p>View live stock prices and key financial metrics instantly.</p>
-            </div>
-            <div className="chatbot-f3 chatbot-f">
-              <h4>Risk & Diversification Check</h4>
-              <p>Check if your portfolio is balanced and risk-free.</p>
+              <h4>Portfolio Risk Analyzer</h4>
+              <p>Evaluate the risk level of your portfolio based on volatility, concentration, beta, and diversification.</p>
             </div>
             <div className="chatbot-f4 chatbot-f">
               <h4>Market News & Sentiment</h4>

@@ -5,18 +5,17 @@ import {ToolNode } from "@langchain/langgraph/prebuilt";
 import { PromptTemplate } from "@langchain/core/prompts";
 // import { ai_stock_suggestion_tool } from "./chatBotTools/ai_stock_suggestion.js";
 import { Market_news_tool } from "./chatBotTools/market_news.js";
-// import { Risk_analysis_tool } from "./chatBotTools/risk_analysis.js";
+import { risk_analysis_tool } from "./chatBotTools/riskAnalysis.js";
 import  {Portfolio_analysis_tool}  from "./chatBotTools/portfolio_analysis.js";
 import { MemorySaver } from "@langchain/langgraph";
 
 import dotenv from "dotenv";
-import { ca } from "zod/v4/locales";
 dotenv.config();
 const checkPointer = new MemorySaver();
 
 
 //Tool list
-const tools = [Portfolio_analysis_tool,Market_news_tool];
+const tools = [Portfolio_analysis_tool,Market_news_tool,risk_analysis_tool];
 const toolNode = new ToolNode(tools);
 
 /** ---------------------------------------------------------LLM initialization------------------------------------------------------------------------------------- */
@@ -27,7 +26,7 @@ const llm = new ChatGroq({
   }).bindTools(tools);
 ///initialize smaller llm for relevance checking and greeting response
 const smallLLm = new ChatGroq({
-    model: "llama-3.3-70b-versatile",
+    model: "llama-3.1-8b-instant",
     temperature: 0, 
   });
 

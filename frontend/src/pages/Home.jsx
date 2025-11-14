@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import home_background from "../assets/home-page-bg.jpg";
 import dashboard_background from "../assets/desh_board.png";
@@ -13,7 +13,8 @@ import featurelogo1 from "../assets/featuredivlogo1.png"
 import featurelogo2 from "../assets/featuredivlogo2.png"
 import featurelogo3 from "../assets/featuredivlogo3.png"
 import featurelogo4 from "../assets/featuredivlogo4.png"
-import {Link} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import Navbar from "../components/Navbar.jsx";
 import { useAppContext } from "../context/AppContext";
 
@@ -29,12 +30,31 @@ export const Home = () => {
   function toggleArrow(index) { 
     setOpenIndex(openIndex === index ? 0 : index)
   }
-  
   function CardClick(cardNumber) {
     if (window.innerWidth <= 768) return; 
     setExpandedCard(cardNumber);
   }
+  async function checkToken() {
+    try {
+      console.log("Checking token validity...");
+      const res = await axios.get(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/checkToken");
+      return Boolean(res?.data?.success);
+    } catch (err) {
+      console.error("Error checking token:", err);
+      return false;
+    }
+  }
+  /*----------------------------------------useEffect----------------------------------------------------------*/
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    (async () => {
+      const valid = await checkToken();
+      if (valid) navigate("/dashboard");
+    })();
+  }, []);
   return (
+
       <div className="home-main">
         <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="/" />
 

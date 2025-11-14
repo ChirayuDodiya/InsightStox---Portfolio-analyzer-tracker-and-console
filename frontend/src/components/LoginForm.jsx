@@ -134,7 +134,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
 /*----------------------------------- Forgot password handlers------------------------------------------------------------------- */
 // Function to handle sending OTP for forgot password
 const handleSendOtpForForgotPassword = async () => {
-    setIsLoading(true);
+  
   try{
     const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/forgotPasswordOtpGeneration", {email : email}, {withCredentials: true});
     console.log("✅ OTP sent successfully:", res.data);
@@ -265,19 +265,19 @@ return (
             {!isForgotPassword && (<button type="submit" disabled={!areAllFieldsValid} className="submit loading" style={{display:'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={() => {handleLogin()}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Login"}</button>)}
             
             {/*Send/verify OTP */}
-            {isForgotPassword && !forgotOtpvarified && (<button type="submit" disabled={!areAllFieldsValid} className="submit loading" style={{display: 'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}  onClick= {()=>{setTitleError(""); if(isOtpSubmitted && forgotUserExists ){handleOtpverificationForForgotPassword() } else { handleForgotPasswordInputToggle();handleSendOtpForForgotPassword();}}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSubmitted && forgotUserExists ? 'Verify OTP' : 'Send OTP'}</>}</button>)}
+            {isForgotPassword && !forgotOtpvarified && (<button type="button" disabled={!areAllFieldsValid} className="submit loading" style={{display: 'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}  onClick= {()=>{setTitleError(""); if(isOtpSubmitted && forgotUserExists ){handleOtpverificationForForgotPassword() } else { handleForgotPasswordInputToggle();handleSendOtpForForgotPassword();}}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSubmitted && forgotUserExists ? 'Verify OTP' : 'Send OTP'}</>}</button>)}
 
             {/* New Password Error Message */}
             {resetPassword && <p style={{ display : "block" }} className="pass-error error">{newPasswordError}</p>}
 
             {/* Resend OTP Button */}
-            {isOtpSubmitted && forgotUserExists && !forgotOtpvarified && (<button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: "block"}} onClick={() => { setTitleError("");handleSendOtpForForgotPassword();}}>Resend</button>)}
+            {isOtpSubmitted && forgotUserExists && !forgotOtpvarified && (<button type="button" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: "block"}} onClick={() => { setTitleError("");handleSendOtpForForgotPassword();}}>Resend</button>)}
 
             {/* Reset Password Button */}
-            {forgotOtpvarified && (<button type="submit" className="resubmit resetpass loading" disabled = {newPasswordError!==""} style={{display: "flex",opacity: newPasswordError!=="" ? 0.5 : 1,cursor: newPasswordError!=="" ? 'not-allowed' : 'pointer'}} onClick={() => {handleResetPassword();}}>{isLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Reset Password"}</button>)}
+            {forgotOtpvarified && (<button type="button" className="resubmit resetpass loading" disabled = {newPasswordError!==""} style={{display: "flex",opacity: newPasswordError!=="" ? 0.5 : 1,cursor: newPasswordError!=="" ? 'not-allowed' : 'pointer'}} onClick={() => {handleResetPassword();}}>{isLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Reset Password"}</button>)}
 
             {/* Google Login Button */}
-            {!isForgotPassword && (<button type="button" className="google-btn " onClick = {()=>{handleGoogleButtonClick();}} style={{display: "flex"}} >
+            {!isForgotPassword && (<button type="button" className="google-btn loading" onClick = {()=>{handleGoogleButtonClick();}} style={{display: "flex"}} >
                 {googleLoginLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <><img src={google_logo} alt="Google logo" className="google-logo" />
                 <span>Continue with Google</span></>}
             </button>)}
