@@ -34,7 +34,8 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     axios.defaults.withCredentials = true;
     const {userLoggedIn, setUserLoggedIn} = useAppContext();
 /*----------------------------------- Functions----------------------------------------------------------------- */
-    // Function to toggle forgot password state and update sessionStorage
+    
+// Function to toggle forgot password state and update sessionStorage
     const toggleForgotPassword = () => {
       setIsForgotPassword(prev => {
         const newVal = !prev;
@@ -43,7 +44,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
       });
     };
     // Function to reset form states
-      const handleForgotPasswordInputToggle = (email) => {
+    const handleForgotPasswordInputToggle = (email) => {
         if (email === "") {
           alert("Email is required");
         } else {
@@ -51,7 +52,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
         } 
       };
       //function to reset all form states
-      function resetFormStates(){
+    function resetFormStates(){
         setEmail("");
         setPassword("");
         setOtp("");
@@ -64,6 +65,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
         if (parentResetFormStates) parentResetFormStates();
     }
 /*-----------------------------------Google login handlers----------------------------------------------------------- */
+
 // Function to handle Google login
       const handleGoogleLogin = async (tokenResponse) => {
         try{
@@ -81,7 +83,8 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
           setGoogleLoginLoading(false);
         }
       }
-    // Google login hook
+    
+      // Google login hook
       const googleLogin = useGoogleLogin({
         onSuccess: (tokenResponse) => handleGoogleLogin(tokenResponse),
         onError: () => {
@@ -231,14 +234,18 @@ useEffect(() => {
 /*----------------------------------- JSX --------------------------------------------------------------------- */
 return (
         <>
+
+        {/* Logo */}
           <div className="authlogo">
             <img src={LogoDark} alt="Dark Mode Logo" />
           </div>
+
+          {/* Title text */}
           <div className="title-text">
             <h1>{isForgotPassword ? 'Reset your password' : 'Login to your account'}</h1>
           </div>
 
-
+          {/* Login and Forgot password field */}
           <form className="form" style={{gap : isForgotPassword ? '0.5rem' : '0rem' }} onSubmit={(e)=>e.preventDefault()}>
             {/* Email Field */}
             <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: forgotUserExists ? 'none':'block' }}/>

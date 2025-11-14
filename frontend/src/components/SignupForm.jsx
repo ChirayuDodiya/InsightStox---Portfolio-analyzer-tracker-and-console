@@ -28,6 +28,7 @@ const SignupForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     const {setUserLoggedIn} = useAppContext();
     const [privacyPolicy, setPrivacyPolicy] = useState(false)
     const [privacyPopup,setPrivacyPopup] =useState(false)
+
 /*----------------------------------- Functions--------------------------------------------------------------- */
 // Function to reset all form states
     function resetFormStates(){
@@ -46,6 +47,8 @@ const SignupForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     // Also call parent reset
     if (parentResetFormStates) parentResetFormStates();
   }
+
+
 /*----------------------------------- Registration handlers-----------------------------------------------------------------------*/
 // Function to handle OTP generation
 const handleOtpGeneration = async () => {
@@ -99,6 +102,7 @@ const handleRegister = async () => {
     }
 };
 /*----------------------------------- useEffect Hooks---------------------------------------------------------- */
+
 //useEffect for validating all fields
 useEffect(() => {
     if(isOtpSent)
@@ -165,34 +169,48 @@ useEffect(() => {
 /*----------------------------------- JSX --------------------------------------------------------------------- */
     return (
         <>
-           <div className="signuplogo">
+        {/* SignUp logo */}
+          <div className="signuplogo">
             <img src={LogoDark} alt="Dark Mode Logo" />
           </div>
+        
+        {/* Title Text */}
           <div className="title-text">
             <h1>{isOtpSent ? 'Check your email for the OTP' : 'Create your account'}</h1>
           </div>
         
-        <form className="form" style={{ gap: isOtpSent ? '0.3rem' : '0rem' }} onSubmit={(e)=>{e.preventDefault();}}>
+        {/* SignUp form Division */}
+      <form className="form" style={{ gap: isOtpSent ? '0.3rem' : '0rem' }} onSubmit={(e)=>{e.preventDefault();}}>
+          {/* Input Fields for Name */}
         <InputField htmlFor="name" type="text" value={name} onChange={(e) => setName(e.target.value)} id="name" placeholder="Enter your full name" labelVal="Full Name" styleVal={{ display: isOtpSent ? 'none' : 'block' }} />
           <p style={{ display: isOtpSent ? 'none' : 'block' }} className="name-error error">{nameError}</p>
+
+          {/* Input Fields for Email */}
         <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: isOtpSent ? 'none' : 'block' }} />
           <p style={{ display: isOtpSent ? 'none' : 'block' }} className="email-error error">{emailError}</p>
+
+          {/* Input Fields for Password */}
         <PasswordInputField htmlFor="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} id="password" placeholder="Enter your password" labelVal="Password" styleVal={{ display: isOtpSent ? 'none' : 'block' }} />
           <p style={{ display: isOtpSent ? 'none' : 'block' }} className="pass-error error">{passwordError}</p>
+
+          {/* Input Fields for Confirm Password */}
         <PasswordInputField htmlFor="confirmPassword" type="password" value={confirmPassword} onPaste={(e) => e.preventDefault()} onChange={(e) => setConfirmPassword(e.target.value)} id="confirmPassword" placeholder="Confirm your password" labelVal="Confirm Password" styleVal={{ display: isOtpSent ? 'none' : 'block' }} />
           <p style={{ display: isOtpSent ? 'none' : 'block' }} className="confirm-pass-error error">{confirmPasswordError}</p>
+
+        {/* Input Fields for OTP */}
         <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSent ? 'block' : 'none' }} />
-        
+
         <p style={{ display: isOtpSent ? 'none' : 'flex' }} className="privacy-policy"><input type="checkbox" checked={privacyPolicy} onChange={(e) => setPrivacyPolicy(e.target.checked)} />I have read and agree to the<a className="policy-link" onClick={()=>{setPrivacyPopup(true);}}>privacy policy</a></p>
 
         {/* Submit and Resend Buttons */}
         <button type="button" disabled={!areAllFieldsValid} className="submit loading" style = {{opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={() => {setTitleError(""); (isOtpSent ? handleRegister() : handleOtpGeneration()); }}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSent ? 'Verify OTP' : 'Sign Up'}</>}</button>
         <button type="button" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSent ? 'block' : 'none'}} onClick={() => {setTitleError("");handleResendOtpGeneration();}}>Resend</button>
 
+        {/* Toggle to Login Form */}
         <p className="auth-text">Already have an account ?<a onClick={() => {toggleForm();setTitleError("");resetFormStates();}} style={{ cursor: 'pointer' }}>Login</a></p>
         <p className="text-center" style={{display : isOtpSent ? 'block' : 'none'}}>{`Didn't receive the OTP? Resend in ${timer}s`}</p>
         <p className="title-error">{titleError}</p>
-        </form>
+      </form>
 
         {/* Privacy Policy Popup */}
          {privacyPopup && (<div className="privacy-popup-overlay" onClick={() => setPrivacyPopup(false)}></div> )}
