@@ -206,7 +206,11 @@
   font-weight: 500;
 }
 .right_btn{
+  transition: all 0.3s ease;
   gap : 1rem;
+}
+.right_btn:active{
+  transform: scale(0.95);
 }
 .profile_btn{
   display: flex;

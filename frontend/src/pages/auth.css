@@ -201,7 +201,7 @@
     cursor: pointer;
     margin-top: 1.2rem;
     font-weight: 600;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in;
     box-shadow: 0 2px 8px rgba(0, 200, 83, 0.2);
 }
 
@@ -223,6 +223,9 @@
     box-shadow: 0 2px 8px rgba(0, 200, 83, 0.3);
 }
 
+.auth_form button:active{
+    transform: scale(0.95);
+}
 .auth_form .google-btn {
     display: flex;
     align-items: center;

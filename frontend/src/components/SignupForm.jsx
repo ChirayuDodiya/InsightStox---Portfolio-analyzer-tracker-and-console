@@ -68,7 +68,7 @@ const handleOtpGeneration = async () => {
 
 // Function to handle OTP resend
   const handleResendOtpGeneration = async () => {
-    setIsLoading(true);
+    // setIsLoading(true);
     try {
         const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/registerOtpGeneration", {email : email, name: name, password : password}, {withCredentials: true});
          console.log("✅ OTP resend successful:", res.data);
@@ -184,8 +184,10 @@ useEffect(() => {
         <InputField htmlFor="otp" type="text" value={otp} onChange={(e) => setOtp(e.target.value)} id="otp" placeholder="Enter the OTP" labelVal="OTP" styleVal={{ display: isOtpSent ? 'block' : 'none' }} />
         
         <p style={{ display: isOtpSent ? 'none' : 'flex' }} className="privacy-policy"><input type="checkbox" checked={privacyPolicy} onChange={(e) => setPrivacyPolicy(e.target.checked)} />I have read and agree to the<a className="policy-link" onClick={()=>{setPrivacyPopup(true);}}>privacy policy</a></p>
-        <button type="submit" disabled={!areAllFieldsValid} className="submit loading" style = {{opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={() => {setTitleError(""); (isOtpSent ? handleRegister() : handleOtpGeneration()); }}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSent ? 'Verify OTP' : 'Sign Up'}</>}</button>
-        <button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSent ? 'block' : 'none'}} onClick={() => {setTitleError("");handleResendOtpGeneration();}}>Resend</button>
+
+        {/* Submit and Resend Buttons */}
+        <button type="button" disabled={!areAllFieldsValid} className="submit loading" style = {{opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={() => {setTitleError(""); (isOtpSent ? handleRegister() : handleOtpGeneration()); }}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSent ? 'Verify OTP' : 'Sign Up'}</>}</button>
+        <button type="button" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: isOtpSent ? 'block' : 'none'}} onClick={() => {setTitleError("");handleResendOtpGeneration();}}>Resend</button>
 
         <p className="auth-text">Already have an account ?<a onClick={() => {toggleForm();setTitleError("");resetFormStates();}} style={{ cursor: 'pointer' }}>Login</a></p>
         <p className="text-center" style={{display : isOtpSent ? 'block' : 'none'}}>{`Didn't receive the OTP? Resend in ${timer}s`}</p>
