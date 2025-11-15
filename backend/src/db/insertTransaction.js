@@ -73,7 +73,7 @@ const yahooFinance = new YahooFinance();
             const [insert,update] = await sql.transaction(queries);
             return {success:true,insert, update};
         } catch (error) {
-            console.log('Error inserting transaction:', error);
+            console.error('Error inserting transaction:', error);
             return null;
         }
     };
