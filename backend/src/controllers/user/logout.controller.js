@@ -9,7 +9,12 @@ const logoutUser = async(req, res) => {
         }
 
         return res
-            .clearCookie("token")
+            .clearCookie("token", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            path: "/",
+            })
             .status(200)
             .json({ success: true, message: "User logged out successfully" });
     } catch (error) {
@@ -46,7 +51,12 @@ const logoutAllUserSessions = async(req, res) => {
         }
 
         return res
-            .clearCookie("token")
+            .clearCookie("token", {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+            path: "/",
+            })
             .status(200)
             .json({ success: true, message: "all session logged out successfully" });
 
