@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer.jsx';
 import './Dashboard.css';
@@ -13,14 +13,13 @@ import MyHoldings from '../components/MyHoldings/MyHoldings'
 import Navbar from '../components/Navbar.jsx';
 import { useAppContext } from "../context/AppContext";
 export const Dashboard = () => {
-  const { darkMode, setDarkMode } = useAppContext();
-
+  const { darkMode, setDarkMode ,userDetails} = useAppContext();
   return (
     <>
     <div className="dashboard-container">
        
       <Navbar darkMode={darkMode} setDarkMode={setDarkMode} pageType="dashboard" 
-      profileData={{name: "Ayush Dhamecha",email: "ma**@gmail.com",}}/>
+      profileData={{name: userDetails?.name?.split(" ")[0] || "Guest",email: userDetails?.email || "N/A"}}/>
 
       <DashboardHeader darkMode={darkMode}  />
       
