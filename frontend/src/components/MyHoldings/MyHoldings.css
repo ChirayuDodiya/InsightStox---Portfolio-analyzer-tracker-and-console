@@ -1,18 +1,23 @@
-
 .card {
   background-color: #161616;
-  border: 1px solid #7dff9e;
+  border: 1px solid #00c853;
   border-radius: 12px;
   padding: 1.5rem;
-  /* margin: 20px; */
   box-shadow: 0 0 15px rgba(0,255,128,0.05);
 }
 
 .holdings-card {
   justify-content: center;
-  width: 82%;
+  width: 80%;
   margin: 0 auto;
   margin-top: 40px;
+  overflow-x: hidden;
+}
+
+.table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 table {
@@ -20,23 +25,66 @@ table {
   border-collapse: collapse;
   margin-top: 1rem;
   text-align: center;
-  
 }
 
 th, td {
-  border: 1px solid #2c2c2c;
-  padding: 0.8rem;
   border: 1px solid white;
+  padding: 0.8rem;
 }
 
 th {
   background-color: #1f1f1f;
   font-weight: 700;
-  
 }
 
 td {
   background-color: #1f1f1f;
   font-weight: 700;
   color: gray;
+}
+
+
+/* Tablet breakpoint */
+@media (max-width: 1050px) {
+  .holdings-card {
+    width: 100%;
+    margin-top: 24px;
+    padding: 1rem;
+  }
+
+  table {
+    font-size: 0.92rem;
+  }
+
+  th, td {
+    padding: 0.6rem;
+  }
+}
+
+
+
+@media (max-width: 600px) {
+  .holdings-card {
+    width: 100%;
+    padding: 0.8rem;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    width: 100%;        
+  }
+
+  table {
+    min-width: 650px;      
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 0.45rem;
+  }
+
+  .header-title {
+    font-size: 1.1rem;
+    text-align: center;
+  }
 }
