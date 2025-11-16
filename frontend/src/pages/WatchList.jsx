@@ -1,18 +1,67 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './WatchList.css'
 import Navbar from '../components/Navbar.jsx'
 import { useAppContext } from "../context/AppContext.jsx";
 import DashboardHeader from '../components/Dashboard-Header.jsx';
 import Footer from '../components/Footer.jsx';
 import filterIcon from '../assets/filter-button.svg';
+import axios from "axios";
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_LINK;
+const Watchlist_API = `${BACKEND_URL}/api/v1/dashboard/displayWatchlist`;
 
 
 const  Watchlist= () => {
   const { darkMode, setDarkMode, isSearchActive, setIsSearchActive } = useAppContext();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [priceError, setPriceError] = useState('');
-
+  const [watchlistData,setwatchlistData]=useState([]);
+  const [filteredData, setFilteredData] = useState([]);
+  const [isFiltersApplied, setIsFiltersApplied] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   // Filter states
+    const fetchWatchlist = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.get(Watchlist_API);
+      const data = res.data?.watchlist || []; // safer access
+
+      const formattedData = data.map((item) => ({
+        company: item.shortName,
+        symbol: item.symbol,
+        price: item.currentPrice,
+        change: item.currentchange,
+        changePercent: item.percentageChange,
+        sector:item.sector,
+        marketcap:item.marketcap
+      }));
+      
+      setwatchlistData(formattedData);
+      setFilteredData(formattedData);
+    } catch (err) {
+      console.error("Error fetching watchlist:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  const handleRemoveStock= async (symbol) => {
+    try{
+      // Optimistic update - remove from UI immediately for instant feedback
+      const updatedData = watchlistData.filter(stock => stock.symbol !== symbol);
+      const updatedFiltered = filteredData.filter(stock => stock.symbol !== symbol);
+      
+      setwatchlistData(updatedData);
+      setFilteredData(updatedFiltered);
+      
+      // Then make the backend call (no need to refetch after)
+      await axios.delete(`${BACKEND_URL}/api/v1/dashboard/removeFromWatchlist?symbol=${symbol}`);
+    }
+    catch(err){
+      console.error("Error removing stock:", err);
+      // If backend call fails, revert by refetching to restore data
+      fetchWatchlist();
+    }
+  }
   const [filters, setFilters] = useState({
     dailyChange: '',
     dailyChangePercent: '',
@@ -23,15 +72,15 @@ const  Watchlist= () => {
     sortBy: ''
   });
 
-  // Sample watchlist data
-  const [watchlistData] = useState([
-    { company: 'TATA Motors', symbol: 'TATAMOTORS.NS', price: 418.30, change: 4.35, changePercent: 0.83 },
-    { company: 'Reliance Industries', symbol: 'RELIANCE.NS', price: 2584.50, change: 8.1, changePercent: 0.56 },
-    { company: 'Infosys Ltd', symbol: 'INFY.NS', price: 1468.90, change: -12.2, changePercent: -0.42 },
-    { company: 'Waree Energy', symbol: 'WAREEENR.NS', price: 3178.34, change: -23.10, changePercent: -0.15 },
-    { company: 'Bajaj Hindustan Sugar Lt', symbol: 'BAJAJHIND', price: 22.09, change: -0.22, changePercent: -0.08 },
-    { company: 'Coal India Ltd', symbol: 'COALINDIA.NS', price: 388.65, change: 0.95, changePercent: 0.25 }
-  ]);
+useEffect(() => {
+
+
+  fetchWatchlist();
+
+  // Optional auto-refresh every minute:
+  // const interval = setInterval(fetchWatchlist, 60000);
+  // return () => clearInterval(interval);
+}, []);
 
   const sectors = [
     'Technology / IT', 'Communication Services', 'Materials & Mining',
@@ -39,10 +88,6 @@ const  Watchlist= () => {
     'Financial Services', 'Real Estate', 'Healthcare / Pharmaceuticals',
     'Energy / Oil & Gas', 'Utilities / Power', 'Industrials', 'Others'
   ];
-
-  const handleRemoveStock = (symbol) => {
-    console.log('Remove stock:', symbol);
-  };
 
   const toggleSector = (sector) => {
     setFilters(prev => ({
@@ -62,8 +107,76 @@ const  Watchlist= () => {
     }));
   };
 
+  const getMarketCapCategory = (marketcap) => {
+    if (!marketcap) return null;
+    const cap = Number(marketcap);
+    if (cap < 50000000000) return 'small';
+    if (cap < 200000000000) return 'mid';
+    return 'large';
+  };
+
   const handleApplyFilters = () => {
-    console.log('Applying filters:', filters);
+    let filtered = [...watchlistData];
+    
+    // Check if any filters are actually applied
+    const hasActiveFilters = 
+      filters.dailyChange !== '' || 
+      filters.dailyChangePercent !== '' || 
+      filters.priceFrom !== '' || 
+      filters.priceUpto !== '' || 
+      filters.sectors.length > 0 || 
+      filters.marketCap.length > 0 || 
+      filters.sortBy !== '';
+    
+    setIsFiltersApplied(hasActiveFilters);
+
+    // Filter by daily change (gainers/losers)
+    if (filters.dailyChange === 'gainers') {
+      filtered = filtered.filter(stock => stock.change > 0);
+    } else if (filters.dailyChange === 'losers') {
+      filtered = filtered.filter(stock => stock.change < 0);
+    }
+
+    // Filter by daily change percentage (gainers/losers)
+    if (filters.dailyChangePercent === 'gainers') {
+      filtered = filtered.filter(stock => stock.changePercent > 0);
+    } else if (filters.dailyChangePercent === 'losers') {
+      filtered = filtered.filter(stock => stock.changePercent < 0);
+    }
+
+    // Filter by price range
+    if (filters.priceFrom) {
+      filtered = filtered.filter(stock => stock.price >= Number(filters.priceFrom));
+    }
+    if (filters.priceUpto) {
+      filtered = filtered.filter(stock => stock.price <= Number(filters.priceUpto));
+    }
+
+    // Filter by market cap
+    if (filters.marketCap.length > 0) {
+      filtered = filtered.filter(stock => {
+        const capCategory = getMarketCapCategory(stock.marketcap);
+        return filters.marketCap.includes(capCategory);
+      });
+    }
+
+    // Filter by sectors
+    if (filters.sectors.length > 0) {
+      filtered = filtered.filter(stock => filters.sectors.includes(stock.sector));
+    }
+
+    // Sort by price or change percentage
+    if (filters.sortBy === 'low-high') {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (filters.sortBy === 'high-low') {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (filters.sortBy === 'low-high-percent') {
+      filtered.sort((a, b) => a.changePercent - b.changePercent);
+    } else if (filters.sortBy === 'high-low-percent') {
+      filtered.sort((a, b) => b.changePercent - a.changePercent);
+    }
+
+    setFilteredData(filtered);
     setIsFilterOpen(false);
   };
 
@@ -78,6 +191,8 @@ const  Watchlist= () => {
       sortBy: ''
     });
     setPriceError('');
+    setFilteredData(watchlistData);
+    setIsFiltersApplied(false);
   };
 
   return (
@@ -125,8 +240,41 @@ const  Watchlist= () => {
               </tr>
             </thead>
             <tbody>
-              {watchlistData.map((stock, index) => (
-                  <tr key={index}>
+              {isLoading ? (
+                Array.from({ length: 4 }).map((_, idx) => (
+                  <tr key={`skeleton-${idx}`}>
+                    <td>
+                      <div className="company-cell">
+                        <div className="skeleton" style={{ width: '60%', height: 14 }}></div>
+                        <div className="skeleton" style={{ width: '36%', height: 14, marginTop: 6 }}></div>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="skeleton" style={{ width: '40%', height: 14 }}></div>
+                    </td>
+                    <td>
+                      <div className="skeleton" style={{ width: '40%', height: 14 }}></div>
+                      <div className="skeleton change-cell-after" style={{ width: '60%', height: 12, marginTop: 6 }}></div>
+                    </td>
+                    <td>
+                      <div className="skeleton" style={{ width: '60%', height: 14 }}></div>
+                    </td>
+                    <td>
+                      <div className="skeleton" style={{ width: 64, height: 28, borderRadius: 9999 }}></div>
+                    </td>
+                  </tr>
+                ))
+              ) : filteredData.length === 0 ? (
+                <tr>
+                  <td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>
+                    {isFiltersApplied 
+                      ? 'No stocks match your filters' 
+                      : 'Your watchlist is empty. Add stocks to start tracking!'}
+                  </td>
+                </tr>
+              ) : (
+                filteredData.map((stock) => (
+                  <tr key={stock.symbol}>
                     <td>
                       <div className="company-cell">
                         <span className="company-name">{stock.company}</span>
@@ -148,7 +296,8 @@ const  Watchlist= () => {
                     </td>
                     <td>
                       <button 
-                        className="action-btn" 
+                        className="action-btn"
+                        aria-label={`Remove ${stock.symbol} from watchlist`} 
                         onClick={() => handleRemoveStock(stock.symbol)}
                       >
                        <span>Remove</span>
@@ -156,7 +305,7 @@ const  Watchlist= () => {
                     </td>
                   </tr>
                 ))
-              }
+              )}
             </tbody>
           </table>
         </div>
@@ -164,11 +313,11 @@ const  Watchlist= () => {
 
       {/* Filter Modal */}
       {isFilterOpen && (
-        <div className="filter-modal-overlay overlay" onClick={() => {setIsFilterOpen(false);handleClearFilters();}}>
+        <div className="filter-modal-overlay overlay" onClick={() => setIsFilterOpen(false)}>
           <div className="filter-modal" onClick={(e) => e.stopPropagation()}>
             <div className="filter-modal-header">
               <h2>Filter Options</h2>
-              <i class="pi pi-times close-btn" onClick={() => {setIsFilterOpen(false);handleClearFilters();}}></i>
+              <i className="pi pi-times close-btn" onClick={() => setIsFilterOpen(false)}></i>
             </div>
 
             <div className="filter-modal-content">
@@ -396,8 +545,8 @@ const  Watchlist= () => {
           darkMode={darkMode}  
           navigationLinks={[
             { text: "Portfolio", href: "#" },
-            { text: "AI Insigths", href: "#" },
-            { text: "Wacthlist", href: "#" },
+            { text: "AI Insights", href: "#" },
+            { text: "Watchlist", href: "#" },
             { text: "Compare Stocks", href: "#" },
           ]}
           legalLinks={[

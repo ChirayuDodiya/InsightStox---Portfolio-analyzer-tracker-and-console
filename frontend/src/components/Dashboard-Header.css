@@ -302,4 +302,10 @@
   .search-input{
     width: 127px;
   }
+  .d-stock-info{
+    gap:0.75rem;
+  }
+  .d-stock-display-container{
+    padding: 0 8px;
+  }
 }

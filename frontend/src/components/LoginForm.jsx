@@ -34,7 +34,8 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     axios.defaults.withCredentials = true;
     const {userLoggedIn, setUserLoggedIn} = useAppContext();
 /*----------------------------------- Functions----------------------------------------------------------------- */
-    // Function to toggle forgot password state and update sessionStorage
+    
+// Function to toggle forgot password state and update sessionStorage
     const toggleForgotPassword = () => {
       setIsForgotPassword(prev => {
         const newVal = !prev;
@@ -43,7 +44,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
       });
     };
     // Function to reset form states
-      const handleForgotPasswordInputToggle = (email) => {
+    const handleForgotPasswordInputToggle = (email) => {
         if (email === "") {
           alert("Email is required");
         } else {
@@ -51,7 +52,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
         } 
       };
       //function to reset all form states
-      function resetFormStates(){
+    function resetFormStates(){
         setEmail("");
         setPassword("");
         setOtp("");
@@ -64,6 +65,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
         if (parentResetFormStates) parentResetFormStates();
     }
 /*-----------------------------------Google login handlers----------------------------------------------------------- */
+
 // Function to handle Google login
       const handleGoogleLogin = async (tokenResponse) => {
         try{
@@ -81,7 +83,8 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
           setGoogleLoginLoading(false);
         }
       }
-    // Google login hook
+    
+      // Google login hook
       const googleLogin = useGoogleLogin({
         onSuccess: (tokenResponse) => handleGoogleLogin(tokenResponse),
         onError: () => {
@@ -131,7 +134,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
 /*----------------------------------- Forgot password handlers------------------------------------------------------------------- */
 // Function to handle sending OTP for forgot password
 const handleSendOtpForForgotPassword = async () => {
-    setIsLoading(true);
+  
   try{
     const res = await axios.post(import.meta.env.VITE_BACKEND_LINK+"/api/v1/users/forgotPasswordOtpGeneration", {email : email}, {withCredentials: true});
     console.log("✅ OTP sent successfully:", res.data);
@@ -184,7 +187,7 @@ const handleResetPassword = async () => {
   //useEffect for enabling/disabling submit button
 useEffect(() => {
     if(isForgotPassword){
-      setAreAllFieldsValid(email.trim() !== "");
+      setAreAllFieldsValid(email.trim() !== "" && (emailError === ""));
     }else{
         const isValid = email.trim() !== "" && password.trim() !== "" && emailError === "";
         setAreAllFieldsValid(isValid);
@@ -231,14 +234,18 @@ useEffect(() => {
 /*----------------------------------- JSX --------------------------------------------------------------------- */
 return (
         <>
+
+        {/* Logo */}
           <div className="authlogo">
             <img src={LogoDark} alt="Dark Mode Logo" />
           </div>
+
+          {/* Title text */}
           <div className="title-text">
             <h1>{isForgotPassword ? 'Reset your password' : 'Login to your account'}</h1>
           </div>
 
-
+          {/* Login and Forgot password field */}
           <form className="form" style={{gap : isForgotPassword ? '0.5rem' : '0rem' }} onSubmit={(e)=>e.preventDefault()}>
             {/* Email Field */}
             <InputField htmlFor="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} id="email" placeholder="Enter your email" labelVal="Email" styleVal={{ display: forgotUserExists ? 'none':'block' }}/>
@@ -258,19 +265,19 @@ return (
             {!isForgotPassword && (<button type="submit" disabled={!areAllFieldsValid} className="submit loading" style={{display:'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={() => {handleLogin()}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Login"}</button>)}
             
             {/*Send/verify OTP */}
-            {isForgotPassword && !forgotOtpvarified && (<button type="submit" disabled={!areAllFieldsValid} className="submit loading" style={{display: 'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}  onClick= {()=>{setTitleError(""); if(isOtpSubmitted && forgotUserExists ){handleOtpverificationForForgotPassword() } else { handleForgotPasswordInputToggle();handleSendOtpForForgotPassword();}}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSubmitted && forgotUserExists ? 'Verify OTP' : 'Send OTP'}</>}</button>)}
+            {isForgotPassword && !forgotOtpvarified && (<button type="button" disabled={!areAllFieldsValid} className="submit loading" style={{display: 'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}  onClick= {()=>{setTitleError(""); if(isOtpSubmitted && forgotUserExists ){handleOtpverificationForForgotPassword() } else { handleForgotPasswordInputToggle();handleSendOtpForForgotPassword();}}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSubmitted && forgotUserExists ? 'Verify OTP' : 'Send OTP'}</>}</button>)}
 
             {/* New Password Error Message */}
             {resetPassword && <p style={{ display : "block" }} className="pass-error error">{newPasswordError}</p>}
 
             {/* Resend OTP Button */}
-            {isOtpSubmitted && forgotUserExists && !forgotOtpvarified && (<button type="submit" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: "block"}} onClick={() => { setTitleError("");handleSendOtpForForgotPassword();}}>Resend</button>)}
+            {isOtpSubmitted && forgotUserExists && !forgotOtpvarified && (<button type="button" className="resubmit" disabled = {timer!==0} style = {{opacity: timer===0 ? 1 : 0.5, cursor: timer===0 ? 'pointer' : 'not-allowed',display: "block"}} onClick={() => { setTitleError("");handleSendOtpForForgotPassword();}}>Resend</button>)}
 
             {/* Reset Password Button */}
-            {forgotOtpvarified && (<button type="submit" className="resubmit resetpass loading" disabled = {newPasswordError!==""} style={{display: "flex",opacity: newPasswordError!=="" ? 0.5 : 1,cursor: newPasswordError!=="" ? 'not-allowed' : 'pointer'}} onClick={() => {handleResetPassword();}}>{isLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Reset Password"}</button>)}
+            {forgotOtpvarified && (<button type="button" className="resubmit resetpass loading" disabled = {newPasswordError!==""} style={{display: "flex",opacity: newPasswordError!=="" ? 0.5 : 1,cursor: newPasswordError!=="" ? 'not-allowed' : 'pointer'}} onClick={() => {handleResetPassword();}}>{isLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Reset Password"}</button>)}
 
             {/* Google Login Button */}
-            {!isForgotPassword && (<button type="button" className="google-btn " onClick = {()=>{handleGoogleButtonClick();}} style={{display: "flex"}} >
+            {!isForgotPassword && (<button type="button" className="google-btn loading" onClick = {()=>{handleGoogleButtonClick();}} style={{display: "flex"}} >
                 {googleLoginLoading ?<><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <><img src={google_logo} alt="Google logo" className="google-logo" />
                 <span>Continue with Google</span></>}
             </button>)}

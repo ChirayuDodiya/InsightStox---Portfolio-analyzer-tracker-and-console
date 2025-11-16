@@ -16,28 +16,17 @@ const ChatWindow = () => {
     const { userDetails } = useAppContext(); 
     const chatEndRef = useRef(null);
     const [isLoading, setIsLoading] = useState(false);
-    const inputRef = useRef(null);
 
 // ----------------------------------------------------------useEffects--------------------------------------------------------
    // Scroll to the bottom of the chat when a new message is added
-useEffect(() => {
-        chatEndRef.current?.scrollIntoView({behavior : "smooth"});
-    },[messages])
 
-// Handle mobile keyboard opening - scroll input into view
 useEffect(() => {
-    const handleFocus = () => {
-        setTimeout(() => {
-            inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 300); // Delay to allow keyboard to open
-    };
+  const timeout = setTimeout(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, 150);
+  return () => clearTimeout(timeout);
+}, [messages]);
 
-    const inputElement = inputRef.current;
-    if (inputElement) {
-        inputElement.addEventListener('focus', handleFocus);
-        return () => inputElement.removeEventListener('focus', handleFocus);
-    }
-}, []);
 
 // ----------------------------------------------------------functions--------------------------------------------------------
 // Function to handle sending message
@@ -47,8 +36,10 @@ useEffect(() => {
         setIsLoading(true);
         setChatStart(true);
         setInput("");
+        let screenWidth = window.innerWidth;
+        console.log("Screen Width:", screenWidth);
         const typingMsg = { id: "typing", text: "Bot is typing... ", sender: "bot", typing: true };
-        const userMsg = {id:Date.now(),text, sender:"user"};
+        const userMsg = {id:Date.now(),text, sender:"user",screenWidth: screenWidth};
         setMessages((prev) => [...prev, userMsg, typingMsg]);
         try{
                 const res = await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/ai-insight/sendMessage",{
@@ -79,14 +70,11 @@ useEffect(() => {
 // ----------------------------------------------------------JSX--------------------------------------------------------
   return (
     <div className="chat-window">
-
-    {!chatStart && (
-        <div className="chat-welcome-message">
+        <div className="chat-welcome-message" style={chatStart ? {display:"none"} : {}}>
                     <h2>Hello, <span className="user-name">{userDetails?.name?.split(" ")[0]  || 'Guest'}!</span></h2>
                     <h3>How can I help you Today?</h3>
         </div>
-    )}
-        <div className="chat-messages">
+        <div className="chat-messages" style={chatStart ? {} : {display:"none"}}>
                 {messages.map((msg) => (
                     <div className={`chat-bubble ${msg.sender}-bubble ${msg.typing ? "typing" : ""}`} key={msg.id}>
                         <div>{msg.text}</div>
@@ -97,7 +85,6 @@ useEffect(() => {
 
         <div className={`chat-input-area ${isLoading ? "loading" : ""}`}>
                 <input 
-                    ref={inputRef}
                     type="text" 
                     value={input} 
                     onChange={(e) => {setInput(e.target.value)}} 
@@ -105,7 +92,7 @@ useEffect(() => {
                     placeholder="Type a message..." 
                     className="chat-input"
                 />
-                <button className="send-btn" onClick={handleSend}>{isLoading ? <RingLoader color="#000000" size={25}/> : <>Send</>}</button>
+                <button className="send-btn" onClick={handleSend}>{isLoading ? <RingLoader color="#000000" size={20}/> : <>Send</>}</button>
         </div>
     </div>
   )

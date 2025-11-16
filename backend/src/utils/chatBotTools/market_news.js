@@ -45,7 +45,6 @@ export const Market_news_tool = tool(
                     console.error(`Error fetching news for stock ${symbol}:`, err.message);
                 }
             }
-
         }
             if(queryType === "sector" && sectors && sectors.length > 0){
                 console.log("queryType is sector, for userId :",email_Id);
@@ -62,7 +61,6 @@ export const Market_news_tool = tool(
                 }
         
             }
-
          if(queryType === "market")
             console.log("queryType is market, for userId :",email_Id);
             try{
@@ -90,7 +88,6 @@ export const Market_news_tool = tool(
                     }
                 }
             }
-
             if(newsResults.length === 0){
                 console.log("JigsawStack tool fallback for general finance news");
                 try{
@@ -104,7 +101,7 @@ export const Market_news_tool = tool(
                 }
             }
         console.log("Market news results:", newsResults);
-        return JSON.stringify(newsResults.slice(7000));
+        return JSON.stringify(newsResults);
 
     },{
         name: "market_news",

@@ -9,7 +9,7 @@ import cron from "node-cron";
 connectDB();
 await connectmongoDB();
 
-app.listen(process.env.PORT || 8000, async()=>{
+app.listen(process.env.PORT || 8000, '0.0.0.0',async()=>{
         console.log(`Server is running at port : ${process.env.PORT||8000}`);
         await updateAllUsers()
         setInterval(updateAllUsers,12*60*60*1000)

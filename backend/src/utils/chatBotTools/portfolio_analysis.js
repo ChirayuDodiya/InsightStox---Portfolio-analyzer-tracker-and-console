@@ -24,11 +24,8 @@ export const Portfolio_analysis_tool = tool(
     }
 
     // Extract user details once (outside the loop)
-    const userName = userDetails.name || "User";
-    const investmentExperience = userDetails.investmentExperience || "not specified";
     const financialGoals = userDetails.financialGoals || "not specified";
     const investmentHorizon = userDetails.investmentHorizon || "not specified";
-    const riskProfile = userDetails.riskProfile || "not specified";
 
     const result = [];
     for (const stock of portfolio) {
@@ -111,7 +108,7 @@ export const Portfolio_analysis_tool = tool(
           dividendRate: null,
           bookValue: null,
           priceToBook: null,
-          userName,
+          userName : name,
           investmentexperience,
           financialGoals,
           investmentHorizon

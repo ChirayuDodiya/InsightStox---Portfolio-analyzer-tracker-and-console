@@ -1,7 +1,6 @@
 import React, { useState,useEffect } from "react";
 import axios from "axios";
 import { Link, Navigate } from "react-router-dom";
-import ButtonDiv from "./ButtonDiv.jsx";
 import web_logo_without_bg_darkmode from "../assets/web_logo_without_bg_darkmode.png";
 import web_logo_without_bg_lightmode from "../assets/web_logo_without_bg_lightmode.png";
 import themetoggledark from "../assets/themetoggledark.svg";
@@ -10,21 +9,25 @@ import routeicon from "../assets/routeicon.svg";
 import exiticon from "../assets/exiticon.svg";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import { useAppContext } from "../context/AppContext";
 // import tailwind from "tailwindcss/tailwind.css";
 const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
   
   axios.defaults.withCredentials = true;
+  /*----------------------------------------------------State Varible------------------------------------------------------- */
   const navigate = useNavigate();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
-
   const handleProfileClick = () => setIsProfileOpen(true);
   const handleProfileClose = () => setIsProfileOpen(false);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const {userDetails} = useAppContext();
+
+
+ /*----------------------------------------------------Functions------------------------------------------------------- */
   const handleNavigation = (path) => {
     navigate(path);
   };
-
   const handleLogout = async () => {
         try{
             await axios.post(import.meta.env.VITE_BACKEND_LINK + "/api/v1/users/logout", {withCredentials: true});
@@ -34,13 +37,14 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
             console.error("Error during logout:", err.response?.data?.message || err.message);
         }
   }
-
   function checkPageType(){
     if(pageType !== "/" && pageType !== "my-profile" && pageType !== "data-privacy" && pageType !== "preferences" && pageType !== "help-support" && pageType !== "activity"){
       return true;
     }
     else return false;
 }
+
+  /*----------------------------------------------------UseEffect------------------------------------------------------- */
   useEffect(() => {
   const handleResize = () => {
     if (window.innerWidth > 1100 && isMenuOpen) {
@@ -49,18 +53,24 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
   };
 
   window.addEventListener("resize", handleResize);
+
   return () => window.removeEventListener("resize", handleResize);
 }, [isMenuOpen]);
+
   return (
     <>
-      {pageType === "dashboard" && isProfileOpen && (
+      {/* Show overlay whenever profile popup is open (not only on dashboard) */}
+      {isProfileOpen && (
         <div className="profileoverlay" onClick={handleProfileClose}></div>
       )}
       {isMenuOpen && <div className="profileoverlay" onClick={toggleMenu}></div>}
+
+      {/*-----------------------------------------Navbar---------------------------------------------------------------- */}
       <div className="navbar">
         <div className="left_btn logo">
           <a href="#"> <img src={darkMode? web_logo_without_bg_darkmode: web_logo_without_bg_lightmode} alt="Logo" /> </a>
         </div>
+
 
         <div className="center_btn">
           {pageType === "/" ? (
@@ -81,19 +91,22 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
         </div>
 
         <div className="right_btn">
-
           {pageType === "/" && (
-            <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");
-                                              sessionStorage.setItem("forgotpassword", "false");}}>
-              <ButtonDiv className="login_btn" val="Log In" />
+            <Link to="/auth" onClick={() => {sessionStorage.setItem("isLogin", "true");sessionStorage.setItem("forgotpassword", "false");}}>
+              <div className="login_btn">
+                <button>Log In</button>
+              </div>
             </Link>
           )}
 
-          <div className="profile_btn">
-            <button onClick={handleProfileClick}>
-              <img src={profileicon} alt="Profile" style={checkPageType() ? {visibility: "visible"} : {visibility: "hidden"}}/>
-            </button>
-          </div>
+          {/* Render profile button when profileData exists (logged-in), not only on dashboard */}
+          {profileData && Object.keys(profileData).length > 0 && (
+            <div className="profile_btn">
+              <button onClick={handleProfileClick}>
+                <img src={userDetails?.profileImage || profileicon} alt="Profile" style={checkPageType() ? {visibility: "visible"} : {visibility: "hidden"}}/>
+              </button>
+            </div>
+          )}
 
           <div className="toggle_btn">
             <button style = {{display : "none"}}onClick={() => setDarkMode(!darkMode)}>
@@ -104,7 +117,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
           </i>
         </div>
       </div>
-           {isMenuOpen && (
+        {isMenuOpen && (
         <div className="mobile_menu ">
           {pageType === "/" ? (
             <div className="menuoptions">
@@ -134,7 +147,7 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
       {isProfileOpen && (
         <div className="profilepopup">
           <div className="popupheading">
-            <img src={profileicon} alt="Profile" />
+            <img src={userDetails?.profileImage || profileicon} alt="Profile" />
             <div className="name-email">
               <h3>{profileData.name}</h3>
               <span>{profileData.email}</span>
