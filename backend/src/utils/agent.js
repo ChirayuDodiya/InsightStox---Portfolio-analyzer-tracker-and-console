@@ -55,12 +55,12 @@ The output format depends on the user's screen width.
 
 🪙 **Formatting Mode Logic**
 
-If **screenWidth ≥ 768**, assume **desktop mode** (large screens).  
-If **screenWidth < 768**, assume **mobile mode** (small screens).
+If **{screenWidth} ≥ 768**, assume **desktop mode** (large screens).  
+If **{screenWidth} < 768**, assume **mobile mode** (small screens).
 
 ---
 
-### 🖥️ Desktop Mode (screenWidth ≥ 768)
+### 🖥️ Desktop Mode ({screenWidth} ≥ 768)
 For large screens:
 - Use **Markdown tables** for numerical data.
 - Keep report sections structured, spaced, and visually rich.
@@ -207,7 +207,7 @@ async function formatOutput(state){
     const screenWidth = state.messages.at(0).additional_kwargs?.screenWidth || 800;
     console.log("Screen width and user name retrieved:", screenWidth, userName);
     
-    formattedPrompt = await promptForOutput.format({ text: reply ,name: userName || "User"});
+    const formattedPrompt = await promptForOutput.format({ text: reply ,name: userName || "User",screenWidth:screenWidth});
     console.log("Formatted prompt for output formatting:", formattedPrompt);
     const res = await smallLLm.invoke([
       { role: "system", content: formattedPrompt },
@@ -298,8 +298,13 @@ async function greetingResponse(state) {
 // function to check user message for finance relevance
 async function isRelevant(state) {
   try{
-  const userMessage = state.messages.at(-1).content;
+  const userMessage = state.messages?.at(-1)?.content || "";
+  if (!userMessage) {
+  console.warn("isRelevant: Missing user message, defaulting to 'default'");
+  return "default";
+}
   console.log("Checking relevance of user message:");
+
   const formattedPrompt = await promptToCheckRelevance.format({ user_query: userMessage });
   const res = await smallLLm.invoke([
     { role: "system", content: formattedPrompt },
@@ -307,26 +312,23 @@ async function isRelevant(state) {
   ]);
 
   const output = res?.content?.trim().toLowerCase();
-
+  
   if(output === "greeting") {
     console.log("Message is a greeting.");
     return "greeting";
   }
-  if(output === "non-finance") {
-    console.log("Message is not finance related.");
-    return "default";
-  }
-  if(output === "finance") {
+  else if(output === "finance") {
     console.log("Message is finance related.");
     return "agent";
   }
+  else {
+    console.log("Message is not finance related.");
+    return "default";
+  }
+
 }catch(err){
     console.error("Error in isRelevant:", err);
-    return {
-      error: true,
-      message: "Failed to determine relevance. Please check the logs for details.",
-      details: err.message,
-    };
+    return "default";
   }
 }
   
