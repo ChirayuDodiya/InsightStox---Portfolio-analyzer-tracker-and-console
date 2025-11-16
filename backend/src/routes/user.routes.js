@@ -85,7 +85,7 @@ router.route("/updateProfileImage").patch(verifyToken,
 });
 router.route("/toggleAiSuggestion").patch(verifyToken, toggleAiSuggestionController);
 router.route("/downloadPortfolioData").get(verifyToken, createExcel);
-router.route("/deleteAccount").delete(verifyToken, deleteAccount, logoutUser);
+router.route("/deleteAccount").delete(verifyToken, deleteAccount);
 router.route("/getPreferencesAndPersonalisation").get(verifyToken, getPreferencesAndPersonalisation);
 router.route("/updateTheme").patch(verifyToken, updateThemeController);
 router.route("/updateDashboardLayout").patch(verifyToken, updateDashboardLayoutController);
