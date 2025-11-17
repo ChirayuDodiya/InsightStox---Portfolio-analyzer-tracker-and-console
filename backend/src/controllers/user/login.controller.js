@@ -35,7 +35,9 @@ const loginUser = async (req, res) => {
         if (!passwordValidity.success) {
             return res.status(422).json({
                 success: false,
-                message: passwordValidity.message,
+                message: typeof passwordValidity.message === "object"
+        ? Object.values(passwordValidity.message).join(", ")
+        : passwordValidity.message,
             });
         }
 

@@ -45,11 +45,7 @@ const LoginForm = ({ toggleForm, resetFormStates: parentResetFormStates }) => {
     };
     // Function to reset form states
     const handleForgotPasswordInputToggle = (email) => {
-        if (email === "") {
-          alert("Email is required");
-        } else {
           setIsOtpSubmitted(!isOtpSubmitted);
-        } 
       };
       //function to reset all form states
     function resetFormStates(){
@@ -187,7 +183,7 @@ const handleResetPassword = async () => {
   //useEffect for enabling/disabling submit button
 useEffect(() => {
     if(isForgotPassword){
-      setAreAllFieldsValid(email.trim() !== "");
+      setAreAllFieldsValid(email.trim() !== "" && emailError==="");
     }else{
         const isValid = email.trim() !== "" && password.trim() !== "" && emailError === "";
         setAreAllFieldsValid(isValid);
@@ -262,10 +258,10 @@ return (
 
             {/* Buttons */}
             {/* Login Button */}
-            {!isForgotPassword && (<button type="submit" disabled={!areAllFieldsValid} className="submit loading" style={{display:'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={() => {handleLogin()}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Login"}</button>)}
+            {!isForgotPassword && (<button type="button" disabled={!areAllFieldsValid} className="submit loading" style={{display:'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}} onClick={() => {handleLogin()}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : "Login"}</button>)}
             
             {/*Send/verify OTP */}
-            {isForgotPassword && !forgotOtpvarified && (<button type="button" disabled={!areAllFieldsValid} className="submit loading" style={{display: 'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}  onClick= {()=>{setTitleError(""); if(isOtpSubmitted && forgotUserExists ){handleOtpverificationForForgotPassword() } else { handleForgotPasswordInputToggle();handleSendOtpForForgotPassword();}}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSubmitted && forgotUserExists ? 'Verify OTP' : 'Send OTP'}</>}</button>)}
+            {isForgotPassword && !forgotOtpvarified && (<button type="button" disabled={!areAllFieldsValid} className="submit loading" style={{display: 'flex', opacity: areAllFieldsValid ? 1 : 0.5, cursor: areAllFieldsValid ? 'pointer' : 'not-allowed'}}  onClick= {()=>{setTitleError(""); if(isOtpSubmitted && forgotUserExists ){handleOtpverificationForForgotPassword() } else { handleForgotPasswordInputToggle(email);handleSendOtpForForgotPassword();}}}>{isLoading ? <><i className="pi pi-spin pi-spinner spin"></i><span>Processing...</span></> : <>{isOtpSubmitted && forgotUserExists ? 'Verify OTP' : 'Send OTP'}</>}</button>)}
 
             {/* New Password Error Message */}
             {resetPassword && <p style={{ display : "block" }} className="pass-error error">{newPasswordError}</p>}
