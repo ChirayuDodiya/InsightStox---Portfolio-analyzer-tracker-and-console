@@ -17,9 +17,11 @@ const  Watchlist= () => {
   const [priceError, setPriceError] = useState('');
   const [watchlistData, setwatchlistData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const [searchData, setSearchData] = useState([]);   
   const [isFiltersApplied, setIsFiltersApplied] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const isWatchlistEmpty = !isLoading && watchlistData.length === 0;
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Filter states
   const fetchWatchlist = async () => {
@@ -40,6 +42,7 @@ const  Watchlist= () => {
       
       setwatchlistData(formattedData);
       setFilteredData(formattedData);
+      setSearchData(formattedData);
     } catch (err) {
       console.error("Error fetching watchlist:", err);
     } finally {
@@ -121,6 +124,23 @@ const  Watchlist= () => {
     if (cap < 200000000000) return 'mid';
     return 'large';
   };
+const handleSearch = (value) => {
+  setSearchQuery(value);
+
+  if (value.trim() === "") {
+    setSearchData(filteredData);   // fallback to filter results
+    return;
+  }
+
+  const lower = value.toLowerCase();
+
+  const searched = filteredData.filter(stock =>
+    stock.company.toLowerCase().includes(lower) ||
+    stock.symbol.toLowerCase().includes(lower)
+  );
+
+  setSearchData(searched);
+};
 
   const handleApplyFilters = () => {
     let filtered = [...watchlistData];
@@ -184,6 +204,7 @@ const  Watchlist= () => {
     }
 
     setFilteredData(filtered);
+    setSearchData(filtered);   // reset search results to filtered
     setIsFilterOpen(false);
   };
 
@@ -199,6 +220,7 @@ const  Watchlist= () => {
     });
     setPriceError('');
     setFilteredData(watchlistData);
+    setSearchData(watchlistData);
     setIsFiltersApplied(false);
   };
 
@@ -229,7 +251,8 @@ const  Watchlist= () => {
               <input 
                 type="text" 
                 placeholder="Search your stock"
-                onFocus={() => setIsSearchActive(true)}
+                value={searchQuery}
+                onChange={(e) => handleSearch(e.target.value)}
               />
               <button className="filter-btn"  onClick={() => setIsFilterOpen(true)}> 
                 <img src={filterIcon} alt="filter-icon" />
@@ -276,14 +299,14 @@ const  Watchlist= () => {
                       </td>
                     </tr>
                   ))
-                ) : filteredData.length === 0 ? (
+                ) : searchData.length === 0 ? (
                   <tr className="no-results-row">
                     <td colSpan="5" className="no-results-cell">
                       No stocks matched your filters
                     </td>
                   </tr>
                 ) : (
-                  filteredData.map((stock) => (
+                  searchData.map((stock) => (
                     <tr key={stock.symbol}>
                       <td>
                         <div className="company-cell">

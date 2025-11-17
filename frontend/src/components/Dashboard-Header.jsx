@@ -122,14 +122,6 @@ const DashboardHeader = ({ isWatchlistPage = false, onAddToWatchlist = null }) =
     return () => window.removeEventListener('keydown', onEsc);
   }, []);
 
-  // Loading state
-  if (loading)
-    return (
-      <div className="dashboard-header loading">
-        <p>Loading market data...</p>
-      </div>
-    );
-
   // Error state
   if (error)
     return (
@@ -144,7 +136,42 @@ const DashboardHeader = ({ isWatchlistPage = false, onAddToWatchlist = null }) =
 
       <div className="dashboard-header">
         {/*  Dynamic stock data display */}
+        
         <div className="d-stock-display-container">
+          {loading ? (
+            // ⭐ show skeletons while loading
+            <div className="d-stock-display-container">
+              {Array.from({ length: 3 }).map((_, idx) => (
+                <React.Fragment key={idx}>
+                  <div className="d-stock-info">
+                    <div className="d-stock-header">
+                      <span className="d-stock-name">
+                        <div className="skeleton skeleton-text medium"></div>
+                      </span>
+
+                      <span className="d-stock-exchange">
+                        <div className="skeleton skeleton-text very-short"></div>
+                      </span>
+                    </div>
+
+                    <div className="d-stock-details">
+                      <span className="d-stock-price">
+                        <div className="skeleton skeleton-text short"></div>
+                      </span>
+
+                      <span className="d-stock-change">
+                        <div className="skeleton skeleton-text short"></div>
+                      </span>
+                    </div>
+                  </div>
+
+                  {idx < 2 && <span className="divider">|</span>}
+                </React.Fragment>
+              ))}
+            </div>
+
+          ) : (<>
+
           {stocks.length > 0 ? (
             stocks.map((stock, index) => {
               const isNegative = Number(stock.change) < 0;
@@ -186,6 +213,8 @@ const DashboardHeader = ({ isWatchlistPage = false, onAddToWatchlist = null }) =
           ) : (
             <p className="no-stocks">No active stock data available</p>
           )}
+          </>
+        )}
         </div>
 
         {/* Search Bar */}
