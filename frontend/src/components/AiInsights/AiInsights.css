@@ -17,33 +17,22 @@
 
 .insights {
   list-style: none;
-  padding-left: 30px;
-  padding-top: 20px;
-  
+  padding-left: 5px;
   margin: 1rem 0;
   line-height: 1.6;
 }
 
-.insight-item
-{
-  /* write css for it */
-  margin-bottom: 0.2rem;
-  text-align: left;
-  font-size: 1.05rem;
+.insights li {
+  margin-bottom: 0.8rem;
 }
+
 .view-all {
   color: white;
   font-weight: 600;
   cursor: pointer;
-  margin-left: 75px;
-  transition: all 0.3s ease;
+  margin-left: 5px;
 }
 
-.view-all:hover {
-  transform: translateX(2px);
-  color: #00C853;
-}
-.view-all:active {
-  transform: scale(0.95);
+.view-all :hover {
   color: #00C853;
 }
