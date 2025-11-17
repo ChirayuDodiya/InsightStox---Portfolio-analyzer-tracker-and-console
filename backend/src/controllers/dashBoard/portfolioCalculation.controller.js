@@ -74,7 +74,7 @@ export const calculatePortfolio = async (req, res) => {
             todayProfitLoss: todayPL.toFixed(2), 
             todayProfitLosspercentage: todayPLPercentage,
             overallProfitLosspercentage: overallPLPercentage,
-            totalInvestment: totalInvestment.toFixed(2),
+            totalInvestment: totalInvestment,
         });
 
     } catch (error) {

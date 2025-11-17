@@ -10,7 +10,7 @@
 
 .ai-title {
   color: #00C853;
-  margin-left: 5px;
+  margin-left: 75px;
   font-size: 1.5rem; 
   font-weight: 700;
 }
@@ -46,48 +46,4 @@
 .view-all:active {
   transform: scale(0.95);
   color: #00C853;
-}
-
-
-@media (max-width: 1050px) {
-  .insights-card {
-    min-width: unset;
-    max-width: 100%;
-    width: 100%;
-    height: auto;
-    margin: 0 auto 1rem;
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 16px;
-  }
-
-  .ai-title {
-    margin-left: 20px;
-    font-size: 1.35rem;
-  }
-
-  .insights {
-    padding-left: 20px;
-    margin: 0.6rem 0;
-  }
-
-  .view-all {
-    margin-left: 20px;
-  }
-}
-
-@media (max-width: 600px) {
-  .ai-title {
-    margin-left: 12px;
-    font-size: 1.1rem;
-  }
-
-  .insights {
-    padding-left: 12px;
-    font-size: 0.95rem;
-  }
-
-  .view-all {
-    margin-left: 12px;
-    font-size: 0.95rem;
-  }
 }

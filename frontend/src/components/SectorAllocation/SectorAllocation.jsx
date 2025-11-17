@@ -135,9 +135,7 @@ export default function SectorAllocationChart() {
   return (
     <div className="sector-allocation-container">
       <div className="chart-wrapper">
-      <div style={{ minWidth: "300px", height: "100%", position: "relative" }}>
         <Pie data={chartData} options={options} />
-      </div>
       </div>
     </div>
   );

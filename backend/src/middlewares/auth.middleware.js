@@ -26,12 +26,7 @@ const verifyToken = async (req, res, next) => {
 
         if (activeSession.length == 0) {
             return res
-                .clearCookie("token", {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-                path: "/",
-                })
+                .clearCookie("token")
                 .status(401)
                 .json({ success: false, message: "unauthorized request" });
         }
@@ -51,12 +46,7 @@ const verifyToken = async (req, res, next) => {
 
         if (user.length == 0) {
             return res
-                .clearCookie("token", {
-                httpOnly: true,
-                secure: true,
-                sameSite: "none",
-                path: "/",
-                })
+                .clearCookie("token")
                 .status(410)
                 .json({ success: false, message: "invalid token" });
         }

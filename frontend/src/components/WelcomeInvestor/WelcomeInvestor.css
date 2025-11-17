@@ -1,25 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 body {
-  background-color: #000;
+  background-color: #000000;
   color: #e0e0e0;
   font-family: 'Inter', sans-serif;
 }
 
 .page-container {
-  max-width: 85%;
+  max-width:85%;
   margin: 0 auto;
-  padding: 2.5rem;
+  padding: 40px;
 }
-.text-positive {
-   color: #00C853 !important; 
-}
-.text-negative { 
-  color: #c81b00 !important; 
-}
-.text-neutral { 
-  color: #fBBC04 !important; 
-}
+
+.text-positive { color: #00C853 !important;}
+.text-negative { color: #c81b00 !important;} 
+.text-neutral { color: #fBBC04 !important;}  
 
 .see-more-link {
   color: #b0b0b0;
@@ -27,31 +22,29 @@ body {
   font-weight: 600;
   font-size: 0.9rem;
 }
-.see-more-link:hover { 
+.see-more-link:hover{ 
   text-decoration: underline; 
 }
 
+
 .dashboard-wrapper {
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  gap: 40px;
 }
-
-.main-content { 
-  flex: 2; 
+.main-content{
+   flex: 2; 
 }
 .sidebar { 
   flex: 1; 
 }
 
-
 .welcome-header h1 {
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: 2.5rem;
   font-weight: 700;
   margin: 0;
 }
-.welcome-header h1 strong { 
-  color: #00C853; 
+.welcome-header h1 strong {
+   color: #00c853; 
 }
 .welcome-header p {
   font-size: 1rem;
@@ -61,7 +54,7 @@ body {
 
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr 1fr;
   gap: 25px;
   margin-top: 30px;
 }
@@ -75,35 +68,31 @@ body {
 }
 
 .card-icon { 
-  width: 2.5rem;
-  margin-bottom: 12px;
+  width: 40px; 
+  height: 40px; 
+  margin-bottom: 12px; 
   background-color: rgba(0, 176, 255, 0.1);
   border-radius: 8px;
 }
 .card-title { 
   color: #b0b0b0; 
-  font-size: 0.9rem;
-  margin: 0;
+  font-size: 0.9rem; 
+  margin: 0; 
 }
-.card-value {
-  font-size: 1.75rem;
-  font-weight: 600;
-  margin: 8px 0;
-  color: #fff;
+.card-value { 
+  font-size: 1.75rem; 
+  font-weight: 600; 
+  margin: 8px 0; color: #ffffff; 
 }
 .card-details { 
   font-size: 1rem; 
   margin: 0; 
 }
 
-
 .trending-stocks-container {
-  width: 100%;
-  max-width: 550px;
-  padding: 24px;
-  border: 1px solid rgba(0, 200, 83, 0.25);
+  border: 1px solid rgba(0, 176, 255, 0.25);
   border-radius: 16px;
-  transition: all 0.3s ease;
+  padding: 24px;
   height: fit-content;
 }
 
@@ -119,23 +108,15 @@ body {
   align-items: center;
   padding: 12px 0;
   border-bottom: 1px solid #2a323c;
-  transition: transform 0.25s ease, background 0.25s ease;
+  transition: 0.25s ease;
   cursor: pointer;
 }
-
 .trending-stock-item:hover {
   transform: translateY(-3px);
-  background: rgba(0, 200, 83, 0.1);
-  box-shadow: 0 4px 14px rgba(0, 200, 83, 0.18);
+  background: rgba(0, 255, 120, 0.08);
+  box-shadow: 0 4px 14px rgba(0, 255, 120, 0.12);
 }
-
-.trending-stock-item:last-of-type { 
-  border-bottom: none; 
-}
-
-.trending-stock-item:active {
-  transform: scale(0.97);
-}
+.trending-stock-item:last-of-type { border-bottom: none; }
 
 .stock-info, .stock-details { 
   flex-basis: 50%; 
@@ -143,162 +124,101 @@ body {
 .stock-details { 
   text-align: right; 
 }
-
-.stock-name {
-  font-weight: 600;
-  margin: 0;
+.stock-name { 
+  font-weight: 600; 
+  margin: 0; 
 }
-.stock-nse {
+.stock-nse { 
+  font-size: 0.8rem; 
+  color: #a0a0a0; 
+  margin: 2px 0 0 0; 
+}
+.stock-price { 
+  font-weight: 600; 
+  margin: 0; 
+}
+.stock-change { 
   font-size: 0.8rem;
-  color: #a0a0a0;
-  margin-top: 2px;
+  margin: 4px 0 0; 
 }
-.stock-price {
-  font-weight: 600;
-  margin: 0;
-}
-.stock-change {
-  font-size: 0.8rem;
-  margin-top: 4px;
-}
-
 
 @media (max-width: 1200px) {
-  .dashboard-wrapper { 
-    gap: 25px; 
-  }
-  .portfolio-grid { 
-    grid-template-columns: 1fr 1fr; 
-  }
-}
-
-
-@media (max-width: 1050px) {
-  .page-container { 
-    padding: 0.1rem; 
-  }
-
-  .dashboard-wrapper { 
-    flex-direction: column; 
-  }
-  .welcome-header h1 {
-    padding-top: 1rem; 
-    font-size: 1.8rem; 
-  }
-  .main-content, .sidebar {
-    width: 100%;
-    margin-top: 1.5rem;
+  .dashboard-wrapper {
+    gap: 25px;
   }
 
   .portfolio-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1.3rem;
-  }
-
-  .trending-stocks-container { 
-    padding: 1.2rem;
-    margin: 0 auto; 
-  }
-
-  .trending-stock-item { 
-    padding: 0.8rem 0; 
-  }
-
-  .stock-name { 
-    font-size: 0.9rem; 
-  }
-  .stock-price { 
-    font-size: 0.95rem; 
-  }
-  .stock-change { 
-    font-size: 0.75rem; 
+    grid-template-columns: 1fr;
   }
 }
 
+/* Tablets */
+@media (max-width: 900px) {
+  .page-container {
+    padding: 24px;
+  }
 
+  .dashboard-wrapper {
+    flex-direction: column;
+  }
+
+  .main-content, 
+  .sidebar {
+    flex: unset;
+    width: 100%;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Mobile */
 @media (max-width: 600px) {
   .welcome-header h1 {
-    padding-top: 1.8rem; 
-    font-size: 1.8rem; 
+    font-size: 1.8rem;
   }
 
-  .portfolio-card { 
-    padding: 18px; 
-  }
-  .card-value { 
-    font-size: 1.5rem; 
+  .portfolio-card {
+    padding: 18px;
   }
 
-  .page-container {
-    max-width: 95%;
-    padding: 1rem;
+  .card-value {
+    font-size: 1.5rem;
   }
 
-  .trending-stocks-container { 
-    padding: 18px; 
+  .trending-stocks-container {
+    padding: 18px;
   }
 
-  /* .trending-stock-item {
+  .trending-stock-item {
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
-  } */
+  }
 
-  /* .stock-details {
+  .stock-details {
     text-align: left;
     margin-top: 6px;
-  } */
-
-  .stock-name { 
-    font-size: 0.85rem; 
-  }
-  .stock-price { 
-    font-size: 0.9rem; 
-  }
-}
-
-@media (max-width: 400px) {
-  .welcome-header h1 {
-    padding-top: 1.8rem; 
-    font-size: 1.8rem; 
   }
 
-  .portfolio-grid {
-    grid-template-columns: 1fr !important;
-    gap: 1rem;
-  }
-
-  
-  .trending-stocks-container {
-    margin-top: 1.2rem;
-  }
-}
-
-@media (max-width: 900px) and (min-width: 601px) {
   .page-container {
-    padding: 0.6rem;
     max-width: 95%;
   }
-
-  .portfolio-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-
-  .trending-stocks-container {
-    max-width: 100%;
-    padding: 16px;
-  }
 }
 
-@media (max-width: 480px) {
+/* Ultra-small devices */
+@media (max-width: 400px) {
   .welcome-header h1 {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
 
-  .portfolio-card { 
-    width:20rem;padding: 12px; }
-
-  .portfolio-grid { grid-template-columns: 1fr !important; }
+  .portfolio-card,
+  .trending-stocks-container {
+    padding: 14px;
+  }
 }
+
+
+
 
