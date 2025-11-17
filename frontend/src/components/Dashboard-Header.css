@@ -247,20 +247,6 @@
   padding: 12px; 
   opacity: 0.8; 
 }
-.search-input,
-.popup-search-input {
-  color: #fff;
-  caret-color: #00C853;
-  background: transparent;
-  border: none;
-  outline: none;
-}
-
-.search-input::placeholder,
-.popup-search-input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
 
 @media (max-width: 1495px) {
   .popup-search-input::placeholder{

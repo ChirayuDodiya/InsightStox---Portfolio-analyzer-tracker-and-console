@@ -53,7 +53,6 @@ export default function PortfolioChart() {
     return {
       responsive: true,
       maintainAspectRatio: false,
-      resizeDelay: 100,// prevents sudden stretching
       plugins: {
         legend: {
           position: "bottom",
@@ -105,12 +104,12 @@ export default function PortfolioChart() {
       },
       scales: {
         x: {
-          type: "category",//✅FIX:prevents all date parsing
+          type: "category", //✅FIX:prevents all date parsing
           ticks: {
             color: "#FFFFFF",
             autoSkip: false,
-            maxRotation: 0,
-            minRotation: 0,
+            maxRotation: 60,
+            minRotation: 40,
             font: (context) => {
               const label = context.tick.label;
               return { weight: label ? "bold" : "normal" };
@@ -156,13 +155,16 @@ export default function PortfolioChart() {
 
       if (range === "30d") {
         const sliced = daily.slice(-30);
+
         labels = sliced.map((d) => {
-        const date = new Date(d.date);
-        return date.getDate() === 1
-          ? date.toLocaleDateString("en-US", { month: "short" })// "Nov"
-            : String(date.getDate()); // "2", "3", ...
+          const date = new Date(d.date);
+          return date.toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+          }); //"Nov 30"
         });
         setHiddenDates(sliced.map((d) => d.date));
+
         values = sliced.map((d) => d.valuation);
       }
 
@@ -261,9 +263,7 @@ export default function PortfolioChart() {
         </div>
 
         <div className="portfoliochart-graph">
-            <div className="chart-responsive-wrapper">
-            <Line options={options} data={chartData} />
-            </div>
+          <Line options={options} data={chartData} />
         </div>
       </div>
     </div>
