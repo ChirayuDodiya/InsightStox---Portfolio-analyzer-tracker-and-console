@@ -242,6 +242,7 @@ export default function PortfolioChart() {
     );
 
   return (
+    <div className="scale-wrapper">
     <div className="portfoliochart-container">
       <div className="portfoliochart-box">
         <div className="portfoliochart-buttons">
@@ -266,6 +267,7 @@ export default function PortfolioChart() {
           <Line options={options} data={chartData} />
         </div>
       </div>
+    </div>
     </div>
   );
 }

@@ -29,3 +29,42 @@
   position: relative;
 }
 
+
+/* Ensure chart graphics scale on small screens */
+.chart-wrapper svg,
+.chart-wrapper canvas {
+  max-width: 100%;
+  height: auto !important;
+  display: block;
+}
+
+
+@media (max-width: 1050px) {
+  .loading-container,
+  .sector-allocation-container {
+    padding: 14px;
+    max-width: 100%;
+    width: 95%;
+  }
+
+  .chart-wrapper {
+    height: 300px;
+    min-height: 220px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .loading-container,
+  .sector-allocation-container {
+    padding: 12px;
+    width: 100%;
+  }
+
+  .chart-wrapper {
+    height: 220px;
+    min-height: 200px;
+    overflow-x: auto;
+  }
+}
+
