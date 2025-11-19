@@ -169,9 +169,9 @@
     line-height: 1.35;
   }
 
-  button,
-  .btn,
-  .primary-btn {
+.section-wrapper button,
+.section-wrapper .btn,
+.section-wrapper .primary-btn {
     font-size: 1rem;
     padding: 12px 14px;
     border-radius: 10px;
@@ -257,7 +257,7 @@
 
   /* Ensure tables and lists are horizontally scrollable rather than overflowing viewport */
   .table-wrapper,
-  .table-responsive,
+  .section-wrapper .table-responsive,
   .chart-wrapper,
   .chart-container,
   .main-grid,
@@ -316,9 +316,9 @@
     font-size: 15px;
   }
 
-  input,
-  select,
-  textarea {
+.section-wrapper input,
+.section-wrapper select,
+.section-wrapper textarea  {
     font-size: 15px;
     padding: 10px 12px;
     border-radius: 8px;

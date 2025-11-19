@@ -43,6 +43,17 @@ export default function PortfolioChart() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // track screen width so we can adjust ticks on small screens
+  const [screenWidth, setScreenWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : 1024
+  );
+
+  useEffect(() => {
+    const onResize = () => setScreenWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   axios.defaults.withCredentials = true;
 
   const BACKEND_URL = import.meta.env.VITE_BACKEND_LINK;
@@ -50,6 +61,9 @@ export default function PortfolioChart() {
 
   // Dynamic Chart.js Options Based on Range
   const options = useMemo(() => {
+    const isNarrowDays = screenWidth < 900 && range === "30d";
+    const maxTicks = isNarrowDays ? Math.max(3, Math.floor(screenWidth / 60)) : undefined;
+
     return {
       responsive: true,
       maintainAspectRatio: false,
@@ -107,9 +121,11 @@ export default function PortfolioChart() {
           type: "category", //✅FIX:prevents all date parsing
           ticks: {
             color: "#FFFFFF",
-            autoSkip: false,
-            maxRotation: 60,
-            minRotation: 40,
+            // only auto-skip and limit ticks on small screens when viewing '30d' (days)
+            autoSkip: isNarrowDays ? true : false,
+            maxTicksLimit: maxTicks,
+            maxRotation:  0,
+            minRotation:  0,
             font: (context) => {
               const label = context.tick.label;
               return { weight: label ? "bold" : "normal" };
@@ -137,7 +153,7 @@ export default function PortfolioChart() {
         },
       },
     };
-  }, [range, hiddenDates]); //✅keep tooltip in sync with real dates
+  }, [range, hiddenDates, screenWidth]); //✅keep tooltip in sync with real dates and respond to width
 
   const fetchPortfolioData = async () => {
     try {
@@ -156,13 +172,13 @@ export default function PortfolioChart() {
       if (range === "30d") {
         const sliced = daily.slice(-30);
 
-        labels = sliced.map((d) => {
-          const date = new Date(d.date);
-          return date.toLocaleDateString("en-US", {
-            month: "short",
-            day: "numeric",
-          }); //"Nov 30"
-        });
+          labels = sliced.map((d) => {
+            const date = new Date(d.date);
+            const day = date.getDate();
+            const monthShort = date.toLocaleDateString("en-US", { month: "short" });
+            // Show month name only when day === 1 (e.g., "Nov 1"), otherwise show day number only
+            return day === 1 ? `${monthShort} 1` : String(day);
+          });
         setHiddenDates(sliced.map((d) => d.date));
 
         values = sliced.map((d) => d.valuation);
