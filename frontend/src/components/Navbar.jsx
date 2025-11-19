@@ -108,17 +108,17 @@ const Navbar = ({ darkMode, setDarkMode, pageType, profileData = {} }) => {
             </div>
           )}
 
-          <div className="toggle_btn">
+          {/* <div className="toggle_btn">
             <button style = {{display : "none"}}onClick={() => setDarkMode(!darkMode)}>
               <img src={themetoggledark} alt="Toggle Theme" />
             </button>
-          </div>
+          </div> */}
           <i className="menu_toggle pi pi-bars" onClick={toggleMenu}> 
           </i>
         </div>
       </div>
         {isMenuOpen && (
-        <div className="mobile_menu ">
+        <div className="mobile_menu">
           {pageType === "/" ? (
             <div className="menuoptions">
               <ul>
