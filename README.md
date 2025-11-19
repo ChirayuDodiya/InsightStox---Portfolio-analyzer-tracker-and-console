@@ -1,13 +1,34 @@
-
 ![InsightStox Logo](https://drive.google.com/uc?export=view&id=1BVzEIrAtxF6D76pE-7wDIwmCHNfI7LPq)
 
+# InsightStox — Portfolio Analyzer, Tracker & Console
 
-# **InsightStox - Portfolio analyzer, tracker and console** 
+InsightStox is a web-based platform that helps investors track, manage, and analyze stock portfolios with AI-driven insights. The system combines real-time market data, personalized AI suggestions, portfolio visualization, and secure account management into a single, developer-friendly codebase.
 
-InsightStox is a web-based platform designed to help investors in tracking, managing and analyzing their stock market portfolios through AI-driven insights. The system looks forword to simplify investment decisions for investors, support investors in structuring their strategies. Unlike traditional stock-tracking platforms, InsightStox combines real-time data, personalized AI suggestions, portfolio management and visualization in a single consolidated solution. 
+---
 
-The platform is around three core aspects: portfolio management, intelligent suggestions, and user-centric insights. Investors can securely register and create personalized portfolios, add or remove stocks, and maintain watchlists of potential opportunities. The system fetches real-time stock market data, enabling users to monitor price movements and track performance instantly. To support better decision-making, InsightStox integrates an AI-powered recommendation facility that looks upon user portfolios, analyzes them, suggests possible improvements, highlights risks, and proposes comparative evaluations between different stocks. 
+## Demo / Overview
+- **Core areas:** Portfolio management, Intelligent suggestions, User-centric insights  
+- **Key user flows:** Register → Create portfolios → Add/Remove stocks → View dashboard & suggestions → Compare stocks  
+- **Value:** Real-time monitoring, AI-backed recommendations, interactive visualizations, and secure authentication
+---
 
-In addition to portfolio features, InsightStox provides a highly visual dashboard with interactive charts and reports, making complex financial information accessible and easier to understand. A stock comparison module further allows users to compare two or more options side by side, offering transparency in decision-making. To ensure security and reliability, the system incorporates secure authentication, and compliance with financial data protection standards. The application is designed to quantify stock market data, and AI computation in real time.  
+## Tech Stack
+- **Backend:** Node.js, Express.js  
+- **Databases:** PostgreSQL (Neon), MongoDB  
+- **Auth & Security:** JWT, bcrypt, secure cookies  
+- **Utilities:** UAParser (device/browser fingerprinting)  
+- **Testing:** Jest (unit tests)  
+- **Dev Tools:** VS Code, Git, GitHub, pgAdmin, Postman, MongoDB Atlas
+---
 
-Overall, InsightStox is visioned as a bridge between investors and technology, featuring financial intelligence by providing a smart, secure, and engaging platform. The system’s goal is to encourage informed, confident, and data-backed investment decisions in a dynamic stock market environment. 
+## ✨ My Contribution
+- Implemented **JWT-based authentication** with secure cookie handling and bcrypt password hashing.  
+- Built **active session tracking** across multiple devices, storing session meta (browser, OS, ip) in PostgreSQL.  
+- Implemented **browser & OS fingerprinting** using UAParser and created a **security alert** system persisted to MongoDB.  
+- Added **activity history logging** for key user actions (login, logout, suspicious activity).  
+- Implemented controller → service → DB separation for maintainability.  
+- Developed Jest unit tests for controllers, DB functions, and validation utilities.
+- 
+---
+
+## Repo Structure (relevant)
