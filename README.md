@@ -12,4 +12,22 @@ In addition to portfolio features, InsightStox provides a highly visual dashboar
 
 Overall, InsightStox is visioned as a bridge between investors and technology, featuring financial intelligence by providing a smart, secure, and engaging platform. The system’s goal is to encourage informed, confident, and data-backed investment decisions in a dynamic stock market environment. 
 
+## Tech Stack
+- **Backend:** Node.js, Express.js  
+- **Databases:** PostgreSQL (Neon), MongoDB  
+- **Auth & Security:** JWT, bcrypt, secure cookies  
+- **Utilities:** UAParser (device/browser fingerprinting)  
+- **Testing:** Jest (unit testing), stryker (mutation testing)
+- **Dev Tools:** VS Code, Git, GitHub, Postman, MongoDB Atlas
+---
+
+## ✨ My Contribution
+- Implemented a secure authentication and session management system with encrypted credentials and device-based active session tracking.
+- Built multi-device session handling, storing session metadata such as browser, operating system, and IP address.
+- Implemented browser and OS fingerprinting and designed a security alert mechanism with persistent activity logging.
+- Developed Profile Page REST APIs supporting user profile retrieval, updates, and account-related operations.
+- Followed a clean controller → service → database architecture with strong input validation, centralized error handling, and login safeguards.
+- Ensured system reliability and correctness through unit testing, mutation testing, integration testing, and black-box testing of backend logic and APIs.
+---
+
 -- YouTube video link of Demonstration of website: https://youtu.be/93mjWPn2CVE?si=H-PY2bFJqtWPchnB
